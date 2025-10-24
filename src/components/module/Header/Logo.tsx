@@ -4,7 +4,7 @@ import React, { memo } from "react";
 const Logo = memo(() => {
   return (
     <div>
-      <Image alt="iranMarket" src="/image/logo.png" width={200} height={200} />
+      <Image alt="iranMarket" src="/image/logo (1).png" width={200} height={200} />
     </div>
   );
 });

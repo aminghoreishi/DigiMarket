@@ -5,7 +5,7 @@ function SearchBar() {
     <div className="relative">
       <input
         type="text"
-        className="border-2 font-danaMed border-red-600 rounded-lg text-red-600 outline-0 p-2 text-sm w-[400px]"
+        className="border-2 font-danaMed border-gray-300 rounded-lg  outline-0 p-2 text-sm w-[400px]"
         placeholder="جستجوی محصول"
       />
       <div className="absolute top-2.5 left-2">
