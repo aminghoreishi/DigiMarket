@@ -1,43 +1,29 @@
-import { NextRequest, NextResponse } from "next/server";
-import subLinkModel from "@/models/subLink";
+// app/api/subLink/route.ts
 import db from "@/config/db";
 import linkModel from "@/models/link";
-import checkSubLink from "@/validator/subLink";
+import subLinkModel from "@/models/subLink";
 
-export async function POST(req: NextRequest) {
-  try {
-    await db();
-    const body = await req.json();
+export async function POST(request: Request) {
+  await db();
+  const { title, href, parentLinkId, parentSubLinkId } = await request.json();
 
-    const { title, href, parentLinkId } = body;
+  const newSubLink = await subLinkModel.create({
+    title,
+    href,
+    parentLink: parentLinkId || null,
+    parentSubLink: parentSubLinkId || null,
+  });
 
-    const validationResult = checkSubLink(body);
-
-    if (validationResult !== true) {
-      return Response.json(
-        {
-          error: "Validation failed",
-          details: validationResult,
-        },
-        { status: 400 }
-      );
-    }
-
-    const sub = await subLinkModel.create({ title, href, parentLinkId });
-
-    await linkModel.findOneAndUpdate(
-      { _id: parentLinkId },
-      {
-        $push: {
-          subLink: sub._id,
-        },
-      }
-    );
-
-    return NextResponse.json({ message: "Created successfully" });
-  } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "An unknown error occurred";
-    return NextResponse.json({ message });
+  // به children والد اضافه کن
+  if (parentSubLinkId) {
+    await subLinkModel.findByIdAndUpdate(parentSubLinkId, {
+      $push: { children: newSubLink._id },
+    });
+  } else if (parentLinkId) {
+    await linkModel.findByIdAndUpdate(parentLinkId, {
+      $push: { subLink: newSubLink._id },
+    });
   }
+
+  return Response.json(newSubLink, { status: 201 });
 }

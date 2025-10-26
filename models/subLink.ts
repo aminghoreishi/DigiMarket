@@ -1,26 +1,50 @@
+// models/subLink.ts
 import mongoose from "mongoose";
 
-const sub = new mongoose.Schema(
+const subLinkSchema = new mongoose.Schema(
   {
     title: {
       type: String,
       required: true,
-    },
-    parentLinkId: {
-      type: mongoose.Types.ObjectId,
-      ref: "Link",
-      required: true,
+      trim: true,
     },
     href: {
       type: String,
       required: true,
     },
+    parentLink: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Link", 
+      default: null,
+    },
+    parentSubLink: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "subLink", // به خودش (برای subSubLink)
+      default: null,
+    },
+    // فرزندان (subSubLink)
+    children: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "subLink",
+      },
+    ],
   },
   {
+    timestamps: true,
     versionKey: false,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 
-const subLinkModel = mongoose.models.subLink || mongoose.model("subLink", sub);
+subLinkSchema.virtual("subChildren", {
+  ref: "subLink",
+  localField: "_id",
+  foreignField: "parentSubLink",
+});
+
+const subLinkModel =
+  mongoose.models.subLink || mongoose.model("subLink", subLinkSchema);
 
 export default subLinkModel;

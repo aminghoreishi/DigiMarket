@@ -1,15 +1,10 @@
+
 import mongoose from "mongoose";
 
-const link = new mongoose.Schema(
+const linkSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
-    href: {
-      type: String,
-      required: true,
-    },
+    title: { type: String, required: true },
+    href: { type: String, required: true },
     subLink: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -19,9 +14,10 @@ const link = new mongoose.Schema(
   },
   {
     versionKey: false,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 
-const linkModel = mongoose.models.Link || mongoose.model("Link", link);
-
-export default linkModel;
+const linkModel = mongoose.models.Link || mongoose.model("Link", linkSchema);
+export default linkModel
