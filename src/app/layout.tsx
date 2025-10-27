@@ -1,5 +1,5 @@
-import Header from "@/components/module/Header/Header";
 import "./globals.css";
+import Header from "@/components/module/Header/Header";
 import HeaderMenu from "@/components/module/HeaderMenu";
 
 export default function RootLayout({

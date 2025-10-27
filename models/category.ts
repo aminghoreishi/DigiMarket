@@ -10,24 +10,20 @@ const category = new mongoose.Schema(
       type: String,
       required: true,
     },
-    parentSubId: {
-      type: mongoose.Types.ObjectId,
-      ref: "subLink",
-      required: true,
-    },
-    subLink: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "subLink",
-      },
-    ],
   },
   {
-    versionKey: false,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 
+category.virtual("subCategory", {
+  ref: "subCategory",
+  localField: "_id",
+  foreignField: "category",
+});
+
 const categoryModel =
-  mongoose.models.Category || mongoose.model("Category", category);
+  mongoose.models.category || mongoose.model("category", category);
 
 export default categoryModel;

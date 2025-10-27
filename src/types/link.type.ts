@@ -5,5 +5,5 @@ export type LinkType = {
   href: string;
   title: string;
   subLink: SubLinkType[];
-  _id: string;
+  _id: string | Types.ObjectId;
 };

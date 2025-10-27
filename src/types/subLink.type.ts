@@ -1,8 +1,8 @@
-import { Types } from "mongoose";
-
 export type SubLinkType = {
-  parentLinkId: string;
+  parentLink: string;
   href: string;
   title: string;
   _id: string;
+  parentSubLink: null | string;
+  children: [];
 };

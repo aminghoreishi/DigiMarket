@@ -15,11 +15,7 @@ function SwiperBanner() {
   return (
     <div className="container mx-auto mt-5">
       <Swiper
-        onSwiper={(swiper) => {
-          console.log("prevRef:", prevRef.current);
-          console.log("nextRef:", nextRef.current);
-        }}
-        className="mySwiper"
+        className="mySwiper rounded-4xl"
         modules={[Autoplay, Navigation]}
         navigation={{
           prevEl: prevRef.current,
@@ -42,7 +38,7 @@ function SwiperBanner() {
           <Image
             alt="Banner"
             src="/image/1.webp"
-            className=" rounded-lg"
+            className="rounded-4xl"
             width={1515}
             height={900}
           />
@@ -51,7 +47,7 @@ function SwiperBanner() {
           <Image
             alt="Banner"
             src="/image/1.webp"
-            className=" rounded-lg"
+            className="rounded-4xl"
             width={1515}
             height={900}
           />
@@ -62,14 +58,14 @@ function SwiperBanner() {
             className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all"
             aria-label="اسلاید بعدی"
           >
-            <MdKeyboardArrowRight className="w-6 h-6" /> {/* چپ به راست */}
+            <MdKeyboardArrowRight className="w-6 h-6" /> 
           </button>
           <button
             ref={prevRef}
             className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all"
             aria-label="اسلاید قبلی"
           >
-            <MdKeyboardArrowLeft className="w-6 h-6" /> {/* راست به چپ */}
+            <MdKeyboardArrowLeft className="w-6 h-6" /> 
           </button>
         </div>
       </Swiper>

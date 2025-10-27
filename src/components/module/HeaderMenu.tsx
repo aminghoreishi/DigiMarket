@@ -1,68 +1,63 @@
 import db from "@/config/db";
-import subLinkModel from "@/models/subLink";
-import linkModel from "@/models/link";
-import React from "react";
+import categoryModel from "@/models/category";
+import { LinkType } from "@/types/link.type";
+import Link from "next/link";
 import { MdKeyboardArrowDown, MdKeyboardArrowLeft } from "react-icons/md";
 
 async function HeaderMenu() {
   await db();
 
-  // مرحله ۱: لینک‌ها + زیرمنوهای سطح اول
-  const links = await linkModel
+  const category = await categoryModel
     .find({})
     .populate({
-      path: "subLink",
-      populate: { path: "children" }, // children هم populate بشه
+      path: "subCategory",
+      populate: {
+        path: "subSubCategory", // اگر می‌خواید subSubCategory هم populate بشه
+      },
     })
-    .lean()
-    .exec();
+    .lean({ virtuals: true });
 
-  // لاگ کامل برای دیباگ
-  console.log("=== لینک‌ها با زیرمنوهای دو سطحی ===");
+  console.log(category);
 
   return (
     <div className="container mx-auto">
       <div className="bg-gray-50 px-3 py-5">
-        <ul className="text-xs flex items-center gap-x-3">
-          {links.map((link) => (
+        <ul className="text-xs flex items-center gap-x-6">
+          <li className="font-danaMed">
+            <Link href="/">صحفه اصلی</Link>
+          </li>
+          {category.map((category) => (
             <li
-              // key={link._id.toString()}
-              className="font-danaMed group relative cursor-pointer flex items-center gap-x-2"
+              key={category._id.toString()}
+              className="font-danaMed group relative cursor-pointer flex items-center gap-x-1  transition-colors"
             >
-              <span>{link.title}</span>
+              <span>
+                <Link href={category.href}>{category.title}</Link>
+              </span>
 
-              {link.subLink && link.subLink.length > 0 && (
-                <MdKeyboardArrowDown className="transition-all group-hover:rotate-180" />
+              {category.subCategory && category.subCategory.length > 0 && (
+                <MdKeyboardArrowDown className="text-lg transition-transform duration-300 group-hover:rotate-180" />
               )}
 
-              {link.subLink && link.subLink.length > 0 && (
-                <ul className="absolute  z-10 -bottom-14 duration-300 invisible opacity-0 group-hover:visible group-hover:opacity-100 bg-white w-[200px] p-3 shadow-lg rounded-md">
-                  {link.subLink.map((sub: any) => (
-                    <li key={sub._id.toString()} className="py-1 group">
-                      <div className="font-medium  flex items-center justify-between hover:text-blue-600 cursor-pointer">
-                        {sub.title}
-                        <MdKeyboardArrowLeft />
-                      </div>
-                      <div className=" absolute invisible group-hover:visible -left-56 w-[200px] top-0  bg-white p-2">
-                        <ul className="ml-4 mt-1 space-y-1 border-l-2 border-gray-200 pl-3">
-                          {sub.children.map((child: any) => (
-                            <li
-                              key={child._id.toString()}
-                              className="text-xs hover:text-blue-600 cursor-pointer"
-                            >
-                              {child.title}
-                            </li>
-                          ))}
-                        </ul>
+              {category.subCategory && category.subCategory.length > 0 && (
+                <ul className="absolute right-[50%] top-full mt-2 w-56 bg-white shadow-xl rounded-md p-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                  {category.subCategory.map((sub: any) => (
+                    <li key={sub._id.toString()} className="group/sub relative">
+                      <div className="flex items-center justify-between px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer transition-colors">
+                        <span className="font-medium text-sm">
+                          <Link href={sub.href}> {sub.title}</Link>
+                        </span>
+                        {/* {sub.children && sub.children.length > 0 && (
+                          <MdKeyboardArrowLeft className="text-lg" />
+                        )} */}
                       </div>
 
-                      {/* زیرمنوهای سطح دوم (children) */}
-                      {/* {sub.children && sub.children.length > 0 && (
-                        <ul className="ml-4 mt-1 space-y-1 border-l-2 border-gray-200 pl-3">
-                          {sub.children.map((child: any) => (
+                      {/* {sub.subChildren && sub.subChildren.length > 0 && (
+                        <ul className="absolute right-[108%] -top-2 w-56 bg-white shadow-xl rounded-md p-2 z-50 opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-300 -ml-1">
+                          {sub.subChildren.map((child: any) => (
                             <li
                               key={child._id.toString()}
-                              className="text-xs hover:text-blue-600 cursor-pointer"
+                              className="px-3 py-2 text-sm hover:bg-gray-100 hover:text-blue-600 rounded-md cursor-pointer transition-colors"
                             >
                               {child.title}
                             </li>
