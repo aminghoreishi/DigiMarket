@@ -33,12 +33,41 @@ function Footer() {
           </div>
         </div>
 
-        <div className="flex justify-between items-center mt-5">
+        <div className="grid grid-cols-5 gap-3  items-center mt-5">
           <FeatureFooter />
           <FeatureFooter />
           <FeatureFooter />
           <FeatureFooter />
           <FeatureFooter />
+        </div>
+
+        <div className="grid grid-cols- mt-5">
+            <div className="flex items-baseline text-sm  gap-5 font-danaMed">
+                <div>
+                    <h2>دسترسی سریع</h2>
+                    <ul className="mt-3 flex flex-col gap-3 text-xs text-zinc-400 *:cursor-pointer">
+                        <li>وبلاگ</li>
+                        <li>درباره ما</li>
+                        <li>تماس باما</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2>محبوب ترین برند ها</h2>
+                    <ul className="mt-3 flex flex-col gap-3 text-xs text-zinc-400 *:cursor-pointer">
+                        <li>شیامومی</li>
+                        <li>سامسونگ</li>
+                        <li>ایفون</li>
+                        <li>ال جی</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h2>ارتباط مستقیم</h2>
+                </div>
+            </div>
+            <div>
+
+            </div>
         </div>
       </div>
     </div>

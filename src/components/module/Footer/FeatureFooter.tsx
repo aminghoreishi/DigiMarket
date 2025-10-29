@@ -6,9 +6,9 @@ function FeatureFooter() {
             <div>
                 <RiTruckLine size={40} className="m-4 text-red-600"/>
             </div>
-            <div>
+            <div className="flex flex-col gap-1">
                 <p>ارسال سریع</p>
-                <p>ارسال در سریع ترین زمان</p>
+                <p className="text-zinc-400">ارسال در سریع ترین زمان</p>
             </div>
         </div>
     </div>
