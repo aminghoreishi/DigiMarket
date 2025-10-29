@@ -41,7 +41,7 @@ function Footer() {
           <FeatureFooter />
         </div>
 
-        <div className="grid grid-cols- mt-5">
+        <div className="grid grid-cols-2 mt-5">
             <div className="flex items-baseline text-sm  gap-5 font-danaMed">
                 <div>
                     <h2>دسترسی سریع</h2>
@@ -65,8 +65,13 @@ function Footer() {
                     <h2>ارتباط مستقیم</h2>
                 </div>
             </div>
-            <div>
-
+            <div className="flex items-center ">
+                <div className="">
+                    <Image width={100} height={100} alt="zarinPal" src="/image/zarinPal.png" />
+                </div>
+                <div className="">
+                    <Image width={100} height={100} alt="zarinPal" src="/image/symbol-02.png" />
+                </div>
             </div>
         </div>
       </div>
