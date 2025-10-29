@@ -1,7 +1,9 @@
+import Footer from "@/components/module/Footer/Footer";
+import Banner from "@/components/template/Home/Banner/Banner";
 import Category from "@/components/template/Home/Category/Category";
+import NewProduct from "@/components/template/Home/NewProduct/NewProduct";
 import PopProduct from "@/components/template/Home/popProduct/PopProduct";
 import SwiperBanner from "@/components/template/Home/SwiperBanner/SwiperBanner";
-import React from "react";
 
 function Home() {
   return (
@@ -9,6 +11,9 @@ function Home() {
       <SwiperBanner />
       <Category/>
       <PopProduct/>
+      <Banner/>
+      <NewProduct/>
+      <Footer/>
     </div>
   );
 }
