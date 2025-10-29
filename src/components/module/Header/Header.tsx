@@ -10,7 +10,9 @@ function Header() {
         <div className="lg:hidden">
           <MenuMobile />
         </div>
-        <Logo />
+        <div>
+          <Logo />
+        </div>
         <div className="max-lg:hidden">
           <SearchBar />
         </div>
