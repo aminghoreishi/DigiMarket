@@ -4,6 +4,7 @@
   --font-danaMed: "Dana-Medium";
   --font-danaDemiBold: "Dana-DemiBold";
   --font-danaLight: "Dana-Light";
+  
 }
 
 @utility container {
@@ -15,11 +16,11 @@
   }
 
   @variant lg {
-    padding-inline: 30px;
+    padding-inline: 20px;
   }
 
   @variant xl {
-    padding-inline: 10px;
+    padding-inline: 30px;
   }
 }
 
