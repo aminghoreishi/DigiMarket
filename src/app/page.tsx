@@ -12,12 +12,12 @@ function Home() {
     <div>
       <SwiperBanner />
       <Category />
-      <PopProductContainer />
-      <PopProduct />
+       <PopProductContainer />
+      {/* <PopProduct />
       <Banner />
       <NewProduct />
       <Brand/>
-      <Footer />
+      <Footer />  */}
     </div>
   );
 }

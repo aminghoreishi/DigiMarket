@@ -16,7 +16,7 @@ function PopProductCom() {
         <p className="text-2xl text-orange-500">1</p>
       </div>
       <div>
-        <p className="font-danaMed text-sm">لپ تاپ ایسوس مدل A5436 با طراحی جدید</p>
+        <p className="font-danaMed text-xs md:text-sm">لپ تاپ ایسوس مدل A5436 با طراحی جدید</p>
       </div>
     </div>
   );

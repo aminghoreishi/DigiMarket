@@ -7,7 +7,7 @@ function PopProductContainer() {
       <div className="flex justify-center">
         <h2 className="font-danaMed text-lg">پرفروش ترین محصولات</h2>
       </div>
-      <div className="grid grid-cols-4 gap-5 mt-5 divide-y-2 divide-zinc-200">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5 divide-y-2 divide-zinc-200">
         <PopProductCom />
         <PopProductCom />
         <PopProductCom />

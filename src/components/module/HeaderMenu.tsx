@@ -12,7 +12,7 @@ async function HeaderMenu() {
     .populate({
       path: "subCategory",
       populate: {
-        path: "subSubCategory", // اگر می‌خواید subSubCategory هم populate بشه
+        path: "subSubCategory", 
       },
     })
     .lean({ virtuals: true });
@@ -20,8 +20,8 @@ async function HeaderMenu() {
   console.log(category);
 
   return (
-    <div className="container mx-auto">
-      <div className="bg-gray-50 px-3 py-5">
+    <div className="bg-gray-50 px-3 py-5">
+        <div className="container mx-auto">
         <ul className="text-xs flex items-center gap-x-6">
           <li className="font-danaMed">
             <Link href="/">صحفه اصلی</Link>

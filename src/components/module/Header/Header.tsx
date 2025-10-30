@@ -1,26 +1,29 @@
-import React from "react";
 import SearchBar from "./SearchBar";
 import Buttons from "./Buttons";
 import MenuMobile from "./MenuMobile";
 import Logo from "./Logo";
+
 function Header() {
   return (
-    <div className="container mx-auto">
-      <div className="flex justify-between px-2 relative bottom-0 right-0 shadow-2xl items-center  py-3">
+    <header className="sticky top-0 z-50 bg-white shadow-lg">
+      <div className="container mx-auto flex items-center justify-between py-3">
         <div className="lg:hidden">
           <MenuMobile />
         </div>
+
         <div>
           <Logo />
         </div>
-        <div className="max-lg:hidden">
+
+        <div className="hidden lg:block flex-1 max-w-md mx-4">
           <SearchBar />
         </div>
-        <div className="max-lg:hidden">
+
+        <div className="hidden lg:block">
           <Buttons />
         </div>
       </div>
-    </div>
+    </header>
   );
 }
 
