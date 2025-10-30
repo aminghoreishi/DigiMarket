@@ -42,37 +42,47 @@ function Footer() {
         </div>
 
         <div className="grid grid-cols-2 mt-5">
-            <div className="flex items-baseline text-sm  gap-5 font-danaMed">
-                <div>
-                    <h2>دسترسی سریع</h2>
-                    <ul className="mt-3 flex flex-col gap-3 text-xs text-zinc-400 *:cursor-pointer">
-                        <li>وبلاگ</li>
-                        <li>درباره ما</li>
-                        <li>تماس باما</li>
-                    </ul>
-                </div>
-                <div>
-                    <h2>محبوب ترین برند ها</h2>
-                    <ul className="mt-3 flex flex-col gap-3 text-xs text-zinc-400 *:cursor-pointer">
-                        <li>شیامومی</li>
-                        <li>سامسونگ</li>
-                        <li>ایفون</li>
-                        <li>ال جی</li>
-                    </ul>
-                </div>
+          <div className="flex items-baseline text-sm  gap-5 font-danaMed">
+            <div>
+              <h2>دسترسی سریع</h2>
+              <ul className="mt-3 flex flex-col gap-3 text-xs text-zinc-400 *:cursor-pointer">
+                <li>وبلاگ</li>
+                <li>درباره ما</li>
+                <li>تماس باما</li>
+              </ul>
+            </div>
+            <div>
+              <h2>محبوب ترین برند ها</h2>
+              <ul className="mt-3 flex flex-col gap-3 text-xs text-zinc-400 *:cursor-pointer">
+                <li>شیامومی</li>
+                <li>سامسونگ</li>
+                <li>ایفون</li>
+                <li>ال جی</li>
+              </ul>
+            </div>
 
-                <div>
-                    <h2>ارتباط مستقیم</h2>
-                </div>
+            <div>
+              <h2>ارتباط مستقیم</h2>
             </div>
-            <div className="flex items-center ">
-                <div className="">
-                    <Image width={100} height={100} alt="zarinPal" src="/image/zarinPal.png" />
-                </div>
-                <div className="">
-                    <Image width={100} height={100} alt="zarinPal" src="/image/symbol-02.png" />
-                </div>
+          </div>
+          <div className="flex items-center ">
+            <div className="">
+              <Image
+                width={100}
+                height={100}
+                alt="zarinPal"
+                src="/image/zarinPal.png"
+              />
             </div>
+            <div className="">
+              <Image
+                width={100}
+                height={100}
+                alt="zarinPal"
+                src="/image/symbol-02.png"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
