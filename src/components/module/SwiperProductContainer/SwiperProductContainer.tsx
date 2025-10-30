@@ -2,7 +2,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/pagination";
 import SwiperProduct from "@/components/module/SwiperProduct/SwiperProduct";
 
 function SwiperProductContainer() {
@@ -12,7 +11,28 @@ function SwiperProductContainer() {
         slidesPerView={5.5}
         spaceBetween={20}
         pagination={{ clickable: true }}
-        modules={[Pagination]}
+        breakpoints={{
+          320: {
+            slidesPerView: 1.5,
+            spaceBetween: 14,
+          },
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 16,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 18,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 20,
+          },
+          1280: {
+            slidesPerView: 5.5,
+            spaceBetween: 20,
+          },
+        }}
         className="mySwiper !h-[400px]"
       >
         <SwiperSlide>

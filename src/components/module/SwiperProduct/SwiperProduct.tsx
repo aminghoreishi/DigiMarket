@@ -47,7 +47,7 @@ function SwiperProduct() {
           </div>
         </div>
         <div className="flex justify-end mt-4">
-          <p className="">23,000,000</p>
+          <p className="text-sm">23,000,000</p>
           <Image
             src="/image/toman.png"
             width={100}

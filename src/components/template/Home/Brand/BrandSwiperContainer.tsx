@@ -1,9 +1,6 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/pagination";
-import React from "react";
 import Image from "next/image";
 import { BrandType } from "@/types/brand.type";
 
@@ -11,14 +8,38 @@ interface BrandSwiperContainerProps {
   brands: BrandType[];
 }
 
-const BrandSwiperContainer: React.FC<BrandSwiperContainerProps> = ({ brands }) => {
+const BrandSwiperContainer: React.FC<BrandSwiperContainerProps> = ({
+  brands,
+}) => {
   return (
     <div className="container mx-auto mt-5">
       <Swiper
         slidesPerView={8.5}
         spaceBetween={20}
-        pagination={{ clickable: true }}
-        modules={[Pagination]}
+        breakpoints={{
+          320: {
+            slidesPerView: 1.5,
+            spaceBetween: 14,
+          },
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 16,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 18,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 20,
+          },
+          1280: {
+            slidesPerView: 5.5,
+            spaceBetween: 20,
+          },
+        }}
+        // pagination={{ clickable: true }}
+        // modules={[Pagination]}
         className="mySwiper !h-[200px]"
       >
         {brands.map((brand) => (

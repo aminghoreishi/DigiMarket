@@ -3,14 +3,15 @@ import { memo } from "react";
 
 const Logo = memo(() => {
   return (
-    <>
+    <div>
       <Image
         alt="iranMarket"
         src="/image/logo (1).png"
-        width={200}
-        height={200}
+        width={100}
+        height={100}
+        // className="max-sm:w-32"
       />
-    </>
+    </div>
   );
 });
 
