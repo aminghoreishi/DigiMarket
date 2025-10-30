@@ -17,7 +17,7 @@ function Home() {
       <Banner />
       <NewProduct />
        <Brand/>
-      {/* <Footer />  */}
+      <Footer /> 
     </div>
   );
 }

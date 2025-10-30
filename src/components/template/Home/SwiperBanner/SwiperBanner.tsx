@@ -55,14 +55,14 @@ function SwiperBanner() {
         <div>
           <button
             ref={nextRef}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 max-sm:size-8 size-12 rounded-full flex items-center justify-center shadow-lg transition-all"
             aria-label="اسلاید بعدی"
           >
             <MdKeyboardArrowRight className="w-6 h-6" /> 
           </button>
           <button
             ref={prevRef}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 max-sm:size-8 size-12 rounded-full flex items-center justify-center shadow-lg transition-all"
             aria-label="اسلاید قبلی"
           >
             <MdKeyboardArrowLeft className="w-6 h-6" /> 
