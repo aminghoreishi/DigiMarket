@@ -1,8 +1,7 @@
 import db from "@/config/db";
 import categoryModel from "@/models/category";
-import { LinkType } from "@/types/link.type";
 import Link from "next/link";
-import { MdKeyboardArrowDown, MdKeyboardArrowLeft } from "react-icons/md";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 async function HeaderMenu() {
   await db();
@@ -12,7 +11,7 @@ async function HeaderMenu() {
     .populate({
       path: "subCategory",
       populate: {
-        path: "subSubCategory", 
+        path: "subSubCategory",
       },
     })
     .lean({ virtuals: true });
@@ -21,27 +20,27 @@ async function HeaderMenu() {
 
   return (
     <div className="bg-gray-50 px-3 py-5">
-        <div className="container mx-auto">
+      <div className="container mx-auto">
         <ul className="text-xs flex items-center gap-x-6">
           <li className="font-danaMed">
             <Link href="/">صحفه اصلی</Link>
           </li>
-          {category.map((category) => (
+          {category.map((cat: any) => (
             <li
-              key={category._id.toString()}
+              key={cat._id.toString()}
               className="font-danaMed group relative cursor-pointer flex items-center gap-x-1  transition-colors"
             >
               <span>
-                <Link href={category.href}>{category.title}</Link>
+                <Link href={cat.href}>{cat.title}</Link>
               </span>
 
-              {category.subCategory && category.subCategory.length > 0 && (
+              {cat.subCategory && cat.subCategory.length > 0 && (
                 <MdKeyboardArrowDown className="text-lg transition-transform duration-300 group-hover:rotate-180" />
               )}
 
-              {category.subCategory && category.subCategory.length > 0 && (
+              {cat.subCategory && cat.subCategory.length > 0 && (
                 <ul className="absolute right-[50%] top-full mt-2 w-56 bg-white shadow-xl rounded-md p-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                  {category.subCategory.map((sub: any) => (
+                  {cat.subCategory.map((sub: any) => (
                     <li key={sub._id.toString()} className="group/sub relative">
                       <div className="flex items-center justify-between px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer transition-colors">
                         <span className="font-medium text-sm">

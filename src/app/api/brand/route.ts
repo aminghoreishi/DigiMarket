@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
     const formData = await req.formData();
     const title = formData.get("title") as string;
-    const img = formData.get("img") as string;
+    const img = formData.get("img") as File;
 
     const buffer = Buffer.from(await img.arrayBuffer());
     const fileName = Date.now() + img.name;

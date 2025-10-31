@@ -36,7 +36,7 @@ function Info() {
         <div>
           <CiCircleInfo size={20} />
         </div>
-        <div className="text-sm font-danaMed">
+        <div className=" max-sm:text-xs text-sm font-danaMed">
           <p className="">
             درخواست مرجوع کردن کالا در گروه لپ تاپ با دلیل "انصراف از خرید" تنها
             در صورتی قابل تایید است که کالا در شرایط اولیه باشد (در صورت پلمپ
