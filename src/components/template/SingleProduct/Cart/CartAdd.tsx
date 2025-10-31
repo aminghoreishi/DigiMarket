@@ -35,7 +35,7 @@ function CartAdd() {
           <CartAddCount />
         </div>
           <div>
-          <button className="bg-orange-500 text-white p-2 rounded-lg font-danaMed w-full text-sm cursor-pointer">افزودن به سبد خرید</button>
+          <button className="bg-orange-500 select-none text-white p-2 rounded-lg font-danaMed w-full text-sm cursor-pointer">افزودن به سبد خرید</button>
         </div>
       </div>
     </div>
