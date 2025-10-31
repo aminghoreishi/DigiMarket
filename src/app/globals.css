@@ -4,7 +4,6 @@
   --font-danaMed: "Dana-Medium";
   --font-danaDemiBold: "Dana-DemiBold";
   --font-danaLight: "Dana-Light";
-  
 }
 
 @utility container {
@@ -14,7 +13,7 @@
   @variant sm {
     padding-inline: 1px;
   }
-    @variant md {
+  @variant md {
     padding-inline: 10px;
   }
 
@@ -45,8 +44,13 @@
 }
 
 
+
+.gallery-container {
+  width: 100%;
+}
+.mySwiper2,
 .mySwiper {
-  height: 300px; /* یا هر ارتفاع دلخواهی برای دسکتاپ */
+  width: 100%;
 }
 
 @media (max-width: 600px) {
