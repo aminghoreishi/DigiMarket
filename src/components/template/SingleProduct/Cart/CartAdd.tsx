@@ -4,7 +4,7 @@ import { BsTruck } from "react-icons/bs";
 import CartAddCount from "./CartAddCount";
 function CartAdd() {
   return (
-    <div className="mt-5">
+    <div className="mt-5 select-none">
       <div className="rounded-xl border-2 border-zinc-200 p-5 space-y-4">
         <div className="flex items-center text-sm font-danaMed border-b-2 pb-4 gap-2 border-zinc-200">
           <SiAdguard size={20} className="text-green-500 " />

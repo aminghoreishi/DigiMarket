@@ -9,7 +9,7 @@ function CartAddCount() {
       <div onClick={() => setCount(count + 1)}>
         <FiPlus className="cursor-pointer text-green-500" />
       </div>
-      <div>{count}</div>
+      <div className="select-none">{count}</div>
       <div onClick={() => setCount(count - 1)}>
         <AiOutlineMinus className="cursor-pointer text-red-500" />
       </div>
