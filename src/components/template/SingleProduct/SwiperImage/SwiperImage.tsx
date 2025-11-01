@@ -148,7 +148,7 @@ function SwiperImage() {
       <Swiper
         onSwiper={setThumbsSwiper}
         spaceBetween={8}
-        slidesPerView={4}
+        slidesPerView={4.5}
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
@@ -162,7 +162,7 @@ function SwiperImage() {
       >
         {Array.from({ length: 8 }).map((_, i) => (
           <SwiperSlide key={i}>
-            <div className="w-full h-20 sm:h-24 md:h-28 relative rounded overflow-hidden">
+            <div className="w-full border-2 border-zinc-200 h- cursor-pointer sm:h-24 md:h-28 relative rounded overflow-hidden">
               <Image
                 src="/image/laptop.webp"
                 alt={`thumb-${i}`}
