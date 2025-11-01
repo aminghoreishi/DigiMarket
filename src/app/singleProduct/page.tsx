@@ -1,6 +1,7 @@
 import BredCrumbs from "@/components/template/SingleProduct/BreadCrumbs/BredCrumbs";
 import Cart from "@/components/template/SingleProduct/Cart/Cart";
 import Info from "@/components/template/SingleProduct/Info/Info";
+import MainContainer from "@/components/template/SingleProduct/MainContainer/MainContainer";
 import SwiperImage from "@/components/template/SingleProduct/SwiperImage/SwiperImage";
 
 function page() {
@@ -23,6 +24,10 @@ function page() {
         <div className="  xl:col-span-3">
           <Cart />
         </div>
+      </div>
+
+      <div className="mt-8">
+        <MainContainer />
       </div>
     </div>
   );
