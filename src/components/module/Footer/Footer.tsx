@@ -4,7 +4,7 @@ import { IoLogoInstagram } from "react-icons/io5";
 import { BsTelegram } from "react-icons/bs";
 function Footer() {
   return (
-    <div className="border-t-2 border-zinc-400">
+    <div className="border-t-2 border-zinc-200">
       <div className="container mx-auto mt-5">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 items-center">
           <div className="max-sm:flex max-sm:justify-center">
@@ -33,7 +33,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-3  items-center mt-5">
+        <div className="grid grid-cols-1 max-md:my-5 lg:grid-cols-5 gap-3  items-center mt-5">
           <FeatureFooter />
           <FeatureFooter />
           <FeatureFooter />
@@ -66,7 +66,7 @@ function Footer() {
             </div>
           </div>
           <div className="flex items-center ">
-            <div className="flex items-center">
+            <div className="flex gap-8 items-center">
               <div className="">
                 <Image
                   width={100}
@@ -96,6 +96,10 @@ function Footer() {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="border-t-2 border-zinc-200 font-danaMed pt-5 pb-5 max-sm:text-xs mt-5 text-sm">
+          <p>توسعه <span className="text-orange-500">محمدامین قریشی</span></p>
         </div>
       </div>
     </div>

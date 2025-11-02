@@ -1,3 +1,4 @@
+import Footer from "@/components/module/Footer/Footer";
 import BredCrumbs from "@/components/template/SingleProduct/BreadCrumbs/BredCrumbs";
 import Cart from "@/components/template/SingleProduct/Cart/Cart";
 import Info from "@/components/template/SingleProduct/Info/Info";
@@ -6,30 +7,33 @@ import SwiperImage from "@/components/template/SingleProduct/SwiperImage/SwiperI
 
 function page() {
   return (
-    <div className="container mx-auto">
-      <div className="grid xl:grid-cols-12 gap-5 mt-5">
-        <div className="xl:col-span-9">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            <div>
+    <>
+      <div className="container mx-auto">
+        <div className="grid xl:grid-cols-12 gap-5 mt-5">
+          <div className="xl:col-span-9">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
               <div>
-                <SwiperImage />
+                <div>
+                  <SwiperImage />
+                </div>
+              </div>
+              <div className="">
+                <BredCrumbs />
+                <Info />
               </div>
             </div>
-            <div className="">
-              <BredCrumbs />
-              <Info />
-            </div>
+          </div>
+          <div className="  xl:col-span-3">
+            <Cart />
           </div>
         </div>
-        <div className="  xl:col-span-3">
-          <Cart />
+
+        <div className="mt-8">
+          <MainContainer />
         </div>
       </div>
-
-      <div className="mt-8">
-        <MainContainer />
-      </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 
