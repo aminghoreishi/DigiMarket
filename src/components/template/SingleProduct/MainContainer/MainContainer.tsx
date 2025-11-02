@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Description from "./Description";
 import Specifications from "./Specifications";
 import CommentContainer from "./Comment/CommentContainer";
+import RelatedPro from "./RelatedPro/RelatedPro";
 
 function MainContainer() {
   return (
@@ -16,8 +17,11 @@ function MainContainer() {
       <div className="mt-5">
         <Specifications />
       </div>
-       <div className="mt-5">
+      <div className="mt-5">
         <CommentContainer />
+      </div>
+       <div className="mt-5">
+        <RelatedPro />
       </div>
     </div>
   );

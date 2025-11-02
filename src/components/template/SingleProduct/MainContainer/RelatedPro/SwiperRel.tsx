@@ -3,9 +3,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import SwiperProduct from "@/components/module/SwiperProduct/SwiperProduct";
 
-function SwiperProductContainer() {
+function SwiperRel() {
   return (
-    <div className="w-full container mx-auto overflow-hidden mt-5 mb-5">
+    <div className="mt-5">
       <Swiper
         slidesPerView={5.5}
         spaceBetween={20}
@@ -49,9 +49,18 @@ function SwiperProductContainer() {
         <SwiperSlide>
           <SwiperProduct />
         </SwiperSlide>
+        <SwiperSlide>
+          <SwiperProduct />
+        </SwiperSlide>
+        <SwiperSlide>
+          <SwiperProduct />
+        </SwiperSlide>
+        <SwiperSlide>
+          <SwiperProduct />
+        </SwiperSlide>
       </Swiper>
     </div>
   );
 }
 
-export default SwiperProductContainer;
+export default SwiperRel;
