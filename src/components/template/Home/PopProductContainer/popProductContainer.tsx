@@ -1,4 +1,3 @@
-import React from "react";
 import PopProductCom from "./PopProductCom";
 
 function PopProductContainer() {

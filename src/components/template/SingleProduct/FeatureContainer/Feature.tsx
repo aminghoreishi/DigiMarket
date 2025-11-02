@@ -1,5 +1,3 @@
-import React from "react";
-
 function Feature() {
   return (
     <div className="bg-gray-100 rounded-xl p-2  font-danaMed">

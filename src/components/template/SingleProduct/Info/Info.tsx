@@ -1,6 +1,5 @@
 import { AiOutlineMessage } from "react-icons/ai";
 import { FaStar } from "react-icons/fa6";
-
 import { CiCircleInfo } from "react-icons/ci";
 import FeatureContainer from "../FeatureContainer/FeatureContainer";
 function Info() {

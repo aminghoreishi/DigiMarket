@@ -1,5 +1,3 @@
-import React from "react";
-
 function Specifications() {
   return (
     <div className="font-danaMed border-t-2 border-t-zinc-200 pt-5">

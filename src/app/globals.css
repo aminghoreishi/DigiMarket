@@ -43,8 +43,6 @@
   src: url("/fonts/woff/Dana-Light.woff") format("woff2");
 }
 
-
-
 .gallery-container {
   width: 100%;
 }
@@ -59,9 +57,29 @@
   }
 }
 
-/* مهم: تصاویر داخلش هم باید با ارتفاع پدر هماهنگ بشن */
 .mySwiper .swiper-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(230, 106, 4, 0.8) #f3f4f6;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(230, 106, 4, 0.8);
+  border-radius: 9999px;
+  border: 2px solid #f3f4f6;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(230, 106, 4, 0.8);
 }

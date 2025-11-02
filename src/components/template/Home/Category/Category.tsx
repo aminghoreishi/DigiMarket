@@ -1,9 +1,8 @@
 import db from "@/config/db";
 import subCategoryModel from "@/models/subCategory";
-import { Category } from "@/types/category.type";
+import type { Category } from "@/types/category.type";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 async function Category() {
   await db();
@@ -11,8 +10,6 @@ async function Category() {
   const category = (await subCategoryModel
     .find({})
     .lean()) as unknown as Category[];
-
-  console.log(category);
 
   return (
     <div

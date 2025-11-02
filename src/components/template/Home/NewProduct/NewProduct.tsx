@@ -1,5 +1,4 @@
 import TopSubject from '@/components/module/TopSubject/TopSubject'
-import React from 'react'
 import SwiperPop from '../popProduct/SwiperPop'
 
 function NewProduct() {

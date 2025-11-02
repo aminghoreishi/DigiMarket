@@ -1,4 +1,3 @@
-import React from "react";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 
@@ -9,10 +8,10 @@ function CommentContainer() {
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 mt-5">
         <div className="xl:col-span-3">
-          <CommentForm/>
+          <CommentForm />
         </div>
         <div className="xl:col-span-9">
-            <Comments/>
+          <Comments />
         </div>
       </div>
     </div>

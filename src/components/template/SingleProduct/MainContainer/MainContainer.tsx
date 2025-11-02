@@ -1,4 +1,3 @@
-import React from "react";
 import Navbar from "./Navbar";
 import Description from "./Description";
 import Specifications from "./Specifications";
@@ -20,7 +19,7 @@ function MainContainer() {
       <div className="mt-5">
         <CommentContainer />
       </div>
-       <div className="mt-5">
+      <div className="mt-5">
         <RelatedPro />
       </div>
     </div>
