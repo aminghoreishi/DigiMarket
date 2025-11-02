@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./Navbar";
 import Description from "./Description";
 import Specifications from "./Specifications";
+import CommentContainer from "./Comment/CommentContainer";
 
 function MainContainer() {
   return (
@@ -14,6 +15,9 @@ function MainContainer() {
       </div>
       <div className="mt-5">
         <Specifications />
+      </div>
+       <div className="mt-5">
+        <CommentContainer />
       </div>
     </div>
   );
