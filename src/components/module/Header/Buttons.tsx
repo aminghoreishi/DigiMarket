@@ -41,216 +41,220 @@ function Buttons() {
           <div>
             <div className="flex items-center text-sm justify-between">
               <div>
-          <Image
-            src="/image/laptop.webp"
-            width={200}
-            height={200}
-            className="size-20"
-            alt="laptop"
-          />
+                <Image
+                  src="/image/laptop.webp"
+                  width={200}
+                  height={200}
+                  className="size-20"
+                  alt="laptop"
+                />
               </div>
               <div className="flex flex-col gap-2">
-          <p>لپ تاپ لنوو</p>
-          <p>
-            13,000,000 <span>تومان</span>
-          </p>
+                <p>لپ تاپ لنوو</p>
+                <p>
+                  13,000,000 <span>تومان</span>
+                </p>
               </div>
               <div className="flex items-center gap-5 border-2 border-zinc-200 rounded-xl p-2">
-          <div>
-            <AiOutlineMinus className="cursor-pointer text-red-500" />
-          </div>
-          <div>1</div>
-          <div>
-            <FaPlus className="cursor-pointer text-green-500" />
-          </div>
+                <div>
+                  <AiOutlineMinus className="cursor-pointer text-red-500" />
+                </div>
+                <div>1</div>
+                <div>
+                  <FaPlus className="cursor-pointer text-green-500" />
+                </div>
               </div>
             </div>
             <div className="flex items-center text-sm justify-between">
               <div>
-          <Image
-            src="/image/laptop.webp"
-            width={200}
-            height={200}
-            className="size-20"
-            alt="laptop"
-          />
+                <Image
+                  src="/image/laptop.webp"
+                  width={200}
+                  height={200}
+                  className="size-20"
+                  alt="laptop"
+                />
               </div>
               <div className="flex flex-col gap-2">
-          <p>لپ تاپ لنوو</p>
-          <p>
-            13,000,000 <span>تومان</span>
-          </p>
+                <p>لپ تاپ لنوو</p>
+                <p>
+                  13,000,000 <span>تومان</span>
+                </p>
               </div>
               <div className="flex items-center gap-5 border-2 border-zinc-200 rounded-xl p-2">
-          <div>
-            <AiOutlineMinus className="cursor-pointer text-red-500" />
-          </div>
-          <div>1</div>
-          <div>
-            <FaPlus className="cursor-pointer text-green-500" />
-          </div>
+                <div>
+                  <AiOutlineMinus className="cursor-pointer text-red-500" />
+                </div>
+                <div>1</div>
+                <div>
+                  <FaPlus className="cursor-pointer text-green-500" />
+                </div>
               </div>
             </div>
             <div className="flex items-center text-sm justify-between">
               <div>
-          <Image
-            src="/image/laptop.webp"
-            width={200}
-            height={200}
-            className="size-20"
-            alt="laptop"
-          />
+                <Image
+                  src="/image/laptop.webp"
+                  width={200}
+                  height={200}
+                  className="size-20"
+                  alt="laptop"
+                />
               </div>
               <div className="flex flex-col gap-2">
-          <p>لپ تاپ لنوو</p>
-          <p>
-            13,000,000 <span>تومان</span>
-          </p>
+                <p>لپ تاپ لنوو</p>
+                <p>
+                  13,000,000 <span>تومان</span>
+                </p>
               </div>
               <div className="flex items-center gap-5 border-2 border-zinc-200 rounded-xl p-2">
-          <div>
-            <AiOutlineMinus className="cursor-pointer text-red-500" />
-          </div>
-          <div>1</div>
-          <div>
-            <FaPlus className="cursor-pointer text-green-500" />
-          </div>
+                <div>
+                  <AiOutlineMinus className="cursor-pointer text-red-500" />
+                </div>
+                <div>1</div>
+                <div>
+                  <FaPlus className="cursor-pointer text-green-500" />
+                </div>
               </div>
             </div>
             <div className="flex items-center text-sm justify-between">
               <div>
-          <Image
-            src="/image/laptop.webp"
-            width={200}
-            height={200}
-            className="size-20"
-            alt="laptop"
-          />
+                <Image
+                  src="/image/laptop.webp"
+                  width={200}
+                  height={200}
+                  className="size-20"
+                  alt="laptop"
+                />
               </div>
               <div className="flex flex-col gap-2">
-          <p>لپ تاپ لنوو</p>
-          <p>
-            13,000,000 <span>تومان</span>
-          </p>
+                <p>لپ تاپ لنوو</p>
+                <p>
+                  13,000,000 <span>تومان</span>
+                </p>
               </div>
               <div className="flex items-center gap-5 border-2 border-zinc-200 rounded-xl p-2">
-          <div>
-            <AiOutlineMinus className="cursor-pointer text-red-500" />
-          </div>
-          <div>1</div>
-          <div>
-            <FaPlus className="cursor-pointer text-green-500" />
-          </div>
+                <div>
+                  <AiOutlineMinus className="cursor-pointer text-red-500" />
+                </div>
+                <div>1</div>
+                <div>
+                  <FaPlus className="cursor-pointer text-green-500" />
+                </div>
               </div>
             </div>
             <div className="flex items-center text-sm justify-between">
               <div>
-          <Image
-            src="/image/laptop.webp"
-            width={200}
-            height={200}
-            className="size-20"
-            alt="laptop"
-          />
+                <Image
+                  src="/image/laptop.webp"
+                  width={200}
+                  height={200}
+                  className="size-20"
+                  alt="laptop"
+                />
               </div>
               <div className="flex flex-col gap-2">
-          <p>لپ تاپ لنوو</p>
-          <p>
-            13,000,000 <span>تومان</span>
-          </p>
+                <p>لپ تاپ لنوو</p>
+                <p>
+                  13,000,000 <span>تومان</span>
+                </p>
               </div>
               <div className="flex items-center gap-5 border-2 border-zinc-200 rounded-xl p-2">
-          <div>
-            <AiOutlineMinus className="cursor-pointer text-red-500" />
-          </div>
-          <div>1</div>
-          <div>
-            <FaPlus className="cursor-pointer text-green-500" />
-          </div>
+                <div>
+                  <AiOutlineMinus className="cursor-pointer text-red-500" />
+                </div>
+                <div>1</div>
+                <div>
+                  <FaPlus className="cursor-pointer text-green-500" />
+                </div>
               </div>
             </div>
             <div className="flex items-center text-sm justify-between">
               <div>
-          <Image
-            src="/image/laptop.webp"
-            width={200}
-            height={200}
-            className="size-20"
-            alt="laptop"
-          />
+                <Image
+                  src="/image/laptop.webp"
+                  width={200}
+                  height={200}
+                  className="size-20"
+                  alt="laptop"
+                />
               </div>
               <div className="flex flex-col gap-2">
-          <p>لپ تاپ لنوو</p>
-          <p>
-            13,000,000 <span>تومان</span>
-          </p>
+                <p>لپ تاپ لنوو</p>
+                <p>
+                  13,000,000 <span>تومان</span>
+                </p>
               </div>
               <div className="flex items-center gap-5 border-2 border-zinc-200 rounded-xl p-2">
-          <div>
-            <AiOutlineMinus className="cursor-pointer text-red-500" />
-          </div>
-          <div>1</div>
-          <div>
-            <FaPlus className="cursor-pointer text-green-500" />
-          </div>
+                <div>
+                  <AiOutlineMinus className="cursor-pointer text-red-500" />
+                </div>
+                <div>1</div>
+                <div>
+                  <FaPlus className="cursor-pointer text-green-500" />
+                </div>
               </div>
             </div>
             <div className="flex items-center text-sm justify-between">
               <div>
-          <Image
-            src="/image/laptop.webp"
-            width={200}
-            height={200}
-            className="size-20"
-            alt="laptop"
-          />
+                <Image
+                  src="/image/laptop.webp"
+                  width={200}
+                  height={200}
+                  className="size-20"
+                  alt="laptop"
+                />
               </div>
               <div className="flex flex-col gap-2">
-          <p>لپ تاپ لنوو</p>
-          <p>
-            13,000,000 <span>تومان</span>
-          </p>
+                <p>لپ تاپ لنوو</p>
+                <p>
+                  13,000,000 <span>تومان</span>
+                </p>
               </div>
               <div className="flex items-center gap-5 border-2 border-zinc-200 rounded-xl p-2">
-          <div>
-            <AiOutlineMinus className="cursor-pointer text-red-500" />
-          </div>
-          <div>1</div>
-          <div>
-            <FaPlus className="cursor-pointer text-green-500" />
-          </div>
+                <div>
+                  <AiOutlineMinus className="cursor-pointer text-red-500" />
+                </div>
+                <div>1</div>
+                <div>
+                  <FaPlus className="cursor-pointer text-green-500" />
+                </div>
               </div>
             </div>
             <div className="flex items-center text-sm justify-between">
               <div>
-          <Image
-            src="/image/laptop.webp"
-            width={200}
-            height={200}
-            className="size-20"
-            alt="laptop"
-          />
+                <Image
+                  src="/image/laptop.webp"
+                  width={200}
+                  height={200}
+                  className="size-20"
+                  alt="laptop"
+                />
               </div>
               <div className="flex flex-col gap-2">
-          <p>لپ تاپ لنوو</p>
-          <p>
-            13,000,000 <span>تومان</span>
-          </p>
+                <p>لپ تاپ لنوو</p>
+                <p>
+                  13,000,000 <span>تومان</span>
+                </p>
               </div>
               <div className="flex items-center gap-5 border-2 border-zinc-200 rounded-xl p-2">
-          <div>
-            <AiOutlineMinus className="cursor-pointer text-red-500" />
-          </div>
-          <div>1</div>
-          <div>
-            <FaPlus className="cursor-pointer text-green-500" />
-          </div>
+                <div>
+                  <AiOutlineMinus className="cursor-pointer text-red-500" />
+                </div>
+                <div>1</div>
+                <div>
+                  <FaPlus className="cursor-pointer text-green-500" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-       
+            <div className="sticky -bottom-5 bg-white p-4 border-t-2 border-zinc-200">
+            <button className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
+              مشاهده سبد خرید
+            </button>
+            </div>
+        </div>
       </div>
     </div>
   );
