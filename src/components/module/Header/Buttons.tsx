@@ -5,7 +5,8 @@ import { BsBasket } from "react-icons/bs";
 import { CiLogin } from "react-icons/ci";
 import Image from "next/image";
 import { AiOutlineMinus } from "react-icons/ai";
-
+import { RiAdminLine } from "react-icons/ri";
+import Link from "next/link";
 function Buttons() {
   return (
     <div className="flex items-center font-danaMed gap-3">
@@ -23,6 +24,16 @@ function Buttons() {
               <BsBasket />
               <p>سفارش ها</p>
             </li>
+            <li className="flex items-center gap-2">
+              <BsBasket />
+              <p>پنل کاربری</p>
+            </li>
+            <Link href="/admin">
+              <li className="flex items-center gap-2">
+                <RiAdminLine />
+                <p>پنل ادمین</p>
+              </li>
+            </Link>
             <li className="flex items-center gap-2 text-red-500">
               <CiLogin />
               <p>خروج از حساب کاربری</p>
@@ -249,11 +260,11 @@ function Buttons() {
             </div>
           </div>
 
-            <div className="sticky -bottom-5 bg-white p-4 border-t-2 border-zinc-200">
+          <div className="sticky -bottom-5 bg-white p-4 border-t-2 border-zinc-200">
             <button className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
               مشاهده سبد خرید
             </button>
-            </div>
+          </div>
         </div>
       </div>
     </div>
