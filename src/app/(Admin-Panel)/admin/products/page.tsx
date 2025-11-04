@@ -1,7 +1,6 @@
 import TopBar from "@/components/module/p-admin/TopBar/TopBar";
 import Table from "@/components/template/p-admin/product/Table";
 import Link from "next/link";
-import React from "react";
 
 function page() {
   return (

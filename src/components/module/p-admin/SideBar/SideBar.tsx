@@ -13,7 +13,7 @@ function SideBar() {
   console.log(route);
 
   return (
-    <div className="h-full overflow-y-auto bg-white pt-5 px-4">
+    <div dir="rtl" className="h-full overflow-y-auto bg-white pt-5 px-4">
       <div className="flex justify-center w-full mb-8">
         <Image
           src="/image/logo (1).png"

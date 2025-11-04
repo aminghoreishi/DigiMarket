@@ -16,7 +16,7 @@ export default function AdminLayout({
         <SideBar />
       </div>
 
-      <div className="pr-0 md:pr-[20%] min-h-screen">
+      <div className="pr-0 md:pr-[20%] min-h-screen" dir="rtl">
         <div className="max-md:p-5 p-8">{children}</div>
       </div>
     </>
