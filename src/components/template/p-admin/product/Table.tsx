@@ -8,19 +8,19 @@ function Table() {
           <thead className="text-xs text-gray-700 uppercase bg-gray-100">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Product name
+                عکس محصول
               </th>
               <th scope="col" className="px-6 py-3">
-                Color
+                اسم محصول
               </th>
               <th scope="col" className="px-6 py-3">
-                Category
+                دسته بندی محصول
               </th>
               <th scope="col" className="px-6 py-3">
-                Price
+                قیمت
               </th>
               <th scope="col" className="px-6 py-3">
-                Action
+                
               </th>
             </tr>
           </thead>

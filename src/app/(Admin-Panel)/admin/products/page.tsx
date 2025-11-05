@@ -7,7 +7,7 @@ function page() {
     <div>
       <TopBar title="محصولات" />
 
-      <div>
+      <div dir="rtl">
         <div className="flex justify-end">
           <Link href="/admin/products/createProduct">
             <button className="px-4 py-2 bg-blue-500 transition-all cursor-pointer hover:bg-blue-600 text-white rounded-md mt-4 font-danaMed text-xs">

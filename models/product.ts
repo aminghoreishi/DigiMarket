@@ -16,7 +16,7 @@ const product = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum: ['laptop', 'smartwatch'] // فقط این دو مقدار مجاز هستند
+        enum: ['laptop', 'smartwatch']
     },
     color: {
         type: [String],
