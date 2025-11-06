@@ -1,17 +1,34 @@
 "use client";
 
-import { useState, MouseEvent } from "react";
+import React, { useState, MouseEvent, useEffect } from "react";
 import { IoIosClose } from "react-icons/io";
+import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 
-function ColorSelector() {
+interface FormValues {
+  colors?: string[]; //* it can undefined or null
+}
+
+interface ColorSelectorProps {
+  register: UseFormRegister<FormValues>;
+  setValue: UseFormSetValue<FormValues>;
+}
+
+const ColorSelector: React.FC<ColorSelectorProps> = ({
+  register,
+  setValue,
+}) => {
   const [color, setColor] = useState("");
   const [colorArray, setColorArray] = useState<string[]>([]);
+
+  useEffect(() => {
+    setValue("colors", colorArray, { shouldValidate: true });
+  }, [colorArray]);
 
   const addColor = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (color.trim() && !colorArray.includes(color.trim())) {
       setColorArray((prev) => [...prev, color.trim()]);
-      setColor(""); 
+      setColor("");
     }
   };
 
@@ -27,6 +44,7 @@ function ColorSelector() {
           type="text"
           value={color}
           placeholder="مشکی"
+          {...register("colors", { shouldUnregister: true })}
           onChange={(e) => setColor(e.target.value)}
           className="border-2 w-full outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl border-zinc-200 px-3 py-2 pl-16 text-sm"
         />
@@ -54,6 +72,6 @@ function ColorSelector() {
       )}
     </div>
   );
-}
+};
 
 export default ColorSelector;

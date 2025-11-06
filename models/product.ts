@@ -40,6 +40,12 @@ const product = new mongoose.Schema({
   },
 });
 
+product.virtual("comment", {
+  ref: "comment",
+  localField: "_id",
+  foreignField: "product",
+});
+
 const productModel =
   mongoose.models.product || mongoose.model("product", product);
 

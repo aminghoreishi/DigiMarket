@@ -202,6 +202,36 @@ function FormContainer({ categories }) {
                     </p>
                   )}
                 </div>
+                <div className="flex flex-col">
+                  <label className="text-sm font-danaMed mb-1">
+                    وزن (کیلوگرم)
+                  </label>
+                  <input
+                    {...register("weight", {
+                      required: "وزن الزامی است",
+                      pattern: {
+                        value: /^\d{1}(\.\d{1,2})?$/,
+                        message: "وزن باید عددی معتبر باشد (مثلاً 1.8 یا 2)",
+                      },
+                      validate: (value) => {
+                        const num = parseFloat(value);
+                        if (num < 0.5)
+                          return "وزن نمی‌تواند کمتر از ۰.۵ کیلوگرم باشد";
+                        if (num > 5)
+                          return "وزن نمی‌تواند بیشتر از ۵ کیلوگرم باشد";
+                        return true;
+                      },
+                    })}
+                    type="text"
+                    placeholder="مثلاً 1.8"
+                    className="border-2 rounded-xl px-3 py-2 text-sm border-zinc-200 outline-0 transition-all focus:ring-2 focus:ring-blue-500 mt-2"
+                  />
+                  {errors.weight && (
+                    <p className="text-red-500 text-xs mt-2">
+                      {errors.weight.message}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -290,12 +320,18 @@ function FormContainer({ categories }) {
                 <div className="flex flex-col">
                   <label className="text-sm font-danaMed mb-1">چیپست</label>
                   <input
-                    {...register("chipset", {
-                      required: "چیپست الزامی است",
+                    {...register("weight", {
+                      required: "وزن الزامی است",
                       pattern: {
-                        value: /^[A-Za-z0-9\s\-]{2,30}$/,
-                        message:
-                          "فرمت چیپست معتبر نیست (مثلاً Exynos W930 یا Snapdragon W5+ Gen 1)",
+                        value: /^\d{1,3}(\.\d{1,2})?$/, // فقط اعداد با حداکثر دو رقم اعشار
+                        message: "وزن باید عددی معتبر باشد (مثلاً 45 یا 32.5)",
+                      },
+                      validate: (value) => {
+                        const num = parseFloat(value);
+                        if (num < 5) return "وزن نمی‌تواند کمتر از ۵ گرم باشد";
+                        if (num > 500)
+                          return "وزن نمی‌تواند بیشتر از ۵۰۰ گرم باشد";
+                        return true;
                       },
                     })}
                     type="text"
@@ -334,6 +370,28 @@ function FormContainer({ categories }) {
                     </p>
                   )}
                 </div>
+                <div className="flex flex-col">
+                  <label className="text-sm font-danaMed mb-1">وزن</label>
+                  <input
+                    {...register("weight", {
+                      required: "سیستم‌عامل الزامی است",
+                      pattern: {
+                        value:
+                          /^(Wear OS|watchOS|HarmonyOS|MIUI Watch OS|RTOS|Android)$/i,
+                        message:
+                          "سیستم‌عامل معتبر نیست (مثلاً Wear OS، watchOS یا HarmonyOS)",
+                      },
+                    })}
+                    type="text"
+                    placeholder="Wear OS"
+                    className="border-2 rounded-xl px-3 py-2 text-sm border-zinc-200 outline-0 transition-all focus:ring-2 focus:ring-blue-500 mt-2"
+                  />
+                  {errors.weight && (
+                    <p className="text-red-500 text-xs mt-2">
+                      {errors.weight.message}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -362,6 +420,13 @@ function FormContainer({ categories }) {
             setValue={setValue}
             errors={errors}
           />
+
+          <div className="font-danaMed flex flex-col lg:col-span-3">
+            <label className="text-sm" htmlFor="">
+              توضیحات طولانی برای محصول
+            </label>
+            <textarea className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"></textarea>
+          </div>
         </div>
       </form>
     </div>
