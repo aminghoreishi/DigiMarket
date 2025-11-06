@@ -1,6 +1,8 @@
 "use client";
 import { useForm, useWatch } from "react-hook-form";
 import ColorSelector from "./ColorSelector";
+import LaptopFields from "./LaptopFields";
+import SmartwatchFields from "./SmartwatchFields";
 
 function FormContainer({ categories }) {
   const {
@@ -16,9 +18,13 @@ function FormContainer({ categories }) {
     name: "category",
   });
 
+  const submitForm = (data) => {
+    console.log(data);
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit(submitForm)}>
         <div className="grid grid-cols-1 md:grid-cols-2 items-baseline lg:grid-cols-3 gap-6">
           <div className="font-danaMed flex flex-col">
             <label className="text-sm" htmlFor="">
@@ -89,7 +95,7 @@ function FormContainer({ categories }) {
             >
               <option value="">انتخاب دسته بندی</option>
               {categories.map((category) => (
-                <option key={category._id} value={category.title}>
+                <option key={category._id} value={category._id}>
                   {category.title}
                 </option>
               ))}
@@ -101,309 +107,70 @@ function FormContainer({ categories }) {
               </p>
             )}
           </div>
-          {watchedCategory === "لپ تاپ" && (
-            <div className="p-6 bg-blue-50 lg:col-span-3 font-danaMed rounded-xl border border-blue-200">
-              <h3 className="text-lg font-danaBold mb-4 text-blue-800">
-                مشخصات لپ‌تاپ
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="flex flex-col">
-                  <label className="text-sm font-danaMed mb-1">رم (GB)</label>
-                  <select className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-xs">
-                    <option value="">انتخاب رم</option>
-                    <option value="">8</option>
-                    <option value="">16</option>
-                    <option value="">32</option>
-                    <option value="">64</option>
-                  </select>
-                </div>
-                <div className="flex flex-col">
-                  <label className="text-sm font-danaMed mb-1">حافظه</label>
-                  <select
-                    dir="rtl"
-                    className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-xs"
-                  >
-                    <option value="">انتخاب حافظه</option>
-                    <option value="">256</option>
-                    <option value="">512</option>
-                    <option value="">1 TB</option>
-                    <option value="">2 TB</option>
-                  </select>
-                </div>
-                <div className="flex flex-col">
-                  <label className="text-sm font-danaMed mb-1">
-                    سایز صفحه (اینچ)
-                  </label>
-                  <input
-                    {...register("screenSize", {
-                      required: "سایز صفحه الزامی است",
-                      pattern: {
-                        value: /^(?:\d{1,2}(?:\.\d{1,2})?)$/,
-                        message:
-                          "سایز صفحه باید عددی بین 10 تا 99 و حداکثر با دو رقم اعشار باشد",
-                      },
-                      validate: (value) => {
-                        const num = parseFloat(value);
-                        if (num < 10 || num > 99)
-                          return "سایز صفحه باید بین 10 تا 99 اینچ باشد";
-                        return true;
-                      },
-                    })}
-                    type="text"
-                    className="border-2 rounded-xl px-3 py-2 text-sm border-zinc-200 outline-0 transition-all focus:ring-2 focus:ring-blue-500 mt-2"
-                    placeholder="15.6"
-                  />
-                  {errors.screenSize && (
-                    <p className="text-red-500 text-xs mt-2">
-                      {errors.screenSize.message}
-                    </p>
-                  )}
-                </div>
-                <div className="flex flex-col">
-                  <label className="text-sm font-danaMed mb-1">CPU</label>
-                  <input
-                    {...register("cpu", {
-                      required: "پردازنده الزامی است",
-                      pattern: {
-                        value:
-                          /^(Intel\s*(Core\s*)?(i[3579]|Xeon)\s*[A-Za-z0-9\- ]{0,20}|(AMD\s*)?(Ryzen\s*\d?\s*[A-Za-z0-9\- ]{0,20}))$/i,
-                        message:
-                          "فرمت CPU معتبر نیست (مثلاً Intel i7-13700H یا Ryzen 7 9800X3D)",
-                      },
-                    })}
-                    type="text"
-                    className="border-2 rounded-xl px-3 py-2 text-sm border-zinc-200 outline-0 transition-all focus:ring-2 focus:ring-blue-500 mt-2"
-                    placeholder="Intel i7-13700H"
-                  />
-                  {errors.cpu && (
-                    <p className="text-red-500 text-xs mt-2">
-                      {errors.cpu.message}
-                    </p>
-                  )}
-                </div>
-                <div className="flex flex-col">
-                  <label className="text-sm font-danaMed mb-1">GPU</label>
-                  <input
-                    {...register("gpu", {
-                      required: "کارت گرافیک الزامی است",
-                      pattern: {
-                        value: /^(RTX|GTX|Radeon)\s?[A-Za-z0-9\s\-]{2,30}$/i,
-                        message:
-                          "فرمت GPU معتبر نیست (مثلاً RTX 4060 یا Radeon RX 6800M)",
-                      },
-                    })}
-                    type="text"
-                    placeholder="RTX 4060"
-                    className="border-2 rounded-xl px-3 py-2 text-sm border-zinc-200 outline-0 transition-all focus:ring-2 focus:ring-blue-500 mt-2"
-                  />
-                  {errors.gpu && (
-                    <p className="text-red-500 text-xs mt-2">
-                      {errors.gpu.message}
-                    </p>
-                  )}
-                </div>
-                <div className="flex flex-col">
-                  <label className="text-sm font-danaMed mb-1">
-                    وزن (کیلوگرم)
-                  </label>
-                  <input
-                    {...register("weight", {
-                      required: "وزن الزامی است",
-                      pattern: {
-                        value: /^\d{1}(\.\d{1,2})?$/,
-                        message: "وزن باید عددی معتبر باشد (مثلاً 1.8 یا 2)",
-                      },
-                      validate: (value) => {
-                        const num = parseFloat(value);
-                        if (num < 0.5)
-                          return "وزن نمی‌تواند کمتر از ۰.۵ کیلوگرم باشد";
-                        if (num > 5)
-                          return "وزن نمی‌تواند بیشتر از ۵ کیلوگرم باشد";
-                        return true;
-                      },
-                    })}
-                    type="text"
-                    placeholder="مثلاً 1.8"
-                    className="border-2 rounded-xl px-3 py-2 text-sm border-zinc-200 outline-0 transition-all focus:ring-2 focus:ring-blue-500 mt-2"
-                  />
-                  {errors.weight && (
-                    <p className="text-red-500 text-xs mt-2">
-                      {errors.weight.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
+          {watchedCategory === "690a2fb904b179efa1860b12" && (
+            <LaptopFields register={register} errors={errors} />
           )}
-          {watchedCategory === "ساعت هوشمند" && (
-            <div className="p-6 bg-blue-50 lg:col-span-3 font-danaMed rounded-xl border border-blue-200">
-              <h3 className="text-lg font-danaBold mb-4 text-blue-800">
-                مشخصات ساعت هوشمند
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {/* RAM */}
-                <div className="flex flex-col">
-                  <label className="text-sm font-danaMed mb-1">رم (GB)</label>
-                  <select
-                    {...register("ram", { required: "مقدار رم الزامی است" })}
-                    className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-xs"
-                  >
-                    <option value="">انتخاب رم</option>
-                    <option value="0.5">0.5</option>
-                    <option value="1">1</option>
-                    <option value="1.5">1.5</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
-                  {errors.ram && (
-                    <p className="text-red-500 text-xs mt-2">
-                      {errors.ram.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Storage */}
-                <div className="flex flex-col">
-                  <label className="text-sm font-danaMed mb-1">
-                    حافظه (GB)
-                  </label>
-                  <select
-                    {...register("storage", { required: "حافظه الزامی است" })}
-                    dir="rtl"
-                    className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-xs"
-                  >
-                    <option value="">انتخاب حافظه</option>
-                    <option value="8">8</option>
-                    <option value="16">16</option>
-                    <option value="32">32</option>
-                    <option value="64">64</option>
-                  </select>
-                  {errors.storage && (
-                    <p className="text-red-500 text-xs mt-2">
-                      {errors.storage.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Screen Size */}
-                <div className="flex flex-col">
-                  <label className="text-sm font-danaMed mb-1">
-                    سایز صفحه (اینچ)
-                  </label>
-                  <input
-                    {...register("screenSize", {
-                      required: "سایز صفحه الزامی است",
-                      pattern: {
-                        value: /^(?:\d{1}(?:\.\d{1,2})?)$/,
-                        message:
-                          "سایز صفحه باید عددی بین 1 تا 9 و حداکثر با دو رقم اعشار باشد",
-                      },
-                      validate: (value) => {
-                        const num = parseFloat(value);
-                        if (num < 1 || num > 9)
-                          return "سایز صفحه باید بین 1 تا 9 اینچ باشد";
-                        return true;
-                      },
-                    })}
-                    type="text"
-                    className="border-2 rounded-xl px-3 py-2 text-sm border-zinc-200 outline-0 transition-all focus:ring-2 focus:ring-blue-500 mt-2"
-                    placeholder="1.9"
-                  />
-                  {errors.screenSize && (
-                    <p className="text-red-500 text-xs mt-2">
-                      {errors.screenSize.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Chipset */}
-                <div className="flex flex-col">
-                  <label className="text-sm font-danaMed mb-1">چیپست</label>
-                  <input
-                    {...register("weight", {
-                      required: "وزن الزامی است",
-                      pattern: {
-                        value: /^\d{1,3}(\.\d{1,2})?$/, // فقط اعداد با حداکثر دو رقم اعشار
-                        message: "وزن باید عددی معتبر باشد (مثلاً 45 یا 32.5)",
-                      },
-                      validate: (value) => {
-                        const num = parseFloat(value);
-                        if (num < 5) return "وزن نمی‌تواند کمتر از ۵ گرم باشد";
-                        if (num > 500)
-                          return "وزن نمی‌تواند بیشتر از ۵۰۰ گرم باشد";
-                        return true;
-                      },
-                    })}
-                    type="text"
-                    placeholder="Snapdragon W5+ Gen 1"
-                    className="border-2 rounded-xl px-3 py-2 text-sm border-zinc-200 outline-0 transition-all focus:ring-2 focus:ring-blue-500 mt-2"
-                  />
-                  {errors.chipset && (
-                    <p className="text-red-500 text-xs mt-2">
-                      {errors.chipset.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Operating System */}
-                <div className="flex flex-col">
-                  <label className="text-sm font-danaMed mb-1">
-                    سیستم‌عامل
-                  </label>
-                  <input
-                    {...register("os", {
-                      required: "سیستم‌عامل الزامی است",
-                      pattern: {
-                        value:
-                          /^(Wear OS|watchOS|HarmonyOS|MIUI Watch OS|RTOS|Android)$/i,
-                        message:
-                          "سیستم‌عامل معتبر نیست (مثلاً Wear OS، watchOS یا HarmonyOS)",
-                      },
-                    })}
-                    type="text"
-                    placeholder="Wear OS"
-                    className="border-2 rounded-xl px-3 py-2 text-sm border-zinc-200 outline-0 transition-all focus:ring-2 focus:ring-blue-500 mt-2"
-                  />
-                  {errors.os && (
-                    <p className="text-red-500 text-xs mt-2">
-                      {errors.os.message}
-                    </p>
-                  )}
-                </div>
-                <div className="flex flex-col">
-                  <label className="text-sm font-danaMed mb-1">وزن</label>
-                  <input
-                    {...register("weight", {
-                      required: "سیستم‌عامل الزامی است",
-                      pattern: {
-                        value:
-                          /^(Wear OS|watchOS|HarmonyOS|MIUI Watch OS|RTOS|Android)$/i,
-                        message:
-                          "سیستم‌عامل معتبر نیست (مثلاً Wear OS، watchOS یا HarmonyOS)",
-                      },
-                    })}
-                    type="text"
-                    placeholder="Wear OS"
-                    className="border-2 rounded-xl px-3 py-2 text-sm border-zinc-200 outline-0 transition-all focus:ring-2 focus:ring-blue-500 mt-2"
-                  />
-                  {errors.weight && (
-                    <p className="text-red-500 text-xs mt-2">
-                      {errors.weight.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
+          {watchedCategory === "690b39962d29378e5b3d6194" && (
+            <SmartwatchFields register={register} errors={errors} />
           )}
 
           <div className="font-danaMed flex flex-col">
             <label className="text-sm" htmlFor="">
-              عکس های محصول
+              عکس‌های محصول
             </label>
+
             <input
               type="file"
-              className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
+              accept="image/png, image/jpeg, image/jpg, image/webp"
+              multiple
+              {...register("images", {
+                required: "انتخاب حداقل یک تصویر الزامی است",
+                validate: {
+                  fileType: (files) => {
+                    if (!files || files.length === 0)
+                      return "لطفاً حداقل یک عکس انتخاب کنید";
+                    const validTypes = [
+                      "image/jpeg",
+                      "image/png",
+                      "image/webp",
+                    ];
+                    for (const file of files) {
+                      if (!validTypes.includes(file.type)) {
+                        return "فرمت تصویر باید PNG، JPG یا WEBP باشد";
+                      }
+                    }
+                    return true;
+                  },
+                  fileName: (files) => {
+                    const regex = /\.(jpg|jpeg|png|webp)$/i;
+                    for (const file of files) {
+                      if (!regex.test(file.name)) {
+                        return "نام فایل باید با پسوند jpg، jpeg، png یا webp تمام شود";
+                      }
+                    }
+                    return true;
+                  },
+                  fileSize: (files) => {
+                    for (const file of files) {
+                      if (file.size > 2 * 1024 * 1024) {
+                        // ۲ مگابایت
+                        return "حجم هر تصویر نباید بیشتر از ۲ مگابایت باشد";
+                      }
+                    }
+                    return true;
+                  },
+                },
+              })}
+              className={`border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm ${
+                errors.images ? "border-red-400" : ""
+              }`}
             />
+
+            {errors.images && (
+              <p className="text-red-500 text-xs mt-2">
+                {errors.images.message}
+              </p>
+            )}
           </div>
           <div className="font-danaMed flex flex-col">
             <label className="text-sm" htmlFor="">
@@ -427,6 +194,15 @@ function FormContainer({ categories }) {
             </label>
             <textarea className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"></textarea>
           </div>
+        </div>
+
+        <div className="mt-5 font-danaMed text-sm">
+          <button
+            type="submit"
+            className="bg-blue-500 text-white p-2 rounded-xl cursor-pointer transition-all hover:bg-blue-600 "
+          >
+            ایجاد محصول
+          </button>
         </div>
       </form>
     </div>
