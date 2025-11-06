@@ -15,6 +15,14 @@ const comment = new mongoose.Schema(
       ref: "product",
       required: true,
     },
+    likesCount: {
+      type: Number,
+      default: 0,
+    },
+    dislikesCount: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     toJSON: { virtuals: true },

@@ -13,6 +13,16 @@ const product = new mongoose.Schema({
     type: [String],
     required: true,
   },
+  count: {
+    type: Number,
+    required: true,
+    default: 1,
+  },
+  delivery: {
+    type: Number,
+    required: true,
+    default: 1,
+  },
   category: {
     type: mongoose.Types.ObjectId,
     ref: "category",
