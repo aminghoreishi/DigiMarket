@@ -8,12 +8,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa">
-      <body dir="rtl">
-        <Header />
-        <HeaderMenu />
-        {children}
-      </body>
-    </html>
+    <>
+      <Header />
+      <HeaderMenu />
+      {children}
+    </>
   );
 }

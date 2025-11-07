@@ -1,9 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { BeatLoader } from "react-spinners";
+import Swal from "sweetalert2";
 
 type FormValues = {
   fullName: string;
@@ -14,8 +17,12 @@ type FormValues = {
 };
 
 function Page() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const route = useRouter();
 
   const {
     register,
@@ -24,12 +31,62 @@ function Page() {
     formState: { errors },
   } = useForm<FormValues>({ mode: "onChange" });
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     console.log(data);
+
+    const obj = {
+      fullName: data.fullName,
+      email: data.email,
+      password: data.password,
+    };
+
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/auth/signUp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(obj),
+      });
+
+      const response = await res.json();
+
+      console.log(response);
+
+      if (res.status === 201) {
+        Swal.fire({
+          title: "با موفقیت ایجاد شد",
+          icon: "success",
+          confirmButtonText: "باشه",
+        }).then((res) => {
+          route.push("/");
+        });
+      } else if (res.status === 422) {
+        Swal.fire({
+          title: "ایمیل وارد شده قبلا ایجاد شده است",
+          icon: "error",
+          confirmButtonText: "باشه",
+        });
+      } else if (res.status === 500) {
+        Swal.fire({
+          title: "خطا در سمت سرور",
+          icon: "error",
+          confirmButtonText: "باشه",
+        });
+      }
+    } catch (error) {
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="flex min-h-screen items-center bg-gray-100 justify-center">
+    <div
+      dir="rtl"
+      className="flex min-h-screen items-center bg-gray-100 justify-center"
+    >
       <div className="shadow-2xl rounded-xl bg-white font-danaMed max-sm:w-[350px] w-[400px]">
         <form className="p-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-5">
@@ -65,8 +122,7 @@ function Page() {
                 {...register("email", {
                   required: "ایمیل الزامی است",
                   pattern: {
-                    value:
-                      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                     message: "ایمیل معتبر نیست",
                   },
                 })}
@@ -89,10 +145,8 @@ function Page() {
                   {...register("password", {
                     required: "رمز عبور الزامی است",
                     pattern: {
-                      value:
-                        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
-                      message:
-                        "رمز باید حداقل ۸ کاراکتر و شامل حرف و عدد باشد",
+                      value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
+                      message: "رمز باید حداقل ۸ کاراکتر و شامل حرف و عدد باشد",
                     },
                   })}
                 />
@@ -121,15 +175,12 @@ function Page() {
                   {...register("confirmPassword", {
                     required: "تکرار رمز عبور الزامی است",
                     validate: (value) =>
-                      value === watch("password") ||
-                      "رمز عبور مطابقت ندارد",
+                      value === watch("password") || "رمز عبور مطابقت ندارد",
                   })}
                 />
                 <div
                   className="absolute left-2 top-2.5"
-                  onClick={() =>
-                    setShowConfirmPassword((pre) => !pre)
-                  }
+                  onClick={() => setShowConfirmPassword((pre) => !pre)}
                 >
                   <FaEye color="orange" className="cursor-pointer" />
                 </div>
@@ -149,9 +200,7 @@ function Page() {
                   required: "باید با قوانین موافقت کنید",
                 })}
               />
-              <label className="text-xs">
-                با قوانین و مقررات موافقم
-              </label>
+              <label className="text-xs">با قوانین و مقررات موافقم</label>
             </div>
             {errors.agree && (
               <span className="text-red-500 text-xs">
@@ -166,7 +215,7 @@ function Page() {
               type="submit"
               className="bg-orange-500 text-white w-full rounded-xl py-2 cursor-pointer text-xs"
             >
-              ثبت نام
+              {isLoading ? <BeatLoader size={9} color="white" /> : "ثبت نام"}
             </button>
           </div>
 
@@ -186,9 +235,7 @@ function Page() {
         <div className="my-3 text-xs flex justify-center">
           <p>
             قبلاً ثبت‌نام کرده‌اید؟{" "}
-            <span className="text-orange-500 cursor-pointer">
-              وارد شوید
-            </span>
+            <span className="text-orange-500 cursor-pointer">وارد شوید</span>
           </p>
         </div>
       </div>

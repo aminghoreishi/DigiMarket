@@ -72,5 +72,7 @@ export async function POST(req: NextRequest) {
         headers,
       }
     );
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json({ message: error.message });
+  }
 }
