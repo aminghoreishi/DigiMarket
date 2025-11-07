@@ -1,4 +1,5 @@
 import "./styles/globals.css";
+import LoaderProvider from "./providers";
 
 export const metadata = {
   title: "DigiMarket",
@@ -12,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fa">
-      <body dir="rtl">{children}</body>
+      <body dir="rtl">
+        <LoaderProvider>{children}</LoaderProvider>
+      </body>
     </html>
   );
 }

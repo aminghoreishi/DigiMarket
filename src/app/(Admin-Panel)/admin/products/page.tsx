@@ -1,8 +1,15 @@
 import TopBar from "@/components/module/p-admin/TopBar/TopBar";
 import Table from "@/components/template/p-admin/product/Table";
+import productModel from "@/models/product";
 import Link from "next/link";
 
-function page() {
+async function page() {
+  const products = await productModel
+    .find({})
+    .populate("category", "subCategory")
+    .lean();
+  console.log(products);
+
   return (
     <div>
       <TopBar title="محصولات" />
@@ -15,7 +22,7 @@ function page() {
             </button>
           </Link>
         </div>
-        <Table />
+        <Table products={JSON.parse(JSON.stringify(products))} />
       </div>
     </div>
   );

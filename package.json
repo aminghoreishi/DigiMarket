@@ -8,9 +8,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "fastest-validator": "^1.19.1",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.2",
     "next": "15.5.6",
+    "nextjs-toploader": "^3.9.17",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.66.0",

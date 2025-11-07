@@ -40,12 +40,12 @@ const product = new mongoose.Schema({
     type: [String],
     required: true,
   },
- features: [
-  {
-    name: String,
-    value: String
-  }
-],
+  features: [
+    {
+      name: String,
+      value: String,
+    },
+  ],
   price: {
     type: Number,
     required: true,
