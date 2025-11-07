@@ -18,10 +18,10 @@ function LaptopFields({ register, errors }) {
             className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-xs"
           >
             <option value="">انتخاب رم</option>
-            <option value="">8</option>
-            <option value="">16</option>
-            <option value="">32</option>
-            <option value="">64</option>
+            <option value={8}>8</option>
+            <option value={16}>16</option>
+            <option value={32}>32</option>
+            <option value={64}>64</option>
           </select>
           {errors.ramLap && (
             <p className="text-red-500 text-xs mt-2">{errors.ramLap.message}</p>
@@ -32,7 +32,7 @@ function LaptopFields({ register, errors }) {
           <select
             dir="rtl"
             {...register("storageLap", {
-              required: "مقدار رم الزامی است",
+              required: "مقدار حافظه الزامی است",
               pattern: {
                 value: /^(256|512|1|2)$/,
                 message: "رم باید یکی از مقادیر 8، 16، 32 یا 64 باشد",
@@ -41,10 +41,10 @@ function LaptopFields({ register, errors }) {
             className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-xs"
           >
             <option value="">انتخاب حافظه</option>
-            <option value="">256</option>
-            <option value="">512</option>
-            <option value="">1 TB</option>
-            <option value="">2 TB</option>
+            <option value={256}>256</option>
+            <option value={512}>512</option>
+            <option value={1}>1 TB</option>
+            <option value={2}>2 TB</option>
           </select>
           {errors.storageLap && (
             <p className="text-red-500 text-xs mt-2">
@@ -86,7 +86,7 @@ function LaptopFields({ register, errors }) {
               required: "پردازنده الزامی است",
               pattern: {
                 value:
-                  /^(Intel\s*(Core\s*)?(i[3579]|Xeon)\s*[A-Za-z0-9\- ]{0,20}|(AMD\s*)?(Ryzen\s*\d?\s*[A-Za-z0-9\- ]{0,20}))$/i,
+                  /^(?:(Intel\s*(Core\s*)?(i[3579]|Xeon)\s*[A-Za-z0-9\- ]{0,20})|(AMD\s*(Ryzen\s*\d?\s*[A-Za-z0-9\- ]{0,20}))|(Apple\s*)?(M\d(\s*(Pro|Max|Ultra))?)?)$/i,
                 message:
                   "فرمت CPU معتبر نیست (مثلاً Intel i7-13700H یا Ryzen 7 9800X3D)",
               },
@@ -105,7 +105,8 @@ function LaptopFields({ register, errors }) {
             {...register("gpu", {
               required: "کارت گرافیک الزامی است",
               pattern: {
-                value: /^(RTX|GTX|Radeon)\s?[A-Za-z0-9\s\-]{2,30}$/i,
+                value:
+                  /^(?:(RTX|GTX|Radeon)\s?[A-Za-z0-9\s\-]{2,30}|(Apple\s*)?M\d(\s*\(integrated\))?|Integrated\s*Graphics)$/i,
                 message:
                   "فرمت GPU معتبر نیست (مثلاً RTX 4060 یا Radeon RX 6800M)",
               },

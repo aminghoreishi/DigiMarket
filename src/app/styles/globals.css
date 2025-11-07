@@ -6,6 +6,12 @@
   --font-danaLight: "Dana-Light";
 }
 
+@utility ss02 {
+  -moz-font-feature-settings: "ss02";
+  -webkit-font-feature-settings: "ss02";
+  font-feature-settings: "ss02";
+}
+
 @utility container {
   padding-inline: 10px;
   margin-inline: auto;

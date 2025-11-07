@@ -3,8 +3,10 @@ import { useForm, useWatch } from "react-hook-form";
 import ColorSelector from "./ColorSelector";
 import LaptopFields from "./LaptopFields";
 import SmartwatchFields from "./SmartwatchFields";
+import { useState } from "react";
 
 function FormContainer({ categories }) {
+  const [rawPrice, setRawPrice] = useState<number>(0);
   const {
     register,
     handleSubmit,
@@ -18,25 +20,85 @@ function FormContainer({ categories }) {
     name: "category",
   });
 
-  const submitForm = (data) => {
-    console.log(data);
+  const submitForm = async (data) => {
+    const formData = new FormData();
+
+    // ساخت features با فیلتر خودکار (بدون if)
+    const laptopFeatures = {
+      ram: data.ramLap,
+      storage: data.storageLap,
+      screenSize: data.screenSize,
+      cpu: data.cpu,
+      gpu: data.gpu,
+      weight: data.weight,
+    };
+
+    const smartwatchFeatures = {
+      ram: data.ram,
+      storage: data.storage,
+      screenSize: data.screenSize,
+      chipset: data.chipset,
+      os: data.os,
+      weight: data.weight,
+    };
+
+    const selectedFeatures =
+      data.category === "690a2fb904b179efa1860b12"
+        ? laptopFeatures
+        : data.category === "690b39962d29378e5b3d6194"
+          ? smartwatchFeatures
+          : {};
+
+    const features = Object.entries(selectedFeatures)
+      .filter(([_, value]) => value != null && value !== "")
+      .map(([name, value]) => ({ name, value: value.toString() }));
+
+    // اضافه کردن به FormData
+    formData.append("title", data.title || "");
+    formData.append("name", data.name || "");
+    formData.append("price", rawPrice.toString());
+    formData.append("count", data.count || "");
+    formData.append("delivery", data.delivery || "");
+    formData.append("category", data.category || "");
+    formData.append("longDescription", data.longDescription || "");
+    formData.append("shortDescription", data.shortDescription || "");
+    formData.append("colors", JSON.stringify(data.colors || []));
+    formData.append("features", JSON.stringify(features));
+
+    // تصاویر
+    if (data.images?.length > 0) {
+      Array.from(data.images).forEach((file) => {
+        formData.append("images", file);
+      });
+    }
+
+    console.log("features:", features); // برای تست
+
+    const res = await fetch("/api/product", {
+      method: "POST",
+      body: formData,
+    });
+
+    const response = await res.json();
+    console.log("پاسخ:", response);
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit(submitForm)}>
         <div className="grid grid-cols-1 md:grid-cols-2 items-baseline lg:grid-cols-3 gap-6">
-          <div className="font-danaMed flex flex-col">
+          <div className="font-danaMed flex flex-col lg:col-span-3">
             <label className="text-sm" htmlFor="">
               نام محصول
             </label>
             <input
               type="text"
               {...register("title", {
-                required: true,
+                required: "نام محصول الزامی است",
                 pattern: {
-                  value: /^[\u0600-\u06FF0-9\s]{3,50}$/,
-                  message: "عنوان باید ۳–۵۰ کاراکتر فارسی یا عدد باشد",
+                  value: /^[\u0600-\u06FFA-Za-z0-9\s.,()\-_/:%+٪،‌–—]+$/,
+                  message:
+                    "عنوان باید بین ۳ تا ۲۰۰ کاراکتر و شامل حروف فارسی، انگلیسی یا عدد باشد",
                 },
               })}
               className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
@@ -45,6 +107,26 @@ function FormContainer({ categories }) {
               <p className="text-red-500 text-xs mt-2">
                 {errors.title.message}
               </p>
+            )}
+          </div>
+          <div className="font-danaMed flex flex-col lg:col-span-3">
+            <label className="text-sm" htmlFor="">
+              اسم اصلی محصول
+            </label>
+            <input
+              type="text"
+              {...register("name", {
+                required: "نام محصول الزامی است",
+                pattern: {
+                  value: /^[\u0600-\u06FFA-Za-z0-9\s.,()\-_/:%+٪،‌–—]+$/,
+                  message:
+                    "عنوان باید بین ۳ تا ۲۰۰ کاراکتر و شامل حروف فارسی، انگلیسی یا عدد باشد",
+                },
+              })}
+              className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
+            />
+            {errors.name && (
+              <p className="text-red-500 text-xs mt-2">{errors.name.message}</p>
             )}
           </div>
           <div className="font-danaMed flex flex-col">
@@ -74,6 +156,7 @@ function FormContainer({ categories }) {
                   ","
                 );
                 e.target.value = formatted;
+                setRawPrice(+rawValue);
               }}
               className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
               placeholder="مثلاً 1,200,000"
@@ -178,8 +261,56 @@ function FormContainer({ categories }) {
             </label>
             <input
               type="text"
-              className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
+              placeholder="مثلاً لپ‌تاپ سبک و مناسب برای کار روزمره"
+              {...register("shortDescription", {
+                required: "توضیح کوتاه الزامی است",
+                pattern: {
+                  value: /^[\u0600-\u06FFA-Za-z0-9\s.,()\-_/:%+٪،‌–—]+$/,
+                  message:
+                    "توضیح باید بین ۱۰ تا ۱۲۰ کاراکتر و بدون کاراکتر غیرمجاز باشد",
+                },
+              })}
+              className={`border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm ${
+                errors.shortDescription ? "border-red-400" : ""
+              }`}
             />
+            {errors.shortDescription && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.shortDescription.message as string}
+              </p>
+            )}
+          </div>
+
+          <div className="font-danaMed flex flex-col">
+            <label className="text-sm" htmlFor="">
+              مدت زمان ارسال (روز کاری)
+            </label>
+            <input
+              type="text"
+              placeholder="مثلاً 1 یا 3"
+              {...register("delivery", {
+                required: "مدت زمان ارسال الزامی است",
+                pattern: {
+                  value: /^[1-9][0-9]*$/,
+                  message: "مدت ارسال باید عدد صحیح مثبت باشد",
+                },
+                validate: (value) => {
+                  const num = Number(value);
+                  if (num < 1) return "حداقل زمان ارسال ۱ روز کاری است";
+                  if (num > 10) return "حداکثر زمان ارسال ۱۰ روز کاری است";
+                  return true;
+                },
+              })}
+              className={`border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm ${
+                errors.delivery ? "border-red-400" : ""
+              }`}
+            />
+
+            {errors.delivery && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.delivery.message as string}
+              </p>
+            )}
           </div>
 
           <ColorSelector
@@ -188,11 +319,57 @@ function FormContainer({ categories }) {
             errors={errors}
           />
 
+          <div className="font-danaMed flex flex-col">
+            <label className="text-sm" htmlFor="">
+              مقدار
+            </label>
+            <input
+              type="text"
+              placeholder="مثلاً 5 یا 10"
+              {...register("count", {
+                required: "مقدار الزامی است",
+                pattern: {
+                  value: /^[1-9][0-9]*$/,
+                  message: "مقدار باید عدد صحیح مثبت باشد",
+                },
+                validate: (value) => {
+                  const num = Number(value);
+                  if (num > 1000) return "حداکثر مقدار مجاز ۱۰۰۰ است";
+                  return true;
+                },
+              })}
+              className={`border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm ${
+                errors.count ? "border-red-400" : ""
+              }`}
+            />
+            {errors.count && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.count.message as string}
+              </p>
+            )}
+          </div>
+
           <div className="font-danaMed flex flex-col lg:col-span-3">
             <label className="text-sm" htmlFor="">
               توضیحات طولانی برای محصول
             </label>
-            <textarea className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"></textarea>
+
+            <textarea
+              placeholder="توضیحات کامل درباره ویژگی‌ها و مشخصات محصول..."
+              {...register("longDescription", {
+                required: "توضیحات محصول الزامی است",
+               
+              })}
+              className={`border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm ${
+                errors.longDescription ? "border-red-400" : ""
+              }`}
+            />
+
+            {errors.longDescription && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.longDescription.message as string}
+              </p>
+            )}
           </div>
         </div>
 

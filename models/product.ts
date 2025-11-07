@@ -9,7 +9,7 @@ const product = new mongoose.Schema({
     type: String,
     required: true,
   },
-  img: {
+  images: {
     type: [String],
     required: true,
   },
@@ -28,22 +28,24 @@ const product = new mongoose.Schema({
     ref: "category",
     required: true,
   },
-  logDes: {
+  longDescription: {
     type: String,
     required: true,
   },
-  shortDes: {
+  shortDescription: {
     type: String,
     required: true,
   },
-  color: {
+  colors: {
     type: [String],
     required: true,
   },
-  feature: {
-    type: [String],
-    required: false,
-  },
+ features: [
+  {
+    name: String,
+    value: String
+  }
+],
   price: {
     type: Number,
     required: true,

@@ -2,24 +2,26 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-function SwiperProduct() {
+function SwiperProduct({ title, images, price }) {
+  console.log({ title, images, price });
+
   return (
     <div className="border-2 px-4 py-3 border-gray-200 rounded-xl">
       <div className="flex justify-center">
         <Image
-          src="/image/3.webp"
+          src={images?.[1] || images?.[0] || "/image/placeholder.png"}
           className="!size-52"
           width={200}
           height={200}
-          alt="product"
+          alt={title || "product"}
         />
       </div>
       <div>
         <p className="text-zinc-400 text-xs">PS5 slim</p>
         <div className="cursor-pointer">
-          <Link href="/product">
+          <Link href={`/singleProduct/`}>
             <span className="text-zinc-800 font-danaMed text-xs md:text-sm h-8 lg:h-10 line-clamp-2 mt-2">
-              هنذفری تسکو مدل 726 TSCO
+              {title}
             </span>
           </Link>
         </div>
@@ -47,15 +49,14 @@ function SwiperProduct() {
           </div>
         </div>
         <div className="flex justify-end mt-4">
-          <p className="text-sm">23,000,000</p>
+          <p className="text-sm font-danaMed ss02">{price.toLocaleString()}</p>
           <Image
             src="/image/toman.png"
             width={100}
             height={100}
-            
             alt="toman"
             className="mt-1 mr-1 !size-4"
-          />  
+          />
         </div>
       </div>
     </div>
