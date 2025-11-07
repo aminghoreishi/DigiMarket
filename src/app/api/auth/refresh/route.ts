@@ -1,48 +1,36 @@
 import db from "@/config/db";
 import userModel from "@/models/user";
-import { generateAccessToken } from "@/utils/auth";
-import { verify } from "jsonwebtoken";
+import { generateAccessToken, verifyRefreshToken } from "@/utils/auth";
+import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req:NextRequest) {
+export async function POST() {
   try {
     await db();
+    const cookieStore = cookies();
+    const refreshToken = cookieStore.get("refresh-token")?.value;
 
-    const refreshToken = (await cookies()).get("refresh-token")?.value;
-
-    if (!refreshToken) {
-      return Response.json(
-        { message: "NO HAVE REFRESHTOKEN" },
-        { status: 401 }
-      );
-    }
+    if (!refreshToken) return NextResponse.json({ message: "NO REFRESH TOKEN" }, { status: 401 });
 
     const user = await userModel.findOne({ refreshToken });
+    if (!user) return NextResponse.json({ message: "INVALID REFRESH TOKEN" }, { status: 401 });
 
-    if (!user) {
-      return Response.json(
-        { message: "NO HAVE REFRESHTOKEN" },
-        { status: 401 }
-      );
-    }
+    // اعتبارسنجی refresh token
+    verifyRefreshToken(refreshToken);
 
-    verify(refreshToken, process.env.JWT_SECRET_REFRESH);
-    const newAccessToken = generateAccessToken({
-      phone: user.phone,
-      role: user.role,
+    const newAccessToken = generateAccessToken({ email: user.email, role: user.role });
+
+    const res = NextResponse.json({ message: "ACCESS TOKEN REFRESHED" }, { status: 200 });
+    res.cookies.set("token", newAccessToken, {
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 5, // 5 دقیقه
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
     });
 
-    return NextResponse.json(
-      { message: "NEW ACCESSS TOKEN SAVED" },
-      {
-        status: 200,
-        headers: {
-          "Set-Cookie": `token=${newAccessToken};path=/;httpOnly=true;`,
-        },
-      }
-    );
-  } catch (error) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    return res;
+  } catch (err: any) {
+    return NextResponse.json({ message: err.message }, { status: 500 });
   }
 }

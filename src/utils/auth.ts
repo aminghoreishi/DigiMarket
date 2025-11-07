@@ -1,32 +1,27 @@
 import db from "@/config/db";
 import userModel from "@/models/user";
-import { hash } from "bcryptjs";
 import { sign, verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
-const hashPassword = async (password) => {
-  const hashP = await hash(password, 12);
-  return hashP;
+import { hash } from "bcryptjs";
+
+export const hashPassword = async (password: string) => {
+  return await hash(password, 12);
 };
 
-const generateAccessToken = (data) => {
-  const token = sign(data, process.env.JWT_SECRET, { expiresIn: "60s" });
-  return token;
+export const generateAccessToken = (data: object) => {
+  return sign(data, process.env.JWT_SECRET!, { expiresIn: "5m" }); // 5 دقیقه
 };
 
-const generateRefreshToken = (data) => {
-  const token = sign(data, process.env.JWT_SECRET_REFRESH, {
-    expiresIn: "15d",
-  });
-  return token;
+export const generateRefreshToken = (data: object) => {
+  return sign(data, process.env.JWT_SECRET_REFRESH!, { expiresIn: "15d" }); // 15 روز
 };
 
-const verifyAccessToken = (token) => {
-  try {
-    const tokenPayload = verify(token, process.env.JWT_SECRET);
-    return tokenPayload;
-  } catch (error) {
-    console.log("Error ---> ", error);
-  }
+export const verifyAccessToken = (token: string) => {
+  return verify(token, process.env.JWT_SECRET!);
+};
+
+export const verifyRefreshToken = (token: string) => {
+  return verify(token, process.env.JWT_SECRET_REFRESH!);
 };
 
 const authUser = async () => {
@@ -63,4 +58,4 @@ const authAdmin = async () => {
   }
 };
 
-export { hashPassword, generateAccessToken, generateRefreshToken, authUser , authAdmin };
+export { authUser, authAdmin };

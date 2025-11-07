@@ -7,45 +7,28 @@ export default function AuthRefresh() {
   const router = useRouter();
 
   useEffect(() => {
-    // بررسی header برای token expired
-    const checkTokenExpired = () => {
-      const tokenExpired = document.querySelector(
-        'meta[name="x-token-expired"]'
-      )?.content;
-
-      if (tokenExpired === "true") {
-        refreshToken();
-      }
-    };
-
     const refreshToken = async () => {
       try {
-        const response = await fetch("/api/auth/refresh", {
+        const res = await fetch("/api/auth/refresh", {
           method: "POST",
-          credentials: "include", // 👈
+          credentials: "include",
         });
 
-        if (!response.ok) {
-          // refresh token هم منقضی شده، به صفحه لاگین برو
-          router.push("/login-reg");
-        } else {
-          // token با موفقیت refresh شد
-          router.refresh();
+        if (!res.ok) {
+          router.push("/reg"); // refresh یا expire fail
         }
-      } catch (error) {
-        console.error("Token refresh failed:", error);
-        router.push("/login-reg");
+      } catch (err) {
+        console.error(err);
+        router.push("/reg");
       }
     };
 
-    // هر 50 ثانیه یک بار token را refresh کن
-    const interval = setInterval(async () => {
+    // هر 2 دقیقه یکبار یا کمتر از expire
+    const interval = setInterval(() => {
       if (pathname.startsWith("/my-account")) {
-        await refreshToken();
+        refreshToken();
       }
-    }, 50000); // 50 seconds
-
-    checkTokenExpired();
+    }, 120000); // 2 دقیقه (برای توکن 5 دقیقه‌ای امنه)
 
     return () => clearInterval(interval);
   }, [pathname, router]);
