@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
-function SwiperProduct({ title, images, price }) {
+function SwiperProduct({ title, images, price, _id }) {
   console.log({ title, images, price });
 
   return (
@@ -19,7 +18,7 @@ function SwiperProduct({ title, images, price }) {
       <div>
         <p className="text-zinc-400 text-xs">PS5 slim</p>
         <div className="cursor-pointer">
-          <Link href={`/singleProduct/`}>
+          <Link href={`/singleProduct/${_id}`}>
             <span className="text-zinc-800 font-danaMed text-xs md:text-sm h-8 lg:h-10 line-clamp-2 mt-2">
               {title}
             </span>

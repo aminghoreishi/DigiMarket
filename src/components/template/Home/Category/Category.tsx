@@ -18,7 +18,7 @@ async function Category() {
     >
       <div className="flex justify-center gap-x-3">
         {category.map((cat) => (
-          <div>
+          <div key={cat._id}>
             <Link href={cat.href}>
               <div className="rounded-xl p-2">
                 <div className="border-2 border-gray-300 px-6 py-3 rounded-lg">

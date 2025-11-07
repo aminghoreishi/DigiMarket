@@ -4,8 +4,17 @@ import Cart from "@/components/template/SingleProduct/Cart/Cart";
 import Info from "@/components/template/SingleProduct/Info/Info";
 import MainContainer from "@/components/template/SingleProduct/MainContainer/MainContainer";
 import SwiperImage from "@/components/template/SingleProduct/SwiperImage/SwiperImage";
+import productModel from "@/models/product";
 
-function page() {
+async function page({ params }) {
+  const { id } = await params;
+
+  console.log(id);
+
+  const findProduct = await productModel.findOne({ _id: id }).lean();
+
+  console.log(findProduct);
+
   return (
     <>
       <div className="container mx-auto">
@@ -24,7 +33,7 @@ function page() {
             </div>
           </div>
           <div className="  xl:col-span-3">
-            <Cart />
+            <Cart price={findProduct.price} count={findProduct.count} delivery={findProduct.delivery} />
           </div>
         </div>
 

@@ -34,7 +34,7 @@ function SwiperRel() {
         }}
         className="mySwiper !h-[400px]"
       >
-        <SwiperSlide>
+        {/* <SwiperSlide>
           <SwiperProduct />
         </SwiperSlide>
         <SwiperSlide>
@@ -57,7 +57,7 @@ function SwiperRel() {
         </SwiperSlide>
         <SwiperSlide>
           <SwiperProduct />
-        </SwiperSlide>
+        </SwiperSlide> */}
       </Swiper>
     </div>
   );
