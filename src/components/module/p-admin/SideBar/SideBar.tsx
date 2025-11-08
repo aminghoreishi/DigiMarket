@@ -41,7 +41,7 @@ function SideBar() {
         <Link href="/admin/products">
           <li
             className={`flex items-center text-sm gap-2 cursor-pointer transition-colors ${
-              route || "/admin/products" || "/admin/products/createProduct"
+              route === "/admin/products" || route === "/admin/products/createProduct"
                 ? "text-blue-500"
                 : "text-gray-700 hover:text-blue-500"
             }`}

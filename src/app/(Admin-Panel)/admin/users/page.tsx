@@ -1,9 +1,21 @@
-import React from 'react'
+import TopBar from "@/components/module/p-admin/TopBar/TopBar";
+import User from "@/components/template/p-admin/user/User";
+import db from "@/config/db";
+import userModel from "@/models/user";
 
-function page() {
+async function page() {
+  await db();
+
+  const users = await userModel.find({}).lean();
   return (
-    <div>page</div>
-  )
+    <div>
+      <TopBar title="کاربران" />
+
+      <div dir="rtl" className="mt-4">
+        <User users={JSON.parse(JSON.stringify(users))} />
+      </div>
+    </div>
+  );
 }
 
-export default page
+export default page;

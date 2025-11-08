@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { BeatLoader } from "react-spinners";
 import Swal from "sweetalert2";
@@ -150,12 +151,21 @@ function Page() {
                     },
                   })}
                 />
-                <div
-                  className="absolute left-2 top-2.5"
-                  onClick={() => setShowPassword((pre) => !pre)}
-                >
-                  <FaEye color="orange" className="cursor-pointer" />
-                </div>
+                {showPassword ? (
+                  <div
+                    className="absolute left-2 top-2.5"
+                    onClick={() => setShowPassword((pre) => !pre)}
+                  >
+                    <FaEye color="orange" className="cursor-pointer" />
+                  </div>
+                ) : (
+                  <div
+                    className="absolute left-2 top-2.5 cursor-pointer"
+                    onClick={() => setShowPassword((pre) => !pre)}
+                  >
+                    <FaEyeSlash color="orange" />
+                  </div>
+                )}
               </div>
               {errors.password && (
                 <span className="text-red-500 text-xs">
