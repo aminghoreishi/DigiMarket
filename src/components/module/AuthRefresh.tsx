@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -7,28 +8,40 @@ export default function AuthRefresh() {
   const router = useRouter();
 
   useEffect(() => {
-    const refreshToken = async () => {
-      try {
-        const res = await fetch("/api/auth/refresh", {
-          method: "POST",
-          credentials: "include",
-        });
+    const checkTokenExpired = () => {
+      const tokenExpired = document.querySelector(
+        'meta[name="x-token-expired"]'
+      )?.content;
 
-        if (!res.ok) {
-          router.push("/reg"); // refresh یا expire fail
-        }
-      } catch (err) {
-        console.error(err);
-        router.push("/reg");
+      if (tokenExpired === "true") {
+        refreshToken();
       }
     };
 
-    // هر 2 دقیقه یکبار یا کمتر از expire
-    const interval = setInterval(() => {
-      if (pathname.startsWith("/my-account")) {
-        refreshToken();
+    const refreshToken = async () => {
+      try {
+        const response = await fetch("/api/auth/refresh", {
+          method: "POST",
+        });
+
+        if (!response.ok) {
+          router.push("/login-reg");
+        } else {
+          router.refresh();
+        }
+      } catch (error) {
+        console.error("Token refresh failed:", error);
+        router.push("/login-reg");
       }
-    }, 120000); // 2 دقیقه (برای توکن 5 دقیقه‌ای امنه)
+    };
+
+    const interval = setInterval(async () => {
+      if (pathname.startsWith("/my-account")) {
+        await refreshToken();
+      }
+    }, 50000); 
+
+    checkTokenExpired();
 
     return () => clearInterval(interval);
   }, [pathname, router]);

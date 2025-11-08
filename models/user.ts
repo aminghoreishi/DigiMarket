@@ -10,12 +10,12 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: true, // هر ایمیل فقط یک‌بار
+      unique: true, 
       lowercase: true,
     },
     password: {
       type: String,
-      required: false, // چون برای کاربران گوگل وجود ندارد
+      required: false, 
     },
     phone: {
       type: String,
@@ -29,19 +29,17 @@ const userSchema = new mongoose.Schema(
     provider: {
       type: String,
       enum: ["credentials", "google"],
-      default: "credentials", // برای تفکیک نوع ثبت‌نام
+      default: "credentials", 
     },
     image: {
-      type: String, // از گوگل برمی‌گردد
+      type: String, 
     },
     refreshToken: String,
   },
   {
     timestamps: true,
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
   }
 );
 
-const userModel = mongoose.models.User || mongoose.model("User", userSchema);
+const userModel = mongoose.models.user || mongoose.model("user", userSchema);
 export default userModel;
