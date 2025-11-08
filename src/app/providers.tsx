@@ -1,14 +1,17 @@
-import NextTopLoader from 'nextjs-toploader';
+"use client";
 
-export default function LoaderProvider({ children }) {
+import { SessionProvider } from "next-auth/react";
+
+import AuthRefresh from "@/components/module/AuthRefresh";
+import LoaderProvider from "./LoaderProvider";
+
+export default function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      {children}
-      <NextTopLoader
-        color="#2299DD"
-        height={3}
-        showSpinner={false}
-      />
-    </>
+    <SessionProvider>
+      <LoaderProvider>
+        <AuthRefresh />
+        {children}
+      </LoaderProvider>
+    </SessionProvider>
   );
 }

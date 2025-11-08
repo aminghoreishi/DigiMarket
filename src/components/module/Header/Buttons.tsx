@@ -8,11 +8,14 @@ import { AiOutlineMinus } from "react-icons/ai";
 import { RiAdminLine } from "react-icons/ri";
 import Link from "next/link";
 import { authAdmin, authUser } from "@/utils/auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/authOptions";
 async function Buttons() {
   const isAdmin = await authAdmin();
   const isUser = await authUser();
 
-  console.log(isAdmin);
+  const session = await getServerSession(authOptions);
+  console.log(session?.user);
 
   return (
     <div className="flex items-center font-danaMed gap-3">

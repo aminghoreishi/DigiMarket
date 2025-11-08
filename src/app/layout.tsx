@@ -1,6 +1,6 @@
 import "./styles/globals.css";
-import LoaderProvider from "./providers";
-import AuthRefresh from "@/components/module/AuthRefresh";
+
+import ClientProviders from "./providers";
 
 export const metadata = {
   title: "DigiMarket",
@@ -15,8 +15,7 @@ export default function RootLayout({
   return (
     <html lang="fa">
       <body dir="rtl">
-        <AuthRefresh />
-        <LoaderProvider>{children}</LoaderProvider>
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );
