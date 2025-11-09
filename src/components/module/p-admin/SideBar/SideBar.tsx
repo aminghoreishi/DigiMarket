@@ -6,6 +6,7 @@ import { HiOutlineHome } from "react-icons/hi2";
 import { SlBasket } from "react-icons/sl";
 import { FiUser } from "react-icons/fi";
 import { CiLogout } from "react-icons/ci";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 function SideBar() {
   const route = usePathname();
@@ -41,7 +42,8 @@ function SideBar() {
         <Link href="/admin/products">
           <li
             className={`flex items-center text-sm gap-2 cursor-pointer transition-colors ${
-              route === "/admin/products" || route === "/admin/products/createProduct"
+              route === "/admin/products" ||
+              route === "/admin/products/createProduct"
                 ? "text-blue-500"
                 : "text-gray-700 hover:text-blue-500"
             }`}
@@ -61,6 +63,29 @@ function SideBar() {
           >
             <FiUser size={20} />
             <span>کاربران</span>
+          </li>
+        </Link>
+        <Link href="/admin/categories">
+          <li
+            className={`flex items-center relative group text-sm gap-2 cursor-pointer transition-colors ${
+              route === "/admin/categories"
+                ? "text-blue-500"
+                : "text-gray-700 hover:text-blue-500"
+            }`}
+          >
+            <SlBasket size={20} />
+            <div className="flex items-center w-full justify-between">
+              <span>دسته بندی ها</span>
+              <p>
+                <MdKeyboardArrowDown size={20} className=" transition-all group-hover:rotate-180" />
+              </p>
+            </div>
+
+            <div className="absolute top-full right-8 transition-all opacity-0 group-hover:opacity-100 duration-250 invisible group-hover:visible bg-white   mt-2 ">
+              <ul>
+                <li className=" p-2   mt-2 w-40 ">زیر دسته بندی ها</li>
+              </ul>
+            </div>
           </li>
         </Link>
 

@@ -25,13 +25,13 @@ export default function AuthRefresh() {
         });
 
         if (!response.ok) {
-          router.push("/login-reg");
+          router.push("/");
         } else {
           router.refresh();
         }
       } catch (error) {
         console.error("Token refresh failed:", error);
-        router.push("/login-reg");
+        router.push("/");
       }
     };
 
