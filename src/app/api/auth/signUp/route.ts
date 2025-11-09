@@ -1,4 +1,3 @@
-// app/api/auth/register/route.ts
 import db from "@/config/db";
 import userModel from "@/models/user";
 import {
@@ -31,7 +30,6 @@ export async function POST(req: NextRequest) {
     const hPassword = await hashPassword(password);
     const role = (await userModel.countDocuments({})) === 0 ? "ADMIN" : "USER";
 
-    // تولید توکن‌ها بعد از ذخیره موفق
     const accessToken = generateAccessToken({
       email,
       role,
@@ -41,14 +39,12 @@ export async function POST(req: NextRequest) {
       role,
     });
 
-    // ایجاد کاربر
-    const newUser = await userModel.create({
+    await userModel.create({
       fullName,
       email,
       password: hPassword,
       role,
     });
-    // ذخیره refreshToken در دیتابیس
     const headers = new Headers();
     headers.append("Set-Cookie", `token=${accessToken};path=/;httpOnly=true`);
     headers.append(

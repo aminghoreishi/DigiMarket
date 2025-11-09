@@ -44,18 +44,14 @@ const authUser = async () => {
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
     const refreshToken = cookieStore.get("refresh-token")?.value;
-    const authToken = cookieStore.get("next-auth.session-token")?.value;
 
-    if (!token && !refreshToken && authToken) return null;
+    if (!token && !refreshToken) return null;
 
     let tokenPayload;
 
     try {
-      tokenPayload =
-        authToken && (tokenPayload = verify(authToken, process.env.JWT_SECRET));
       tokenPayload = verify(token, process.env.JWT_SECRET);
     } catch (error) {
-      // اگر توکن منقضی شده باشد، از refresh-token استفاده می‌کنیم
       if (error.name === "TokenExpiredError" && refreshToken) {
         try {
           const refreshPayload = verify(

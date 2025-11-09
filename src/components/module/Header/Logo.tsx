@@ -9,7 +9,6 @@ const Logo = memo(() => {
         src="/image/logo (1).png"
         width={100}
         height={100}
-        // className="max-sm:w-32"
       />
     </div>
   );

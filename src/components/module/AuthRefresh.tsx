@@ -39,7 +39,7 @@ export default function AuthRefresh() {
       if (pathname.startsWith("/my-account")) {
         await refreshToken();
       }
-    }, 50000); 
+    }, 50000);
 
     checkTokenExpired();
 

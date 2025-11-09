@@ -23,7 +23,6 @@ function FormContainer({ categories }) {
   const submitForm = async (data) => {
     const formData = new FormData();
 
-    // ساخت features با فیلتر خودکار (بدون if)
     const laptopFeatures = {
       ram: data.ramLap,
       storage: data.storageLap,
@@ -53,7 +52,6 @@ function FormContainer({ categories }) {
       .filter(([_, value]) => value != null && value !== "")
       .map(([name, value]) => ({ name, value: value.toString() }));
 
-    // اضافه کردن به FormData
     formData.append("title", data.title || "");
     formData.append("name", data.name || "");
     formData.append("price", rawPrice.toString());
@@ -65,14 +63,13 @@ function FormContainer({ categories }) {
     formData.append("colors", JSON.stringify(data.colors || []));
     formData.append("features", JSON.stringify(features));
 
-    // تصاویر
     if (data.images?.length > 0) {
       Array.from(data.images).forEach((file) => {
         formData.append("images", file);
       });
     }
 
-    console.log("features:", features); // برای تست
+    console.log("features:", features); 
 
     const res = await fetch("/api/product", {
       method: "POST",

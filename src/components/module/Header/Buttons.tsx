@@ -2,7 +2,6 @@ import { FaPlus, FaRegUser } from "react-icons/fa6";
 import { RiShoppingCart2Fill } from "react-icons/ri";
 import { LuUser } from "react-icons/lu";
 import { BsBasket } from "react-icons/bs";
-import { CiLogin } from "react-icons/ci";
 import Image from "next/image";
 import { AiOutlineMinus } from "react-icons/ai";
 import { RiAdminLine } from "react-icons/ri";
@@ -10,16 +9,30 @@ import Link from "next/link";
 import { authAdmin, authUser } from "@/utils/auth";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/authOptions";
+import userModel from "@/models/user";
+import SignOut from "./SignOut";
+
+type IUser = {
+  _id: unknown;
+  email?: string;
+  role?: string;
+  __v?: number;
+};
+
 async function Buttons() {
   const isAdmin = await authAdmin();
   const isUser = await authUser();
 
   const session = await getServerSession(authOptions);
-  console.log(session?.user);
+
+  const user: IUser | null = await userModel
+    .findOne({ email: session?.user?.email }, { password: 0, refreshToken: 0 })
+    .lean<IUser>();
+  console.log(user);
 
   return (
     <div className="flex items-center font-danaMed gap-3">
-      {isUser ? (
+      {isUser || user?.email ? (
         <>
           <div className="flex relative group items-center gap-x-2 border-2 p-2 rounded-xl border-gray-300 cursor-pointer">
             <p className="text-xs">حساب کاربری</p>
@@ -42,19 +55,17 @@ async function Buttons() {
                   <BsBasket />
                   <p>پنل کاربری</p>
                 </li>
-                {isAdmin && (
-                  <Link href="/admin">
-                    <li className="flex items-center gap-2">
-                      <RiAdminLine />
-                      <p>پنل ادمین</p>
-                    </li>
-                  </Link>
-                )}
+                {isAdmin ||
+                  (user?.role === "ADMIN" && (
+                    <Link href="/admin">
+                      <li className="flex items-center gap-2">
+                        <RiAdminLine />
+                        <p>پنل ادمین</p>
+                      </li>
+                    </Link>
+                  ))}
 
-                <li className="flex items-center gap-2 text-red-500">
-                  <CiLogin />
-                  <p>خروج از حساب کاربری</p>
-                </li>
+                <SignOut />
               </ul>
             </div>
           </div>

@@ -7,7 +7,6 @@ function MenuMobile() {
 
   return (
     <div className="relative">
-      {/* دکمه منو */}
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
@@ -16,7 +15,6 @@ function MenuMobile() {
         {isOpen ? <IoCloseOutline size={24} /> : <IoMenuOutline size={24} />}
       </button>
 
-      {/* پس‌زمینه تیره (Backdrop) */}
       {isOpen && (
         <div
           onClick={() => setIsOpen(false)}
@@ -24,7 +22,6 @@ function MenuMobile() {
         />
       )}
 
-      {/* منوی کشویی */}
       <div
         className={`fixed top-0 bottom-0 right-0 w-60 bg-white shadow-2xl z-50 transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-5" : "translate-x-[120%]"
