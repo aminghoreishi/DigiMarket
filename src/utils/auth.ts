@@ -8,18 +8,25 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/lib/authOptions";
 
-const hashPassword = async (password) => {
+const hashPassword = async (password: string) => {
   const hashP = await hash(password, 12);
   return hashP;
 };
 
-const verifyPassword = async (password, hashPass) => {
+const verifyPassword = async (password: string, hashPass: string) => {
   const isValid = await compare(password, hashPass);
   return isValid;
 };
 
-const generateAccessToken = (data) => {
-  const token = sign(data, process.env.JWT_SECRET, { expiresIn: "60s" });
+interface AccessTokenPayload {
+  email: string;
+  role: string;
+}
+
+const generateAccessToken = (data: AccessTokenPayload): string => {
+  const token = sign(data, process.env.JWT_SECRET as string, {
+    expiresIn: "60s",
+  });
   return token;
 };
 
@@ -32,71 +39,33 @@ const verifyAccessToken = (token) => {
   }
 };
 
-const generateRefreshToken = (data) => {
+const generateRefreshToken = (data: string | object) => {
   const token = sign(data, process.env.JWT_SECRET_REFRESH, {
     expiresIn: "15d",
   });
   return token;
 };
 
+interface AccessTokenPayload {
+  email: string;
+  role: string;
+}
+
 const authUser = async () => {
   try {
-    const session = await getServerSession(authOptions);
-    if (session?.user?.email) {
-      const user = await userModel
-        .findOne({ email: session.user.email })
-        .select("-password -refreshToken")
-        .lean();
-      if (user) return JSON.parse(JSON.stringify(user));
-    }
-
     await db();
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
-    const refreshToken = cookieStore.get("refresh-token")?.value;
 
-    if (!token && !refreshToken) return null;
+    if (!token) return null;
 
-    let tokenPayload;
-
-    try {
-      tokenPayload = verify(token, process.env.JWT_SECRET);
-    } catch (error) {
-      if (error.name === "TokenExpiredError" && refreshToken) {
-        try {
-          const refreshPayload = verify(
-            refreshToken,
-            process.env.JWT_SECRET_REFRESH
-          );
-          const user = await userModel.findOne({ email: refreshPayload.email });
-          if (!user) return null;
-
-          const newAccessToken = generateAccessToken({
-            email: user.email,
-            role: user.role,
-          });
-
-          const res = NextResponse.next();
-          res.cookies.set("token", newAccessToken, {
-            httpOnly: true,
-            path: "/",
-            secure: true,
-            sameSite: "strict",
-          });
-          return user;
-        } catch (refreshErr) {
-          return null;
-        }
-      }
-
-      return null;
-    }
+    const tokenPayload = verifyAccessToken(token);
 
     if (!tokenPayload?.email) return null;
 
     const user = await userModel.findOne(
       { email: tokenPayload.email },
-      { password: 0, refreshToken: 0 }
+      { password: 0, refreshToken: 0 } // عدم بازگشت فیلدهای حساس
     );
 
     return user ? JSON.parse(JSON.stringify(user)) : null;

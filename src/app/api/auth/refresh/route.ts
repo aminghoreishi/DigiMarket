@@ -1,19 +1,19 @@
 import db from "@/config/db";
 import userModel from "@/models/user";
-
 import { generateAccessToken } from "@/utils/auth";
+
 import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req:NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     await db();
 
     const refreshToken = (await cookies()).get("refresh-token")?.value;
 
     if (!refreshToken) {
-      return Response.json(
+      return NextResponse.json(
         { message: "NO HAVE REFRESHTOKEN" },
         { status: 401 }
       );
@@ -22,7 +22,7 @@ export async function POST(req:NextRequest) {
     const user = await userModel.findOne({ refreshToken });
 
     if (!user) {
-      return Response.json(
+      return NextResponse.json(
         { message: "NO HAVE REFRESHTOKEN" },
         { status: 401 }
       );
@@ -30,7 +30,7 @@ export async function POST(req:NextRequest) {
 
     verify(refreshToken, process.env.JWT_SECRET_REFRESH);
     const newAccessToken = generateAccessToken({
-      phone: user.phone,
+      email: user.email,
       role: user.role,
     });
 

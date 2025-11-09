@@ -44,12 +44,13 @@ export async function POST(req: NextRequest) {
       email,
       password: hPassword,
       role,
+      refreshToken,
     });
     const headers = new Headers();
-    headers.append("Set-Cookie", `token=${accessToken};path=/;httpOnly=true`);
+    headers.append("Set-Cookie", `token=${accessToken};path=/;httpOnly`);
     headers.append(
       "Set-Cookie",
-      `refresh-token=${refreshToken};path=/;httpOnly=true`
+      `refresh-token=${refreshToken};path=/;httpOnly`
     );
 
     return NextResponse.json(

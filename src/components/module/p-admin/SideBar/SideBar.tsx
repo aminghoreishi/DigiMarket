@@ -77,7 +77,7 @@ function SideBar() {
             <div className="flex items-center w-full justify-between">
               <span>دسته بندی ها</span>
               <p>
-                <MdKeyboardArrowDown size={20} className=" transition-all group-hover:rotate-180" />
+                <MdKeyboardArrowDown size={20} className="transition-all group-hover:rotate-180" />
               </p>
             </div>
 

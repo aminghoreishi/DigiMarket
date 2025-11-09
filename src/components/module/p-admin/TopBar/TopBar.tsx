@@ -10,7 +10,7 @@ async function TopBar({ title }: { title: string }) {
       <h2>{title}</h2>
       <div>
         <p className="text-xs text-zinc-500">
-           سلام ،<span className="text-base text-black">{isAdmin.fullName}</span>
+           سلام ،<span className="text-base text-black"></span>
         </p>
       </div>
     </div>

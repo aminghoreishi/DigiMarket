@@ -13,7 +13,7 @@ async function page({ params }) {
 
   const findProduct = await productModel.findOne({ _id: id }).lean();
 
-  console.log(findProduct);
+  // console.log(findProduct);
 
   return (
     <>

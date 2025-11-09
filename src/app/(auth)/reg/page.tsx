@@ -54,7 +54,7 @@ function Page() {
 
       const response = await res.json();
 
-      console.log(response);
+      // console.log(response);
 
       if (res.status === 201) {
         Swal.fire({

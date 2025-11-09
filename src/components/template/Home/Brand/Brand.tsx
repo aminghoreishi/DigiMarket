@@ -9,7 +9,7 @@ async function Brand() {
 
   const brands = (await brandModel.find({})) as unknown as BrandType[];
 
-  console.log(brands);
+  // console.log(brands);
 
   return (
     <div>

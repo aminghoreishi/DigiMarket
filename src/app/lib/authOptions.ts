@@ -1,6 +1,6 @@
+// lib/authOptions.ts
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
 import db from "@/config/db";
 import userModel from "@/models/user";
 import { sign } from "jsonwebtoken";
@@ -11,19 +11,6 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: {},
-        password: {},
-      },
-      async authorize(credentials) {
-        await db();
-        const user = await userModel.findOne({ email: credentials?.email });
-        if (!user) throw new Error("کاربر یافت نشد");
-        return user;
-      },
-    }),
   ],
 
   callbacks: {
@@ -33,9 +20,11 @@ export const authOptions: NextAuthOptions = {
         const existingUser = await userModel.findOne({ email: user.email });
         if (!existingUser) {
           await userModel.create({
-            fullName: user.name,
+            fullName: user.name || "کاربر گوگل",
             email: user.email,
             password: "",
+            provider: "google",
+            role: "USER",
           });
         }
       }
@@ -44,66 +33,64 @@ export const authOptions: NextAuthOptions = {
 
     async jwt({ token, user }) {
       if (user) {
-        token.accessToken = sign(
-          { email: user.email, role: user.role },
-          process.env.JWT_SECRET!,
-          { expiresIn: "60s" }
-        );
+        const payload = {
+          userId: user._id.toString(),
+          email: user.email,
+          role: user.role,
+        };
 
-        token.refreshToken = sign(
-          { email: user.email },
+        // Access Token
+        token.accessToken = sign(payload, process.env.JWT_SECRET!, {
+          expiresIn: "60s",
+        });
+
+        // Refresh Token
+        const refreshToken = sign(
+          { userId: user._id.toString() },
           process.env.JWT_SECRET_REFRESH!,
           { expiresIn: "15d" }
         );
+
+        token.refreshToken = refreshToken;
+
+        // ذخیره در دیتابیس
+        try {
+          await userModel.findByIdAndUpdate(user._id, { refreshToken });
+        } catch (err) {
+          console.error("خطا در ذخیره refreshToken:", err);
+        }
       }
+
       return token;
     },
 
-    async session({ session, token, response }) {
-      if (token.accessToken && token.refreshToken) {
-        response?.cookies.set("token", token.accessToken as string, {
-          httpOnly: true,
-          path: "/",
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "strict",
-          maxAge: 60,
-        });
-
-        response?.cookies.set("refresh-token", token.refreshToken as string, {
-          httpOnly: true,
-          path: "/",
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "strict",
-          maxAge: 7 * 24 * 60 * 60,
-        });
+    async session({ session, token }) {
+      if (token.accessToken) {
+        session.accessToken = token.accessToken as string;
       }
-
-      session.accessToken = token.accessToken;
-      session.refreshToken = token.refreshToken;
-
       return session;
     },
   },
 
   session: {
     strategy: "jwt",
-    maxAge: 7 * 24 * 60 * 60,
+    maxAge: 15 * 24 * 60 * 60, // 15 روز
+  },
+
+  pages: {
+    signIn: "/reg",
   },
 
   cookies: {
-    sessionToken: {
-      name: "next-auth.session-token",
+    refreshToken: {
+      name: "refresh-token",
       options: {
         httpOnly: true,
-        sameSite: "lax",
+        sameSite: "strict",
         path: "/",
         secure: process.env.NODE_ENV === "production",
         maxAge: 15 * 24 * 60 * 60,
       },
     },
-  },
-
-  pages: {
-    signIn: "/reg",
   },
 };

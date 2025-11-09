@@ -8,7 +8,7 @@ async function PopProduct() {
 
   const products = await productModel.find({}).lean()
 
-  console.log(products);
+  // console.log(products);
 
   return (
     <div className="mt-12">

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 function SwiperProduct({ title, images, price, _id }) {
-  console.log({ title, images, price });
+  // console.log({ title, images, price });
 
   return (
     <div className="border-2 px-4 py-3 border-gray-200 rounded-xl">

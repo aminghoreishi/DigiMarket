@@ -6,10 +6,8 @@ import Image from "next/image";
 import { AiOutlineMinus } from "react-icons/ai";
 import { RiAdminLine } from "react-icons/ri";
 import Link from "next/link";
-import { authAdmin, authUser } from "@/utils/auth";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions";
-import userModel from "@/models/user";
+import { authUser } from "@/utils/auth";
+
 import SignOut from "./SignOut";
 
 type IUser = {
@@ -25,6 +23,11 @@ async function Buttons() {
   const isLoggedIn = !!user;
   const isAdmin = user?.role === "ADMIN";
   const displayName = user?.fullName || user?.email?.split("@")[0] || "کاربر";
+
+  console.log("User in Buttons:", user);
+  console.log("isAdmin in Buttons:", isAdmin);
+  console.log("isLoggedIn in Buttons:", isLoggedIn);
+  console.log("displayName in Buttons:", displayName);
 
   return (
     <div className="flex items-center font-danaMed gap-3">
