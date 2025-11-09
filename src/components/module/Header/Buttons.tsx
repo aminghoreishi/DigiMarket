@@ -21,18 +21,14 @@ type IUser = {
 };
 
 async function Buttons() {
-  const isAdmin = await authAdmin();
-  const isUser = await authUser();
-
-  const session = await getServerSession(authOptions);
-
-  const user: IUser | null = await userModel
-    .findOne({ email: session?.user?.email }, { password: 0, refreshToken: 0 })
-    .lean<IUser>();
+  const user = await authUser();
+  const isLoggedIn = !!user;
+  const isAdmin = user?.role === "ADMIN";
+  const displayName = user?.fullName || user?.email?.split("@")[0] || "کاربر";
 
   return (
     <div className="flex items-center font-danaMed gap-3">
-      {isUser || user?.email ? (
+      {isLoggedIn ? (
         <>
           <div className="flex relative group items-center gap-x-2 border-2 p-2 rounded-xl border-gray-300 cursor-pointer">
             <p className="text-xs">حساب کاربری</p>
@@ -42,7 +38,7 @@ async function Buttons() {
               <ul className="text-sm flex flex-col gap-4">
                 <li className="flex items-center gap-2">
                   <LuUser />
-                  <p>{user?.fullName || isUser.fullName}</p>
+                  <p>{displayName}</p>
                 </li>
                 <li className="flex items-center gap-2">
                   <BsBasket />
@@ -53,15 +49,14 @@ async function Buttons() {
                   <BsBasket />
                   <p>پنل کاربری</p>
                 </li>
-                {isAdmin ||
-                  (user?.role === "ADMIN" && (
-                    <Link href="/admin">
-                      <li className="flex items-center gap-2">
-                        <RiAdminLine />
-                        <p>پنل ادمین</p>
-                      </li>
-                    </Link>
-                  ))}
+                {isAdmin && (
+                  <Link href="/admin">
+                    <li className="flex items-center gap-2">
+                      <RiAdminLine />
+                      <p>پنل ادمین</p>
+                    </li>
+                  </Link>
+                )}
 
                 <SignOut />
               </ul>

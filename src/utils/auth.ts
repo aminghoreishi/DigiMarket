@@ -5,7 +5,8 @@ import { cookies } from "next/headers";
 import db from "@/config/db";
 import userModel from "@/models/user";
 import { NextResponse } from "next/server";
-import { log } from "console";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/lib/authOptions";
 
 const hashPassword = async (password) => {
   const hashP = await hash(password, 12);
@@ -40,6 +41,15 @@ const generateRefreshToken = (data) => {
 
 const authUser = async () => {
   try {
+    const session = await getServerSession(authOptions);
+    if (session?.user?.email) {
+      const user = await userModel
+        .findOne({ email: session.user.email })
+        .select("-password -refreshToken")
+        .lean();
+      if (user) return JSON.parse(JSON.stringify(user));
+    }
+
     await db();
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
