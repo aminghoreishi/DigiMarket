@@ -74,7 +74,7 @@ export const authOptions: NextAuthOptions = {
           path: "/",
           secure: process.env.NODE_ENV === "production",
           sameSite: "strict",
-          maxAge: 7 * 24 * 60 * 60, 
+          maxAge: 7 * 24 * 60 * 60,
         });
       }
 
@@ -98,12 +98,12 @@ export const authOptions: NextAuthOptions = {
         sameSite: "lax",
         path: "/",
         secure: process.env.NODE_ENV === "production",
-        maxAge: 7 * 24 * 60 * 60,
+        maxAge: 15 * 24 * 60 * 60,
       },
     },
   },
 
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/reg",
   },
 };

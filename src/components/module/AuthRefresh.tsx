@@ -36,7 +36,7 @@ export default function AuthRefresh() {
     };
 
     const interval = setInterval(async () => {
-      if (pathname.startsWith("/my-account")) {
+      if (pathname.startsWith("/admin")) {
         await refreshToken();
       }
     }, 50000);

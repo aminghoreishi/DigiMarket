@@ -16,6 +16,7 @@ type IUser = {
   _id: unknown;
   email?: string;
   role?: string;
+  fullName?: string;
   __v?: number;
 };
 
@@ -28,7 +29,6 @@ async function Buttons() {
   const user: IUser | null = await userModel
     .findOne({ email: session?.user?.email }, { password: 0, refreshToken: 0 })
     .lean<IUser>();
-  console.log(user);
 
   return (
     <div className="flex items-center font-danaMed gap-3">
@@ -42,15 +42,13 @@ async function Buttons() {
               <ul className="text-sm flex flex-col gap-4">
                 <li className="flex items-center gap-2">
                   <LuUser />
-                  <p>امیر رضا کریمی</p>
+                  <p>{user?.fullName || isUser.fullName}</p>
                 </li>
                 <li className="flex items-center gap-2">
                   <BsBasket />
                   <p>سفارش ها</p>
                 </li>
-                {/* {
-              isUser &&
-            } */}
+
                 <li className="flex items-center gap-2">
                   <BsBasket />
                   <p>پنل کاربری</p>
