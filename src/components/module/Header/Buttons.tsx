@@ -294,7 +294,7 @@ async function Buttons() {
         </>
       ) : (
         <div>
-          <Link href="/reg">
+          <Link href="/login">
             <button className="text-sm border-2 text-orange-500 transition-all hover:bg-orange-500 hover:text-white cursor-pointer border-orange-500 px-3 py-2 rounded-xl">
               وارد شوید
             </button>
