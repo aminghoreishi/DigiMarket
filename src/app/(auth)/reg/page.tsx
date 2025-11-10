@@ -231,7 +231,7 @@ function Page() {
           </div>
 
           {/* Google Sign-up */}
-          <div className="mt-5">
+          {/* <div className="mt-5">
             <button
               type="button"
               onClick={() => signIn("google", { callbackUrl: "/" })}
@@ -240,7 +240,7 @@ function Page() {
               <p>ثبت نام با گوگل</p>
               <FcGoogle size={15} />
             </button>
-          </div>
+          </div> */}
         </form>
 
         <hr className="text-zinc-400" />

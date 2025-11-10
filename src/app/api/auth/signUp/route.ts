@@ -49,14 +49,14 @@ export async function POST(req: NextRequest) {
     const role = userCount === 0 ? "ADMIN" : "USER";
 
     const accessToken = generateAccessToken({ email, role }); // 60s
-    const refreshToken = generateRefreshToken({ email });     // 15d
+    const refreshToken = generateRefreshToken({ email }); // 15d
 
     await userModel.create({
       fullName,
       email,
       password: hashedPassword,
       role,
-      refreshToken, 
+      refreshToken,
     });
 
     const response = NextResponse.json(
@@ -65,28 +65,19 @@ export async function POST(req: NextRequest) {
     );
 
     const isProd = process.env.NODE_ENV === "production";
-    const domain = process.env.COOKIE_DOMAIN; 
+    const domain = process.env.COOKIE_DOMAIN;
 
-    response.cookies.set("token", accessToken, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: "strict",
-      path: "/",
-      maxAge: 60,
-      domain,
+    const headers = new Headers();
+    headers.append("Set-Cookie", `token=${accessToken};path=/;httpOnly=true`);
+    headers.append(
+      "Set-Cookie",
+      `refresh-token=${refreshToken};path=/;httpOnly=true`
+    );
+
+    return new NextResponse(response.body, {
+      status: response.status,
+      headers,
     });
-
-    // Refresh Token Cookie (15 days)
-    response.cookies.set("refresh-token", refreshToken, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: "strict",
-      path: "/",
-      maxAge: 15 * 24 * 60 * 60, // 15 days
-      domain,
-    });
-
-    return response;
   } catch (error: any) {
     console.error("Signup error:", error);
     return NextResponse.json(

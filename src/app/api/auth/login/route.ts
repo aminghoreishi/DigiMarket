@@ -1,59 +1,73 @@
+// app/api/auth/login/route.ts
+import { NextRequest, NextResponse } from "next/server";
 import db from "@/config/db";
 import userModel from "@/models/user";
-import { generateAccessToken, generateRefreshToken, verifyPassword } from "@/utils/auth";
-import { NextRequest, NextResponse } from "next/server";
+import {
+  verifyPassword,
+  generateAccessToken,
+  generateRefreshToken,
+} from "@/utils/auth";
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     await db();
-    const { email, password } = await request.json();
+    const { email, password } = await req.json();
 
-    const isUserExite = await userModel.find({ email, password });
+    if (!email || !password) {
+      return NextResponse.json(
+        { success: false, message: "ایمیل و رمز عبور الزامی هستند" },
+        { status: 400 }
+      );
+    }
 
-    const verifyPass = verifyPassword(password, isUserExite.password);
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return NextResponse.json(
+        { success: false, message: "ایمیل یا رمز عبور اشتباه است" },
+        { status: 401 }
+      );
+    }
 
-    const accessToken = generateAccessToken({ email, role: isUserExite.role }); // 60s
-    const refreshToken = generateRefreshToken({ email }); // 15d
+    const isValid = await verifyPassword(password, user.password);
+    if (!isValid) {
+      return NextResponse.json(
+        { success: false, message: "ایمیل یا رمز عبور اشتباه است" },
+        { status: 401 }
+      );
+    }
 
-      await userModel.updateOne(
-      { _id: isUserExite._id },
-      { $set: { refreshToken } }
-    );
+    const accessToken = generateAccessToken({
+      email: user.email,
+      role: user.role,
+    });
+    const refreshToken = generateRefreshToken({ email: user.email });
+
+    await userModel.updateOne({ _id: user._id }, { $set: { refreshToken } });
 
     const response = NextResponse.json(
-      { message: "ورود با موفقیت انجام شد" },
+      { success: true, message: "ورود با موفقیت انجام شد" },
       { status: 200 }
     );
 
-     const isProd = process.env.NODE_ENV === "production";
-    const domain = process.env.COOKIE_DOMAIN; 
+    const isProd = process.env.NODE_ENV === "production";
 
+    const headers = new Headers();
+    headers.append("Set-Cookie", `token=${accessToken};path=/;httpOnly=true`);
+    headers.append(
+      "Set-Cookie",
+      `refresh-token=${refreshToken};path=/;httpOnly=true`
+    );
 
-    
-    response.cookies.set("token", accessToken, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: "strict",
-      path: "/",
-      maxAge: 60,
-      domain,
+    return new NextResponse(response.body, {
+      status: response.status,
+      headers,
     });
 
-    // Refresh Token Cookie (15 days)
-    response.cookies.set("refresh-token", refreshToken, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: "strict",
-      path: "/",
-      maxAge: 15 * 24 * 60 * 60, // 15 days
-      domain,
-    });
 
-    return response;
-
-  } catch (error) {
+  } catch (error: any) {
+    console.error("Login API error:", error);
     return NextResponse.json(
-      { message: error instanceof Error ? error.message : "An error occurred" },
+      { success: false, message: "خطا در سرور" },
       { status: 500 }
     );
   }

@@ -33,8 +33,6 @@ function Page() {
   } = useForm<FormValues>({ mode: "onChange" });
 
   const onSubmit = async (data: FormValues) => {
-    console.log(data);
-
     const obj = {
       fullName: data.fullName,
       email: data.email,
@@ -49,35 +47,35 @@ function Page() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(obj),
+        credentials: "include", // این خط مهمه!
       });
 
       const response = await res.json();
-
-      console.log(response);
+      console.log("Login response:", response);
 
       if (res.status === 200) {
         Swal.fire({
           title: "با موفقیت وارد شدید",
           icon: "success",
           confirmButtonText: "باشه",
-        }).then((res) => {
+        }).then(() => {
           route.push("/");
+          route.refresh(); // این خط مهمه!
         });
-      } else if (res.status === 422) {
+      } else {
         Swal.fire({
-          title: "ایمیل وارد شده قبلا ایجاد شده است",
-          icon: "error",
-          confirmButtonText: "باشه"
-        });
-      } else if (res.status === 500) {
-        Swal.fire({
-          title: "خطا در سمت سرور",
+          title: response.message || "خطا در ورود",
           icon: "error",
           confirmButtonText: "باشه",
         });
       }
     } catch (error) {
-      setIsLoading(false);
+      console.error("Login error:", error);
+      Swal.fire({
+        title: "خطا در ارتباط با سرور",
+        icon: "error",
+        confirmButtonText: "باشه",
+      });
     } finally {
       setIsLoading(false);
     }

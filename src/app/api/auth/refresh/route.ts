@@ -1,3 +1,4 @@
+// app/api/auth/refresh/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { verify, sign } from "jsonwebtoken";
 import db from "@/config/db";
@@ -7,16 +8,13 @@ export async function POST(req: NextRequest) {
   try {
     await db();
     const refreshToken = req.cookies.get("refresh-token")?.value;
-
-    if (!refreshToken) {
-      return NextResponse.json({ error: "No refresh token" }, { status: 401 });
-    }
+    if (!refreshToken) return NextResponse.json({ error: "No token" }, { status: 401 });
 
     const payload = verify(refreshToken, process.env.JWT_SECRET_REFRESH!) as { email: string };
-
     const user = await userModel.findOne({ email: payload.email });
+
     if (!user || user.refreshToken !== refreshToken) {
-      return NextResponse.json({ error: "Invalid refresh token" }, { status: 401 });
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
     const newAccessToken = sign(
@@ -25,8 +23,7 @@ export async function POST(req: NextRequest) {
       { expiresIn: "60s" }
     );
 
-    const response = NextResponse.json({ accessToken: newAccessToken });
-
+    const response = NextResponse.json({ success: true });
     response.cookies.set("token", newAccessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -36,7 +33,7 @@ export async function POST(req: NextRequest) {
     });
 
     return response;
-  } catch (error) {
-    return NextResponse.json({ error: "Invalid refresh token" }, { status: 401 });
+  } catch {
+    return NextResponse.json({ error: "Invalid token" }, { status: 401 });
   }
 }
