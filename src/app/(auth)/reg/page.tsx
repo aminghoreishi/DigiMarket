@@ -9,6 +9,7 @@ import { FcGoogle } from "react-icons/fc";
 import { BeatLoader } from "react-spinners";
 import { signIn } from "next-auth/react";
 import Swal from "sweetalert2";
+import Link from "next/link";
 
 type FormValues = {
   fullName: string;
@@ -247,7 +248,9 @@ function Page() {
         <div className="my-3 text-xs flex justify-center">
           <p>
             قبلاً ثبت‌نام کرده‌اید؟{" "}
-            <span className="text-orange-500 cursor-pointer">وارد شوید</span>
+            <Link href="/login">
+              <span className="text-orange-500 cursor-pointer">وارد شوید</span>
+            </Link>
           </p>
         </div>
       </div>

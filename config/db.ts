@@ -4,6 +4,13 @@ import "@/models/subSubCategory";
 
 import mongoose from "mongoose";
 
+declare global {
+  var mongoose: {
+    conn: mongoose.Mongoose | null;
+    promise: Promise<mongoose.Mongoose> | null;
+  };
+}
+
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/digimarket";
 
