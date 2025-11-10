@@ -65,29 +65,34 @@ function SideBar() {
             <span>کاربران</span>
           </li>
         </Link>
-        <Link href="/admin/categories">
-          <li
-            className={`flex items-center relative group text-sm gap-2 cursor-pointer transition-colors ${
-              route === "/admin/categories"
-                ? "text-blue-500"
-                : "text-gray-700 hover:text-blue-500"
-            }`}
-          >
-            <SlBasket size={20} />
+        <li
+          className={`flex items-center relative group text-sm gap-2 cursor-pointer transition-colors ${
+            route === "/admin/categories"
+              ? "text-blue-500"
+              : "text-gray-700 hover:text-blue-500"
+          }`}
+        >
+          <SlBasket size={20} />
+          <Link href="/admin/categories">
             <div className="flex items-center w-full justify-between">
               <span>دسته بندی ها</span>
               <p>
-                <MdKeyboardArrowDown size={20} className="transition-all group-hover:rotate-180" />
+                <MdKeyboardArrowDown
+                  size={20}
+                  className="transition-all group-hover:rotate-180"
+                />
               </p>
             </div>
+          </Link>
 
-            <div className="absolute top-full right-8 transition-all opacity-0 group-hover:opacity-100 duration-250 invisible group-hover:visible bg-white   mt-2 ">
-              <ul>
+          <div className="absolute top-full right-8 transition-all opacity-0 group-hover:opacity-100 duration-250 invisible group-hover:visible bg-white   mt-2 ">
+            <ul>
+              <Link href="/admin/categories">
                 <li className=" p-2   mt-2 w-40 ">زیر دسته بندی ها</li>
-              </ul>
-            </div>
-          </li>
-        </Link>
+              </Link>
+            </ul>
+          </div>
+        </li>
 
         <li className="flex items-center text-sm gap-2 cursor-pointer text-red-500 hover:text-red-600 transition-colors mt-12">
           <CiLogout size={20} />
