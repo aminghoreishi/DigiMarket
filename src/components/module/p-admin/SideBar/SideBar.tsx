@@ -66,14 +66,14 @@ function SideBar() {
           </li>
         </Link>
         <li
-          className={`flex items-center relative group text-sm gap-2 cursor-pointer transition-colors ${
+          className={`flex items-center  relative group text-sm gap-2 cursor-pointer transition-colors ${
             route === "/admin/categories"
               ? "text-blue-500"
               : "text-gray-700 hover:text-blue-500"
           }`}
         >
           <SlBasket size={20} />
-          <Link href="/admin/categories">
+          <Link href="/admin/categories" className="w-full">
             <div className="flex items-center w-full justify-between">
               <span>دسته بندی ها</span>
               <p>
@@ -92,6 +92,10 @@ function SideBar() {
               </Link>
             </ul>
           </div>
+        </li>
+
+        <li className=" text-sm">
+          <Link href="/">بازگشت به صحفه اصلی</Link>
         </li>
 
         <li className="flex items-center text-sm gap-2 cursor-pointer text-red-500 hover:text-red-600 transition-colors mt-12">

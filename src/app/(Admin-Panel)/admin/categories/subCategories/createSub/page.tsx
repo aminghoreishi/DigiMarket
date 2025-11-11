@@ -25,7 +25,6 @@ function Page() {
     setValue,
   } = useForm<FormData>({ mode: "all" });
 
-  
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -41,12 +40,10 @@ function Page() {
     fetchCategories();
   }, []);
 
- 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     setSelectedFile(file);
 
-   
     if (file) {
       setValue("img", e.target.files as any, { shouldValidate: true });
     } else {
@@ -54,7 +51,6 @@ function Page() {
     }
   };
 
- 
   const onSubmit = async (data: FormData) => {
     if (!selectedFile) {
       Swal.fire({
@@ -85,7 +81,6 @@ function Page() {
           timer: 2000,
         });
 
-      
         reset();
         setSelectedFile(null);
         if (fileInputRef.current) {
@@ -116,7 +111,6 @@ function Page() {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid md:grid-cols-2 gap-6">
-         
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               نام زیر دسته بندی
@@ -134,11 +128,12 @@ function Page() {
               placeholder="مثلاً: گوشی آیفون"
             />
             {errors.title && (
-              <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>
+              <p className="text-red-500 text-xs mt-1">
+                {errors.title.message}
+              </p>
             )}
           </div>
 
-         
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               لینک دسته بندی
@@ -148,7 +143,8 @@ function Page() {
                 required: "لینک الزامی است",
                 pattern: {
                   value: /^(?:\/)?[a-z0-9]+(?:[-\/][a-z0-9]+)*$/,
-                  message: "لینک باید فقط شامل حروف کوچک، اعداد، خط تیره و / باشد",
+                  message:
+                    "لینک باید فقط شامل حروف کوچک، اعداد، خط تیره و / باشد",
                 },
               })}
               className="border-2 w-full outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl px-3 py-2 text-sm border-zinc-200"
@@ -160,7 +156,6 @@ function Page() {
             )}
           </div>
 
-        
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               عکس زیردسته بندی
@@ -182,7 +177,6 @@ function Page() {
             )}
           </div>
 
-         
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               دسته بندی
@@ -208,12 +202,11 @@ function Page() {
           </div>
         </div>
 
-       
-        <div className="mt-8">
+        <div className="mt-5">
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-2.5 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed text-white rounded-lg font-danaMed text-sm transition-all"
+            className="bg-blue-500 text-xs text-white p-2 rounded-xl cursor-pointer transition-all hover:bg-blue-600"
           >
             {loading ? "در حال ایجاد..." : "ایجاد زیر دسته بندی"}
           </button>

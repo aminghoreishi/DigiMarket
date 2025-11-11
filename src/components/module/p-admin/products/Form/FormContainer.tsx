@@ -5,7 +5,7 @@ import LaptopFields from "./LaptopFields";
 import SmartwatchFields from "./SmartwatchFields";
 import { useState } from "react";
 
-function FormContainer({ categories }) {
+function FormContainer({ categories } : { categories: { _id: string; title: string }[] }) {
   const [rawPrice, setRawPrice] = useState<number>(0);
   const {
     register,
@@ -20,7 +20,7 @@ function FormContainer({ categories }) {
     name: "category",
   });
 
-  const submitForm = async (data) => {
+  const submitForm = async (data: any) => {
     const formData = new FormData();
 
     const laptopFeatures = {
@@ -187,7 +187,7 @@ function FormContainer({ categories }) {
               </p>
             )}
           </div>
-          {watchedCategory === "690a2fb904b179efa1860b12" && (
+          {watchedCategory === "6912c239c714dc8badfdbe30" && (
             <LaptopFields register={register} errors={errors} />
           )}
           {watchedCategory === "690b39962d29378e5b3d6194" && (
@@ -373,7 +373,7 @@ function FormContainer({ categories }) {
         <div className="mt-5 font-danaMed text-sm">
           <button
             type="submit"
-            className="bg-blue-500 text-white p-2 rounded-xl cursor-pointer transition-all hover:bg-blue-600 "
+            className="bg-blue-500 text-white p-2 rounded-xl cursor-pointer transition-all hover:bg-blue-600"
           >
             ایجاد محصول
           </button>

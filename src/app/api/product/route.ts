@@ -47,12 +47,12 @@ export async function POST(req: NextRequest) {
       const filename = `${Date.now()}-${image.name}`;
       const filepath = path.join(
         process.cwd(),
-        "public/uploads/product/",
+        "public/uploads/product",
         filename
       );
       await writeFile(filepath, buffer);
 
-      imagePaths.push(`/uploads/${filename}`);
+      imagePaths.push(`/uploads/product/${filename}`);
     }
 
     await productModel.create({

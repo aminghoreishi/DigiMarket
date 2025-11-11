@@ -8,7 +8,7 @@ async function page() {
     .find({})
     .populate("category", "subCategory")
     .lean();
-  // console.log(products);
+  console.log(products);
 
   return (
     <div>

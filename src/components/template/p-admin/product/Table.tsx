@@ -71,13 +71,28 @@ function Table({ products }) {
             </tr>
           </thead>
           <tbody>
+            {proSatate.length === 0 && (
+              <tr>
+                <td colSpan={7} className="text-center font-danaMed py-4">
+                  هیچ محصولی یافت نشد.
+                </td>
+              </tr>
+            )}
             {proSatate.map((pro) => (
-              <tr className="odd:bg-white font-danaMed even:bg-gray-50 border-b border-gray-200">
+              <tr
+                key={pro._id}
+                className="odd:bg-white font-danaMed even:bg-gray-50 border-b border-gray-200"
+              >
                 <th
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                 >
-                  <Image src={pro.images[1]} width={100} height={100} />
+                  <Image
+                    src={`http://localhost:3000${pro.images[1] || pro.images[0]}`}
+                    alt="product"
+                    width={100}
+                    height={100}
+                  />
                 </th>
                 <td className="px-6 py-4">{pro.name}</td>
                 <td className="px-6 py-4">Laptop</td>
