@@ -8,7 +8,7 @@ import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import { useState } from "react";
 import Image from "next/image";
 
-function SwiperImage() {
+function SwiperImage({ images }) {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
 
   return (
@@ -27,102 +27,20 @@ function SwiperImage() {
           modules={[FreeMode, Navigation, Thumbs]}
           className="mySwiper2"
         >
-          <SwiperSlide>
-            <div className="w-full h-56 sm:h-72 md:h-96 lg:h-[400px] relative">
-              <Image
-                src="/image/laptop.webp"
-                alt="gallery"
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 400px"
-                priority
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-full h-56 sm:h-72 md:h-96 lg:h-[400px] relative">
-              <Image
-                src="/image/laptop.webp"
-                alt="gallery"
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 400px"
-                priority
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-full h-56 sm:h-72 md:h-96 lg:h-[400px] relative">
-              <Image
-                src="/image/laptop.webp"
-                alt="gallery"
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 400px"
-                priority
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-full h-56 sm:h-72 md:h-96 lg:h-[400px] relative">
-              <Image
-                src="/image/laptop.webp"
-                alt="gallery"
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 400px"
-                priority
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-full h-56 sm:h-72 md:h-96 lg:h-[400px] relative">
-              <Image
-                src="/image/laptop.webp"
-                alt="gallery"
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 400px"
-                priority
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-full h-56 sm:h-72 md:h-96 lg:h-[400px] relative">
-              <Image
-                src="/image/laptop.webp"
-                alt="gallery"
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 400px"
-                priority
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-full h-56 sm:h-72 md:h-96 lg:h-[400px] relative">
-              <Image
-                src="/image/laptop.webp"
-                alt="gallery"
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 400px"
-                priority
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-full h-56 sm:h-72 md:h-96 lg:h-[400px] relative">
-              <Image
-                src="/image/laptop.webp"
-                alt="gallery"
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 400px"
-                priority
-              />
-            </div>
-          </SwiperSlide>
+          {images.map((image, index) => (
+            <SwiperSlide key={index}>
+              <div className="w-full h-56 sm:h-72 md:h-96 lg:h-[400px] relative">
+                <Image
+                  src={image}
+                  alt="gallery"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 400px"
+                  priority
+                />
+              </div>
+            </SwiperSlide>
+          ))}
 
           {/* add more slides as needed */}
         </Swiper>
@@ -160,12 +78,12 @@ function SwiperImage() {
           1024: { slidesPerView: 6.5 },
         }}
       >
-        {Array.from({ length: 8 }).map((_, i) => (
-          <SwiperSlide key={i}>
-            <div className="w-full border-2 border-zinc-200 h- cursor-pointer sm:h-24 md:h-28 relative rounded overflow-hidden">
+        {images.map((image, index) => (
+          <SwiperSlide key={index}>
+            <div className="w-full border-2 border-zinc-200 h-20 cursor-pointer relative rounded overflow-hidden">
               <Image
-                src="/image/laptop.webp"
-                alt={`thumb-${i}`}
+                src={image}
+                alt={`thumb-${index}`}
                 fill
                 className="object-cover"
                 sizes="80px"
@@ -173,8 +91,6 @@ function SwiperImage() {
             </div>
           </SwiperSlide>
         ))}
-
-        {/* add more thumbnail slides as needed */}
       </Swiper>
     </div>
   );

@@ -13,7 +13,7 @@ async function page({ params }) {
 
   const findProduct = await productModel.findOne({ _id: id }).lean();
 
-  // console.log(findProduct);
+  console.log(findProduct.images);
 
   return (
     <>
@@ -23,7 +23,7 @@ async function page({ params }) {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
               <div>
                 <div>
-                  <SwiperImage />
+                  <SwiperImage images={findProduct.images} />
                 </div>
               </div>
               <div className="">
