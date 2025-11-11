@@ -1,6 +1,46 @@
+"use client";
 import Image from "next/image";
+import { useState } from "react";
+import Swal from "sweetalert2";
 
 function Table({ products }) {
+  const [proSatate, setProSatate] = useState([...products]);
+  const removeProduct = async (id: string) => {
+    Swal.fire({
+      title: "آیا از حذف این محصول مطمئن هستید؟",
+      text: "این عملیات قابل بازگشت نیست!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "بله، حذف کن!",
+      cancelButtonText: "لغو",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await fetch(`/api/product/${id}`, {
+            method: "DELETE",
+          });
+          if (response.ok) {
+            try {
+              const res = await fetch("/api/product");
+              if (res.ok) {
+                const data = await res.json();
+                setProSatate(data);
+              }
+            } catch (error) {
+              console.error("Error fetching products:", error);
+            }
+
+            Swal.fire("محصول با موفقیت حذف شد!", "", "success");
+          }
+        } catch (error) {
+          console.error("Error deleting product:", error);
+        }
+      }
+    });
+  };
+
   return (
     <div className="mt-5">
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -25,10 +65,13 @@ function Table({ products }) {
               <th scope="col" className="px-6 py-3">
                 رنگ
               </th>
+              <th scope="col" className="px-6 py-3">
+                عملیات
+              </th>
             </tr>
           </thead>
           <tbody>
-            {products.map((pro) => (
+            {proSatate.map((pro) => (
               <tr className="odd:bg-white font-danaMed even:bg-gray-50 border-b border-gray-200">
                 <th
                   scope="row"
@@ -49,6 +92,19 @@ function Table({ products }) {
                     {pro.colors.map((c) => (
                       <div>{c}</div>
                     ))}
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="flex items-center gap-3">
+                    <button className="text-blue-600 hover:underline">
+                      ویرایش
+                    </button>
+                    <button
+                      className="text-red-600 hover:underline mr-2"
+                      onClick={() => removeProduct(pro._id)}
+                    >
+                      حذف
+                    </button>
                   </div>
                 </td>
               </tr>

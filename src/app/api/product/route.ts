@@ -88,6 +88,28 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    return NextResponse.json({ messge: error.message });
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 500 });
+    }
+    return NextResponse.json(
+      { message: "An unknown error occurred" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET() {
+  try {
+    await db();
+    const products = await productModel.find({}).lean();
+    return NextResponse.json(products, { status: 200 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 500 });
+    }
+    return NextResponse.json(
+      { message: "An unknown error occurred" },
+      { status: 500 }
+    );
   }
 }
