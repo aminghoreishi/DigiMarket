@@ -1,14 +1,62 @@
+"use client";
 import Image from "next/image";
+import { useState } from "react";
 import { MdNoPhotography } from "react-icons/md";
+import Swal from "sweetalert2";
 type SubCategory = {
   _id: string;
   title: string;
   category: { title: string };
   href: string;
-  img?: string | null; // اختیاری و ممکنه null باشه
+  img?: string | null;
 };
-
 function subCategoryTable({ data }: { data: SubCategory[] }) {
+  const [subCategory, setSubCategory] = useState([...data]);
+
+  const getSubCategories = async () => {
+    try {
+      const response = await fetch("/api/subCategory");
+
+      if (response.ok) {
+        const data = await response.json();
+        setSubCategory(data);
+      }
+    } catch (error) {
+      console.error("Error fetching subCategories:", error);
+    }
+  };
+
+  const removeSub = async (id: string) => {
+    Swal.fire({
+      title: "آیا از حذف این زیردسته مطمئن هستید؟",
+      text: "این عملیات قابل بازگشت نیست!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "بله، حذف شود!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await fetch(`/api/subCategory/${id}`, {
+            method: "DELETE",
+          });
+
+          if (response.ok) {
+            Swal.fire({
+              icon: "success",
+              title: "زیردسته با موفقیت حذف شد",
+            }).then(() => {
+              getSubCategories();
+            });
+          }
+        } catch (error) {
+          console.error("Error deleting subCategory:", error);
+        }
+      }
+    });
+  };
+
   return (
     <div className="mt-5">
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -36,7 +84,7 @@ function subCategoryTable({ data }: { data: SubCategory[] }) {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {subCategory.map((item, index) => (
               <tr
                 key={item._id}
                 className="odd:bg-white font-danaMed even:bg-gray-50 border-b border-gray-200"
@@ -67,7 +115,10 @@ function subCategoryTable({ data }: { data: SubCategory[] }) {
                     <button className="text-blue-600 hover:underline">
                       ویرایش
                     </button>
-                    <button className="text-red-600 hover:underline mr-2">
+                    <button
+                      onClick={() => removeSub(item._id)}
+                      className="text-red-600 hover:underline mr-2"
+                    >
                       حذف
                     </button>
                   </div>
