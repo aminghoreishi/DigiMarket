@@ -2,6 +2,7 @@ import TopBar from "@/components/module/p-admin/TopBar/TopBar";
 import subCategoryModel from "@/models/subCategory";
 import SubCategoryTable from "@/components/template/p-admin/category/subCategory/subCategoryTable";
 import Link from "next/link";
+import categoryModel from "@/models/category";
 async function page() {
   const subCat = await subCategoryModel.find({}).populate("category").lean();
 

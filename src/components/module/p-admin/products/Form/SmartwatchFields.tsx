@@ -128,7 +128,7 @@ function SmartwatchFields({ register, errors }) {
                 value: /^\d{1,3}(\.\d{1,2})?$/,
                 message: "وزن باید عددی معتبر باشد (مثلاً 45 یا 32.5)",
               },
-              validate: (value) => {
+              validate: (value ) => {
                 const num = parseFloat(value);
                 if (num < 5) return "وزن نمی‌تواند کمتر از ۵ گرم باشد";
                 if (num > 500) return "وزن نمی‌تواند بیشتر از ۵۰۰ گرم باشد";

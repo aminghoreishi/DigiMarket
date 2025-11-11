@@ -6,7 +6,7 @@ import MainContainer from "@/components/template/SingleProduct/MainContainer/Mai
 import SwiperImage from "@/components/template/SingleProduct/SwiperImage/SwiperImage";
 import productModel from "@/models/product";
 
-async function page({ params }) {
+async function page({ params } : { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
   console.log(id);

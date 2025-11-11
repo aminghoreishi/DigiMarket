@@ -16,6 +16,15 @@ export async function POST(req: NextRequest) {
     const buffer = Buffer.from(await img.arrayBuffer());
     const fileName = Date.now() + img.name;
 
+    const subs = await subCategoryModel.findOne({ title });
+    
+    if (subs) {
+      return NextResponse.json(
+        { message: "این زیر دسته بندی قبلاً ثبت شده است" },
+        { status: 400 }
+      );
+    }
+
     await writeFile(
       path.join(process.cwd(), "public/uploads/category/" + fileName),
       buffer
