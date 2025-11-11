@@ -5,15 +5,26 @@ import Info from "@/components/template/SingleProduct/Info/Info";
 import MainContainer from "@/components/template/SingleProduct/MainContainer/MainContainer";
 import SwiperImage from "@/components/template/SingleProduct/SwiperImage/SwiperImage";
 import productModel from "@/models/product";
+import { authUser } from "@/utils/auth";
 
-async function page({ params } : { params: Promise<{ id: string }> }) {
+type findProductType = {
+  _id: string;
+  images: string[];
+  price: number;
+  count: number;
+  delivery: boolean;
+};
+
+async function page({ params }: { params: Promise<{ id: string }> }) {
+  const user = await authUser();
+  const isLoggedIn = !!user.user;
   const { id } = await params;
 
   console.log(id);
 
   const findProduct = await productModel.findOne({ _id: id }).lean();
 
-  console.log(findProduct.images);
+  console.log(findProduct);
 
   return (
     <>
@@ -33,12 +44,17 @@ async function page({ params } : { params: Promise<{ id: string }> }) {
             </div>
           </div>
           <div className="  xl:col-span-3">
-            <Cart price={findProduct.price} count={findProduct.count} delivery={findProduct.delivery} />
+            <Cart
+              isLoggedIn={isLoggedIn}
+              price={findProduct.price}
+              count={findProduct.count}
+              delivery={findProduct.delivery}
+            />
           </div>
         </div>
 
         <div className="mt-8">
-          <MainContainer />
+          <MainContainer isLoggedIn={isLoggedIn} />
         </div>
       </div>
       <Footer />

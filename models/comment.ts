@@ -10,6 +10,11 @@ const comment = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    accept: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     product: {
       type: mongoose.Types.ObjectId,
       ref: "product",

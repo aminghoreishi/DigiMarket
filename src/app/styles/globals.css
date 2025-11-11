@@ -89,3 +89,7 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(230, 106, 4, 0.8);
 }
+
+.likeBtn {
+  @apply bg-green-500 text-white;
+}

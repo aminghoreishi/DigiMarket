@@ -4,7 +4,7 @@ import Specifications from "./Specifications";
 import CommentContainer from "./Comment/CommentContainer";
 import RelatedPro from "./RelatedPro/RelatedPro";
 
-function MainContainer() {
+function MainContainer({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
     <div>
       <div>
@@ -17,7 +17,7 @@ function MainContainer() {
         <Specifications />
       </div>
       <div className="mt-5">
-        <CommentContainer />
+        <CommentContainer isLoggedIn={isLoggedIn} />
       </div>
       <div className="mt-5">
         <RelatedPro />
