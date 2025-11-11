@@ -87,7 +87,7 @@ function SideBar() {
 
           <div className="absolute top-full right-8 transition-all opacity-0 group-hover:opacity-100 duration-250 invisible group-hover:visible bg-white   mt-2 ">
             <ul>
-              <Link href="/admin/categories">
+              <Link href="/admin/categories/subCategories">
                 <li className=" p-2   mt-2 w-40 ">زیر دسته بندی ها</li>
               </Link>
             </ul>
