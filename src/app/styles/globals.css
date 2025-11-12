@@ -93,3 +93,12 @@
 .likeBtn {
   @apply bg-green-500 text-white;
 }
+
+.swal2-popup {
+   @apply !font-danaMed;
+}
+
+.swal2-title,
+.swal2-content {
+  @apply !font-danaMed;
+}

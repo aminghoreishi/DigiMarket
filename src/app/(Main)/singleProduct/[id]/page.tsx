@@ -54,7 +54,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
         </div>
 
         <div className="mt-8">
-          <MainContainer isLoggedIn={isLoggedIn} />
+          <MainContainer isLoggedIn={isLoggedIn} findProductID={findProduct._id} />
         </div>
       </div>
       <Footer />

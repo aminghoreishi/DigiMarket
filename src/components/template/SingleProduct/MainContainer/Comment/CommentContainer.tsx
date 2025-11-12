@@ -1,14 +1,14 @@
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 
-function CommentContainer({isLoggedIn} : { isLoggedIn: boolean }) {
+function CommentContainer({isLoggedIn , findProductID}: { isLoggedIn: boolean; findProductID: string }) {
   return (
     <div className="border-t-2 font-danaMed border-zinc-200 pt-5">
       <h2>دیدگاه ها</h2>
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 mt-5">
         <div className="xl:col-span-3">
-          <CommentForm isLoggedIn={isLoggedIn} />
+          <CommentForm isLoggedIn={isLoggedIn} findProductID={JSON.parse(JSON.stringify(findProductID))} />
         </div>
         <div className="xl:col-span-9">
           <Comments />
