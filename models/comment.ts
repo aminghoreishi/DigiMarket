@@ -10,9 +10,8 @@ const comment = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    accept: {
+    isApproved: {
       type: Boolean,
-      required: true,
       default: false,
     },
     product: {
@@ -32,6 +31,7 @@ const comment = new mongoose.Schema(
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
+    timestamps: true,
   }
 );
 

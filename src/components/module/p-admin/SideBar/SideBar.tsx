@@ -7,7 +7,7 @@ import { SlBasket } from "react-icons/sl";
 import { FiUser } from "react-icons/fi";
 import { CiLogout } from "react-icons/ci";
 import { MdKeyboardArrowDown } from "react-icons/md";
-
+import { FaRegComments } from "react-icons/fa6";
 function SideBar() {
   const route = usePathname();
 
@@ -56,7 +56,7 @@ function SideBar() {
         <Link href="/admin/users">
           <li
             className={`flex items-center text-sm gap-2 cursor-pointer transition-colors ${
-              route === "/admin/users" 
+              route === "/admin/users"
                 ? "text-blue-500"
                 : "text-gray-700 hover:text-blue-500"
             }`}
@@ -67,7 +67,8 @@ function SideBar() {
         </Link>
         <li
           className={`flex items-center  relative group text-sm gap-2 cursor-pointer transition-colors ${
-            route === "/admin/categories" || route === "/admin/categories/subCategories"
+            route === "/admin/categories" ||
+            route === "/admin/categories/subCategories"
               ? "text-blue-500"
               : "text-gray-700 hover:text-blue-500"
           }`}
@@ -93,6 +94,19 @@ function SideBar() {
             </ul>
           </div>
         </li>
+
+        <Link href="/admin/comment">
+          <li
+            className={`flex items-center text-sm gap-2 cursor-pointer transition-colors ${
+              route === "/admin/comment"
+                ? "text-blue-500"
+                : "text-gray-700 hover:text-blue-500"
+            }`}
+          >
+            <FaRegComments size={20} />
+            <span>کامنت ها</span>
+          </li>
+        </Link>
 
         <li className=" text-sm">
           <Link href="/">بازگشت به صحفه اصلی</Link>

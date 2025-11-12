@@ -1,10 +1,11 @@
+import "@/models/comment"; 
+import productModel from "@/models/product";  
 import Footer from "@/components/module/Footer/Footer";
 import BredCrumbs from "@/components/template/SingleProduct/BreadCrumbs/BredCrumbs";
 import Cart from "@/components/template/SingleProduct/Cart/Cart";
 import Info from "@/components/template/SingleProduct/Info/Info";
 import MainContainer from "@/components/template/SingleProduct/MainContainer/MainContainer";
 import SwiperImage from "@/components/template/SingleProduct/SwiperImage/SwiperImage";
-import productModel from "@/models/product";
 import { authUser } from "@/utils/auth";
 
 type findProductType = {
@@ -22,7 +23,13 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
 
   console.log(id);
 
-  const findProduct = await productModel.findOne({ _id: id }).lean();
+  const findProduct = (await productModel
+    .findOne({ _id: id })
+    .populate({
+      path: "comment",
+      match: { isApproved: true },
+    })
+    .lean({ virtuals: true })) as unknown as findProductType;
 
   console.log(findProduct);
 
@@ -54,7 +61,11 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
         </div>
 
         <div className="mt-8">
-          <MainContainer isLoggedIn={isLoggedIn} findProductID={findProduct._id} longDescription={findProduct.longDescription} />
+          <MainContainer
+            isLoggedIn={isLoggedIn}
+            findProductID={findProduct._id}
+            longDescription={findProduct.longDescription}
+          />
         </div>
       </div>
       <Footer />
