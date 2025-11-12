@@ -1,8 +1,11 @@
+// src/components/template/p-admin/category/subCategory/subCategoryTable.tsx
 "use client";
+import Pagination from "@/components/module/Pagination/Pagination";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdNoPhotography } from "react-icons/md";
 import Swal from "sweetalert2";
+
 type SubCategory = {
   _id: string;
   title: string;
@@ -10,24 +13,59 @@ type SubCategory = {
   href: string;
   img?: string | null;
 };
-function subCategoryTable({ data }: { data: SubCategory[] }) {
-  const [subCategory, setSubCategory] = useState([...data]);
+
+type Pagination = {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  limit: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+};
+
+function SubCategoryTable({
+  subCategoriesServer,
+  totalPages,
+}: {
+  subCategoriesServer?: SubCategory[];
+  totalPages?: number;
+}) {
+  const [subCategories, setSubCategories] = useState<SubCategory[]>([
+    ...(subCategoriesServer || []),
+  ]);
+  const [pagination, setPagination] = useState<Pagination | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPageState, setTotalPageState] = useState(totalPages || 1);
+
+  useEffect(() => {
+    const shouldFetch = !subCategoriesServer.length || currentPage > 1;
+    if (shouldFetch) {
+      getSubCategories();
+    } else {
+      // استفاده از داده‌های سرور برای صفحه 1
+      setSubCategories(subCategoriesServer);
+    }
+  }, [currentPage, subCategoriesServer]);
 
   const getSubCategories = async () => {
     try {
-      const response = await fetch("/api/subCategory");
+      const response = await fetch(`/api/subCategory?page=${currentPage}`);
 
-      if (response.ok) {
-        const data = await response.json();
-        setSubCategory(data);
-      }
+      if (!response.ok) throw new Error("Failed to fetch");
+
+      const { subCategories, totalPages } = await response.json();
+
+      console.log(subCategories);
+
+      setSubCategories(subCategories); // ← array only
+      // ← metadata for UI
     } catch (error) {
       console.error("Error fetching subCategories:", error);
     }
   };
 
   const removeSub = async (id: string) => {
-    Swal.fire({
+    const result = await Swal.fire({
       title: "آیا از حذف این زیردسته مطمئن هستید؟",
       text: "این عملیات قابل بازگشت نیست!",
       icon: "warning",
@@ -35,65 +73,46 @@ function subCategoryTable({ data }: { data: SubCategory[] }) {
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
       confirmButtonText: "بله، حذف شود!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          const response = await fetch(`/api/subCategory/${id}`, {
-            method: "DELETE",
-          });
-
-          if (response.ok) {
-            Swal.fire({
-              icon: "success",
-              title: "زیردسته با موفقیت حذف شد",
-            }).then(() => {
-              getSubCategories();
-            });
-          }
-        } catch (error) {
-          console.error("Error deleting subCategory:", error);
-        }
-      }
+      cancelButtonText: "خیر",
     });
+
+    if (result.isConfirmed) {
+      try {
+        const res = await fetch(`/api/subCategory/${id}`, { method: "DELETE" });
+        if (res.ok) {
+          Swal.fire({ icon: "success", title: "زیردسته با موفقیت حذف شد" });
+          getSubCategories(); // refresh list
+        }
+      } catch (err) {
+        console.error("Error deleting subCategory:", err);
+      }
+    }
   };
 
   return (
     <div className="mt-5">
+      {/* Table */}
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-600">
           <thead className="text-xs font-danaMed text-gray-700 uppercase bg-gray-100">
             <tr>
-              <th scope="col" className="px-6 py-3">
-                شماره
-              </th>
-              <th scope="col" className="px-6 py-3">
-                عکس
-              </th>
-              <th scope="col" className="px-6 py-3">
-                عنوان
-              </th>
-              <th scope="col" className="px-6 py-3">
-                والد
-              </th>
-              <th scope="col" className="px-6 py-3">
-                لینک
-              </th>
-              <th scope="col" className="px-6 py-3">
-                عملیات
-              </th>
+              <th className="px-6 py-3">شماره</th>
+              <th className="px-6 py-3">عکس</th>
+              <th className="px-6 py-3">عنوان</th>
+              <th className="px-6 py-3">والد</th>
+              <th className="px-6 py-3">لینک</th>
+              <th className="px-6 py-3">عملیات</th>
             </tr>
           </thead>
+
           <tbody>
-            {subCategory.map((item, index) => (
+            {subCategories.map((item, index) => (
               <tr
                 key={item._id}
                 className="odd:bg-white font-danaMed even:bg-gray-50 border-b border-gray-200"
               >
-                <th
-                  scope="row"
-                  className="px-6 py-4 ss02 font-medium text-gray-900 whitespace-nowrap"
-                >
-                  {index + 1}
+                <th className="px-6 py-4 ss02 font-medium text-gray-900 whitespace-nowrap">
+                  {(currentPage - 1) * (pagination?.limit ?? 6) + index + 1}
                 </th>
                 <td className="px-6 py-4">
                   {item.img ? (
@@ -101,14 +120,16 @@ function subCategoryTable({ data }: { data: SubCategory[] }) {
                       src={item.img}
                       width={90}
                       height={90}
-                      alt="subCategory"
+                      alt={item.title}
                     />
                   ) : (
                     <MdNoPhotography className="text-gray-400" size={40} />
                   )}
                 </td>
                 <td className="px-6 py-4">{item.title}</td>
-                <td className="px-6 py-4">{item.category.title}</td>
+                <td className="px-6 py-4">
+                  {item.category?.title || "بدون دسته بندی"}
+                </td>
                 <td className="px-6 py-4">{item.href}</td>
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
@@ -128,8 +149,16 @@ function subCategoryTable({ data }: { data: SubCategory[] }) {
           </tbody>
         </table>
       </div>
+
+      {totalPageState && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPageState={totalPageState}
+        />
+      )}
     </div>
   );
 }
 
-export default subCategoryTable;
+export default SubCategoryTable;

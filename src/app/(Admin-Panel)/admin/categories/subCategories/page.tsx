@@ -2,11 +2,22 @@ import TopBar from "@/components/module/p-admin/TopBar/TopBar";
 import subCategoryModel from "@/models/subCategory";
 import SubCategoryTable from "@/components/template/p-admin/category/subCategory/subCategoryTable";
 import Link from "next/link";
-import categoryModel from "@/models/category";
-async function page() {
-  const subCat = await subCategoryModel.find({}).populate("category").lean();
+import db from "@/config/db";
 
-  console.log(subCat);
+async function page() {
+  await db();
+  const subCategories = await subCategoryModel
+    .find({})
+    .skip(0)
+    .limit(3)
+    .populate("category")
+    .lean();
+
+  const total = await subCategoryModel.countDocuments({});
+
+  const totalPages = Math.ceil(total / 3);
+
+  console.log(subCategories);
 
   return (
     <div>
@@ -21,7 +32,10 @@ async function page() {
       </div>
 
       <div>
-        <SubCategoryTable data={JSON.parse(JSON.stringify(subCat))} />
+        <SubCategoryTable
+          subCategoriesServer={JSON.parse(JSON.stringify(subCategories))}
+          totalPages={totalPages}
+        />
       </div>
     </div>
   );
