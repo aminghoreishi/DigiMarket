@@ -4,14 +4,14 @@ import Specifications from "./Specifications";
 import CommentContainer from "./Comment/CommentContainer";
 import RelatedPro from "./RelatedPro/RelatedPro";
 
-function MainContainer({ isLoggedIn, findProductID }: { isLoggedIn: boolean; findProductID: string }) {
+function MainContainer({ isLoggedIn, findProductID , longDescription }: { isLoggedIn: boolean; findProductID: string; longDescription: string }) {
   return (
     <div>
       <div>
         <Navbar />
       </div>
       <div className="mt-5">
-        <Description />
+        <Description longDescription={longDescription} />
       </div>
       <div className="mt-5">
         <Specifications />

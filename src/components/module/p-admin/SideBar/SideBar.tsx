@@ -56,7 +56,7 @@ function SideBar() {
         <Link href="/admin/users">
           <li
             className={`flex items-center text-sm gap-2 cursor-pointer transition-colors ${
-              route === "/admin/users"
+              route === "/admin/users" 
                 ? "text-blue-500"
                 : "text-gray-700 hover:text-blue-500"
             }`}
@@ -67,7 +67,7 @@ function SideBar() {
         </Link>
         <li
           className={`flex items-center  relative group text-sm gap-2 cursor-pointer transition-colors ${
-            route === "/admin/categories"
+            route === "/admin/categories" || route === "/admin/categories/subCategories"
               ? "text-blue-500"
               : "text-gray-700 hover:text-blue-500"
           }`}
@@ -85,10 +85,10 @@ function SideBar() {
             </div>
           </Link>
 
-          <div className="absolute top-full right-8 transition-all opacity-0 group-hover:opacity-100 duration-250 invisible group-hover:visible bg-white   mt-2 ">
+          <div className="absolute top-[170%] p-4 rounded-xl w-full bg-white right-0 shadow-2xl transition-all opacity-0 group-hover:opacity-100 duration-250 invisible group-hover:visible">
             <ul>
               <Link href="/admin/categories/subCategories">
-                <li className=" p-2   mt-2 w-40 ">زیر دسته بندی ها</li>
+                <li className="">زیر دسته بندی ها</li>
               </Link>
             </ul>
           </div>
