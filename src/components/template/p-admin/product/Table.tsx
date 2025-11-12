@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useState } from "react";
 import Swal from "sweetalert2";
 
-function Table({ products }) {
+function Table({ products } : { products: any[] }) {
   const [proSatate, setProSatate] = useState([...products]);
   const removeProduct = async (id: string) => {
     Swal.fire({
@@ -104,7 +104,7 @@ function Table({ products }) {
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center">
-                    {pro.colors.map((c) => (
+                    {pro.colors.map((c: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined) => (
                       <div>{c}</div>
                     ))}
                   </div>

@@ -1,4 +1,3 @@
-// src/components/template/p-admin/category/subCategory/subCategoryTable.tsx
 "use client";
 import Pagination from "@/components/module/Pagination/Pagination";
 import Image from "next/image";
@@ -33,16 +32,14 @@ function SubCategoryTable({
   const [subCategories, setSubCategories] = useState<SubCategory[]>([
     ...(subCategoriesServer || []),
   ]);
-  const [pagination, setPagination] = useState<Pagination | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPageState, setTotalPageState] = useState(totalPages || 1);
 
   useEffect(() => {
-    const shouldFetch = !subCategoriesServer.length || currentPage > 1;
+    const shouldFetch =
+      !subCategoriesServer || !subCategoriesServer.length || currentPage > 1;
     if (shouldFetch) {
       getSubCategories();
     } else {
-      // استفاده از داده‌های سرور برای صفحه 1
       setSubCategories(subCategoriesServer);
     }
   }, [currentPage, subCategoriesServer]);
@@ -53,12 +50,8 @@ function SubCategoryTable({
 
       if (!response.ok) throw new Error("Failed to fetch");
 
-      const { subCategories, totalPages } = await response.json();
-
-      console.log(subCategories);
-
-      setSubCategories(subCategories); // ← array only
-      // ← metadata for UI
+      const { subCategories } = await response.json();
+      setSubCategories(subCategories);
     } catch (error) {
       console.error("Error fetching subCategories:", error);
     }
@@ -81,7 +74,7 @@ function SubCategoryTable({
         const res = await fetch(`/api/subCategory/${id}`, { method: "DELETE" });
         if (res.ok) {
           Swal.fire({ icon: "success", title: "زیردسته با موفقیت حذف شد" });
-          getSubCategories(); // refresh list
+          getSubCategories();
         }
       } catch (err) {
         console.error("Error deleting subCategory:", err);
@@ -91,7 +84,6 @@ function SubCategoryTable({
 
   return (
     <div className="mt-5">
-      {/* Table */}
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-600">
           <thead className="text-xs font-danaMed text-gray-700 uppercase bg-gray-100">
@@ -112,7 +104,7 @@ function SubCategoryTable({
                 className="odd:bg-white font-danaMed even:bg-gray-50 border-b border-gray-200"
               >
                 <th className="px-6 py-4 ss02 font-medium text-gray-900 whitespace-nowrap">
-                  {(currentPage - 1) * (pagination?.limit ?? 6) + index + 1}
+                  {(currentPage - 1) * (totalPages?.limit ?? 6) + index + 1}
                 </th>
                 <td className="px-6 py-4">
                   {item.img ? (
@@ -150,11 +142,11 @@ function SubCategoryTable({
         </table>
       </div>
 
-      {totalPageState && (
+      {totalPages && (
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-          totalPageState={totalPageState}
+          totalPages={totalPages}
         />
       )}
     </div>

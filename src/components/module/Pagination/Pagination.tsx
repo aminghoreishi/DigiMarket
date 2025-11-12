@@ -1,4 +1,12 @@
-function Pagination({ currentPage, setCurrentPage, totalPageState }: { currentPage: number; setCurrentPage: (page: number) => void; totalPageState: number }) {
+function Pagination({
+  currentPage,
+  setCurrentPage,
+  totalPages,
+}: {
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+  totalPages: number;
+}) {
   return (
     <div
       dir="ltr"
@@ -12,7 +20,7 @@ function Pagination({ currentPage, setCurrentPage, totalPageState }: { currentPa
         قبلی
       </button>
 
-      {Array.from({ length: totalPageState }, (_, i) => i + 1).map((p) => (
+      {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
         <button
           key={p}
           onClick={() => setCurrentPage(p)}
@@ -26,7 +34,7 @@ function Pagination({ currentPage, setCurrentPage, totalPageState }: { currentPa
 
       <button
         onClick={() => setCurrentPage(currentPage + 1)}
-        disabled={currentPage === totalPageState}
+        disabled={currentPage === totalPages}
         className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
       >
         بعدی
