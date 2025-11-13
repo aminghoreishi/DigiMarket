@@ -1,5 +1,6 @@
 import db from "@/config/db";
 import commentModel from "@/models/comment";
+import { authAdmin } from "@/utils/auth";
 import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -20,8 +21,31 @@ export async function POST(req: NextRequest) {
     );
   } catch (error) {
     console.error("Error creating comment:", error);
+    return new Response(JSON.stringify({ message: "خطا در ثبت دیدگاه" }), {
+      status: 500,
+    });
+  }
+}
+
+export async function GET() {
+  const isAdmin = await authAdmin();
+  
+  if (!isAdmin) {
+    return new Response(JSON.stringify({ message: "Unauthorized access" }), {
+      status: 401,
+    });
+  }
+
+  try {
+    await db();
+
+    const comments = await commentModel.find({}).populate("product").lean();
+
+    return new Response(JSON.stringify({ data: comments }), { status: 200 });
+  } catch (error) {
+    console.error("Error fetching comments:", error);
     return new Response(
-      JSON.stringify({ message: "خطا در ثبت دیدگاه" }),
+      JSON.stringify({ message: "خطا در دریافت دیدگاه‌ها" }),
       { status: 500 }
     );
   }

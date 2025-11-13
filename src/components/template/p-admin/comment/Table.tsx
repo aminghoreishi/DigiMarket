@@ -1,16 +1,38 @@
 "use client";
 
 import Modal from "@/components/module/Modal/Modal";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CommentDetails from "./CommentDetail";
 import Swal from "sweetalert2";
 
 const jalaali = require("jalaali-js");
 
-
 const Table = ({ comments }: { comments: any[] }) => {
+  const [commentState, setCommentState] = useState([...comments]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [comment, setComment] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    if (currentPage === 1 && comments?.length) {
+      setCommentState(comments);
+    } else {
+      getComments(currentPage);
+    }
+  }, [currentPage, comments]);
+
+  const getComments = async (page: number) => {
+    try {
+      const res = await fetch(`/api/comment?page=${page}`);
+      if (res.ok) {
+        const data = await res.json();
+        setCommentState(data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
+  };
+
   const getDaysAgo = (createdAt: string) => {
     const commentDate = new Date(createdAt);
     const today = new Date();
@@ -57,18 +79,17 @@ const Table = ({ comments }: { comments: any[] }) => {
   };
 
   const onAccept = async () => {
-
     const res = await fetch(`/api/comment/${comment._id}`, {
       method: "PATCH",
     });
 
     if (res.ok) {
       Swal.fire({
-        title:'با موفقعیت قبول شد'
-      }).then(res => {})
-
-  }
-}
+        title: "با موفقعیت قبول شد",
+      }).then((res) => {});
+      getComments();
+    }
+  };
   return (
     <>
       <div className="mt-5">
@@ -94,7 +115,7 @@ const Table = ({ comments }: { comments: any[] }) => {
               </tr>
             </thead>
             <tbody>
-              {comments.map((comment, index) => (
+              {commentState.map((comment, index) => (
                 <tr
                   key={comment._id}
                   className="odd:bg-white font-danaMed even:bg-gray-50 border-b border-gray-200"
@@ -137,8 +158,22 @@ const Table = ({ comments }: { comments: any[] }) => {
         </div>
       </div>
 
-      <Modal onAccept={onAccept} isOpen={isModalOpen} onClose={onClose} title="جزئیات کامنت" acceptLabel='قبول' declineLabel="رد">
-        <CommentDetails body={comment.body} likesCount={comment.likesCount} dislikesCount={comment.dislikesCount} createdAt={comment.createdAt} product={comment.product?.title} />
+      <Modal
+        isApproved={comment.isApproved}
+        onAccept={onAccept}
+        isOpen={isModalOpen}
+        onClose={onClose}
+        title="جزئیات کامنت"
+        acceptLabel="قبول"
+        declineLabel="رد"
+      >
+        <CommentDetails
+          body={comment.body}
+          likesCount={comment.likesCount}
+          dislikesCount={comment.dislikesCount}
+          createdAt={comment.createdAt}
+          product={comment.product?.title}
+        />
       </Modal>
     </>
   );
