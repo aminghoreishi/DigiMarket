@@ -51,6 +51,8 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
               price={findProduct.price}
               count={findProduct.count}
               delivery={findProduct.delivery}
+              name={findProduct.title}
+              id={findProduct._id}
             />
           </div>
         </div>
@@ -58,7 +60,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
         <div className="mt-8">
           <MainContainer
             isLoggedIn={isLoggedIn}
-            userID={user.user._id}
+            userID={user?.user?._id}
             findProductID={findProduct._id}
             longDescription={findProduct.longDescription}
           />

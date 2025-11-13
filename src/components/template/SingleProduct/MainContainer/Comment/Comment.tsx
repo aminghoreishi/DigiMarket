@@ -1,6 +1,6 @@
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
-function Comment({ comment }) {
+function Comment({ comment }: { comment: any }) {
   console.log(comment);
 
   return (

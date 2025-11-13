@@ -10,6 +10,7 @@ function CommentForm({
 }: {
   isLoggedIn: boolean;
   findProductID: string;
+  userID: string;
 }) {
   const [body, setBody] = useState<string>("");
   const [isOk, setIsOk] = useState<boolean | null>(null);

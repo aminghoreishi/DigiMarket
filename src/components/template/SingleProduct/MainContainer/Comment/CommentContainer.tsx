@@ -1,7 +1,7 @@
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 
-function CommentContainer({isLoggedIn , userID , findProductID}: { isLoggedIn: boolean; findProductID: string }) {
+function CommentContainer({isLoggedIn , userID , findProductID}: { isLoggedIn: boolean; findProductID: string ; userID: string }) {
   return (
     <div className="border-t-2 font-danaMed border-zinc-200 pt-5">
       <h2>دیدگاه ها</h2>

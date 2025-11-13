@@ -4,7 +4,7 @@ import Specifications from "./Specifications";
 import CommentContainer from "./Comment/CommentContainer";
 import RelatedPro from "./RelatedPro/RelatedPro";
 
-function MainContainer({ isLoggedIn, findProductID , userID , longDescription }: { isLoggedIn: boolean; findProductID: string; longDescription: string }) {
+function MainContainer({ isLoggedIn, findProductID , userID , longDescription }: { isLoggedIn: boolean; findProductID: string; longDescription: string ; userID: string }) {
   return (
     <div>
       <div>

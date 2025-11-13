@@ -1,8 +1,8 @@
 import { SiAdguard } from "react-icons/si";
 import { AiOutlineLike } from "react-icons/ai";
 import { BsTruck } from "react-icons/bs";
-import CartAddCount from "./CartAddCount";
-function CartAdd({ count, price, delivery }) {
+import CartContainer from "./CartContainer";
+function CartAdd({ count, price, delivery , name , id } : { count: number; price: number; delivery: boolean | number }) {
   return (
     <div className="mt-5 select-none">
       <div className="rounded-xl border-2 border-zinc-200 p-5 space-y-4">
@@ -36,12 +36,7 @@ function CartAdd({ count, price, delivery }) {
           )}
         </div>
         <div>
-          <CartAddCount />
-        </div>
-        <div>
-          <button className="bg-orange-500 select-none text-white p-2 rounded-lg font-danaMed w-full text-sm cursor-pointer">
-            افزودن به سبد خرید
-          </button>
+          <CartContainer count={count} name={name} id={id} price={price} />
         </div>
       </div>
     </div>
