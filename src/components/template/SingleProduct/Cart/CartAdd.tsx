@@ -36,7 +36,7 @@ function CartAdd({ count, price, delivery , name , id , img } : { count: number;
           )}
         </div>
         <div>
-          <CartContainer count={count} name={name} id={id} price={price} img={img} />
+          <CartContainer count={JSON.parse(JSON.stringify(count))} name={JSON.parse(JSON.stringify(name))} id={JSON.parse(JSON.stringify(id))} price={JSON.parse(JSON.stringify(price))} img={JSON.parse(JSON.stringify(img))} />
         </div>
       </div>
     </div>
