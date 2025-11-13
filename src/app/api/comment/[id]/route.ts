@@ -62,7 +62,7 @@ export async function GET(
     const { id } = await params;
 
     const { searchParams } = new URL(req.url);
-    const page = JSON.parse(searchParams.get("page")) || 1;
+    const page = JSON.parse(searchParams.get("page") || "1");
 
     const skip = (Number(page) - 1) * 4;
 
@@ -70,10 +70,15 @@ export async function GET(
       .find({ product: { _id: id } })
       .skip(skip)
       .limit(4)
+      .populate("user")
       .lean();
 
     console.log(comments);
 
-    return NextResponse.json({ data: comments }, { status: 200 });
+    const total = await commentModel.countDocuments({});
+
+    const totalPages = Math.ceil(total / 4);
+
+    return NextResponse.json({ data: comments, totalPages }, { status: 200 });
   } catch (error) {}
 }

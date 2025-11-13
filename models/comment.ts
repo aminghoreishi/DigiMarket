@@ -10,6 +10,11 @@ const comment = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    user : {
+      type : mongoose.Types.ObjectId,
+      ref:'user',
+      required:true
+    },
     isApproved: {
       type: Boolean,
       default: false,
@@ -29,8 +34,6 @@ const comment = new mongoose.Schema(
     },
   },
   {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
     timestamps: true,
   }
 );

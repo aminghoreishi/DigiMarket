@@ -4,7 +4,7 @@ import Specifications from "./Specifications";
 import CommentContainer from "./Comment/CommentContainer";
 import RelatedPro from "./RelatedPro/RelatedPro";
 
-function MainContainer({ isLoggedIn, findProductID , longDescription }: { isLoggedIn: boolean; findProductID: string; longDescription: string }) {
+function MainContainer({ isLoggedIn, findProductID , userID , longDescription }: { isLoggedIn: boolean; findProductID: string; longDescription: string }) {
   return (
     <div>
       <div>
@@ -17,7 +17,7 @@ function MainContainer({ isLoggedIn, findProductID , longDescription }: { isLogg
         <Specifications />
       </div>
       <div className="mt-5">
-        <CommentContainer isLoggedIn={isLoggedIn} findProductID={findProductID} />
+        <CommentContainer userID={userID} isLoggedIn={isLoggedIn} findProductID={findProductID} />
       </div>
       <div className="mt-5">
         <RelatedPro />

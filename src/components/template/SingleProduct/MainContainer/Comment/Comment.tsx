@@ -1,19 +1,29 @@
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
-function Comment() {
+function Comment({ comment }) {
+  console.log(comment);
+
   return (
     <div className="font-danaMed pb-5">
-      <h2 className="text-lg">توسط کاربر مهمان</h2>
+      <h2 className="text-lg">{comment.user.fullName}</h2>
       <div className="flex text-sm max-sm:text-xs items-center gap-2 my-3 border-b-2 border-b-zinc-200 pb-2">
-        <p>11 بهمن</p>
+        <p>{comment.createdAt.slice(0,10)}</p>
         <p className="bg-green-500 text-white px-2 rounded-xl py-1 ">خریدار</p>
       </div>
       <div className="mt-2">
-        <div className="flex items-center gap-2 mb-2 text-green-500">
-          <AiOutlineLike size={19} />
-          <p>پیشنهاد میشود</p>
-        </div>
-        <p className="text-sm">واقعا لپ تاپ عالی از هر نظر نسبت به قیمتش</p>
+        {comment.isOk ? (
+          <div className="flex items-center gap-2 mb-2 text-green-500">
+            <AiOutlineLike size={19} />
+            <p>پیشنهاد میشود</p>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2 mb-2 text-red-500">
+            <AiOutlineDislike size={19} />
+            <p>پیشنهاد نمی شود</p>
+          </div>
+        )}
+
+        <p className="text-sm">{comment.body}</p>
       </div>
       <div className="">
         <div className="flex justify-end gap-5 items-center">

@@ -7,12 +7,13 @@ export async function POST(req: NextRequest) {
   try {
     await db();
 
-    const { body, isOk, product } = await req.json();
+    const { body, isOk, product, user } = await req.json();
 
     await commentModel.create({
       body,
       isOk,
       product,
+      user,
     });
 
     return new Response(

@@ -1,5 +1,4 @@
 "use client";
-import { log } from "console";
 import { useState } from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
@@ -7,6 +6,7 @@ import Swal from "sweetalert2";
 function CommentForm({
   isLoggedIn,
   findProductID,
+  userID,
 }: {
   isLoggedIn: boolean;
   findProductID: string;
@@ -54,6 +54,7 @@ function CommentForm({
           body,
           isOk,
           product: findProductID,
+          user: userID,
         }),
       });
 
