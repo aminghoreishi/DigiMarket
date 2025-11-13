@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
+import { BeatLoader } from "react-spinners";
 import Swal from "sweetalert2";
 function CommentForm({
   isLoggedIn,
@@ -14,6 +15,7 @@ function CommentForm({
 }) {
   const [body, setBody] = useState<string>("");
   const [isOk, setIsOk] = useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const createComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -46,6 +48,7 @@ function CommentForm({
     }
 
     try {
+      setIsLoading(true);
       const response = await fetch("/api/comment", {
         method: "POST",
         headers: {
@@ -75,6 +78,8 @@ function CommentForm({
       }
     } catch (error) {
       console.error("Error creating comment:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -117,7 +122,7 @@ function CommentForm({
             onClick={createComment}
             className="bg-orange-500 text-white text-sm p-2 rounded-xl font-danaMed w-full"
           >
-            ارسال دیدگاه
+            {isLoading ? <BeatLoader size={9} color="white" /> : "ارسال دیدگاه"}
           </button>
         </div>
       </form>
