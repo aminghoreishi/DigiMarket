@@ -3,7 +3,7 @@ import Table from "@/components/template/p-admin/comment/Table";
 import commentModel from "@/models/comment";
 
 async function page() {
-  const comments = await commentModel.find({}).lean();
+  const comments = await commentModel.find({}).populate("product").lean();
   return (
     <div>
       <TopBar title="کامنت ها" />
