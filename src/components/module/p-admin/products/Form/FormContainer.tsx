@@ -5,7 +5,11 @@ import LaptopFields from "./LaptopFields";
 import SmartwatchFields from "./SmartwatchFields";
 import { useState } from "react";
 
-function FormContainer({ categories } : { categories: { _id: string; title: string }[] }) {
+function FormContainer({
+  categories,
+}: {
+  categories: { _id: string; title: string }[];
+}) {
   const [rawPrice, setRawPrice] = useState<number>(0);
   const {
     register,
@@ -42,7 +46,7 @@ function FormContainer({ categories } : { categories: { _id: string; title: stri
     };
 
     const selectedFeatures =
-      data.category === "690a2fb904b179efa1860b12"
+      data.category === "6912c239c714dc8badfdbe30"
         ? laptopFeatures
         : data.category === "690b39962d29378e5b3d6194"
           ? smartwatchFeatures
@@ -69,7 +73,7 @@ function FormContainer({ categories } : { categories: { _id: string; title: stri
       });
     }
 
-    console.log("features:", features); 
+    console.log("features:", features);
 
     const res = await fetch("/api/product", {
       method: "POST",
@@ -355,7 +359,6 @@ function FormContainer({ categories } : { categories: { _id: string; title: stri
               placeholder="توضیحات کامل درباره ویژگی‌ها و مشخصات محصول..."
               {...register("longDescription", {
                 required: "توضیحات محصول الزامی است",
-               
               })}
               className={`border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm ${
                 errors.longDescription ? "border-red-400" : ""

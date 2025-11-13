@@ -2,7 +2,7 @@ import { AiOutlineMessage } from "react-icons/ai";
 import { FaStar } from "react-icons/fa6";
 import { CiCircleInfo } from "react-icons/ci";
 import FeatureContainer from "../FeatureContainer/FeatureContainer";
-function Info() {
+function Info({features}) {
   return (
     <div className="mt-5">
       <div>
@@ -28,7 +28,7 @@ function Info() {
         </div>
       </div>
       <div className="mt-3 border-b-2 border-zinc-200 pb-5">
-        <FeatureContainer />
+        <FeatureContainer features={features} />
       </div>
       
       <div className="flex items-center gap-3 mt-5 text-zinc-500">

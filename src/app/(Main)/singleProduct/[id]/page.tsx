@@ -26,6 +26,9 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
 
   const findProduct = await productModel.findOne({ _id: id }).lean();
 
+  console.log(findProduct);
+  
+
 
 
   return (
@@ -41,7 +44,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
               </div>
               <div className="">
                 <BredCrumbs />
-                <Info />
+                <Info features={findProduct.features} />
               </div>
             </div>
           </div>
