@@ -2,7 +2,7 @@ import { SiAdguard } from "react-icons/si";
 import { AiOutlineLike } from "react-icons/ai";
 import { BsTruck } from "react-icons/bs";
 import CartContainer from "./CartContainer";
-function CartAdd({ count, price, delivery , name , id } : { count: number; price: number; delivery: boolean | number }) {
+function CartAdd({ count, price, delivery , name , id , img } : { count: number; price: number; delivery: boolean | number; name: string; id: string; img: string }) {
   return (
     <div className="mt-5 select-none">
       <div className="rounded-xl border-2 border-zinc-200 p-5 space-y-4">
@@ -36,7 +36,7 @@ function CartAdd({ count, price, delivery , name , id } : { count: number; price
           )}
         </div>
         <div>
-          <CartContainer count={count} name={name} id={id} price={price} />
+          <CartContainer count={count} name={name} id={id} price={price} img={img} />
         </div>
       </div>
     </div>

@@ -56,6 +56,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
               delivery={findProduct.delivery}
               name={findProduct.title}
               id={findProduct._id}
+              img={findProduct.images[0]|| findProduct.images[1]}
             />
           </div>
         </div>
