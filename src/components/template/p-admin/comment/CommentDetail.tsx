@@ -1,6 +1,16 @@
+import { getDaysAgo } from "@/utils/cal";
+import { get } from "http";
 import React from "react";
 
-const CommentDetails: React.FC = ({
+interface CommentDetailsProps {
+  body: string;
+  likesCount: number;
+  dislikesCount: number;
+  createdAt: string;
+  product: string;
+}
+
+const CommentDetails: React.FC<CommentDetailsProps> = ({
   body,
   likesCount,
   dislikesCount,
@@ -25,7 +35,7 @@ const CommentDetails: React.FC = ({
         </div>
         <div className="flex items-center gap-5 text-sm">
           <p>تاریخ ایجاد:</p>
-          <p>{createdAt}</p>
+          <p>{getDaysAgo(createdAt)}</p>
         </div>
         <div className="flex items-center gap-5 text-sm">
           <p>محصول:</p>
