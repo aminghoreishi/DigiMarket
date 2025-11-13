@@ -8,7 +8,7 @@ function SwiperProduct({ title, images, price, _id }) {
     <div className="border-2 px-4 py-3 border-gray-200 rounded-xl">
       <div className="flex justify-center">
         <Image
-          src={images?.[1] || images?.[0] || "/image/placeholder.png"}
+          src={images?.[0] || images?.[1] || "/image/placeholder.png"}
           className="!size-52"
           width={200}
           height={200}

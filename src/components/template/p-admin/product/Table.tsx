@@ -88,7 +88,7 @@ function Table({ products } : { products: any[] }) {
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                 >
                   <Image
-                    src={`http://localhost:3000${pro.images[1] || pro.images[0]}`}
+                    src={`http://localhost:3000${pro.images[0] || pro.images[1]}`}
                     alt="product"
                     width={100}
                     height={100}
