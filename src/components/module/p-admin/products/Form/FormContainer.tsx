@@ -4,6 +4,10 @@ import ColorSelector from "./ColorSelector";
 import LaptopFields from "./LaptopFields";
 import SmartwatchFields from "./SmartwatchFields";
 import { useState } from "react";
+import { BeatLoader } from "react-spinners";
+
+import Swal from "sweetalert2";
+import { getFeatures } from "@/utils/productCategory";
 
 function FormContainer({
   categories,
@@ -11,6 +15,7 @@ function FormContainer({
   categories: { _id: string; title: string }[];
 }) {
   const [rawPrice, setRawPrice] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -26,35 +31,7 @@ function FormContainer({
 
   const submitForm = async (data: any) => {
     const formData = new FormData();
-
-    const laptopFeatures = {
-      ram: data.ramLap,
-      storage: data.storageLap,
-      screenSize: data.screenSize,
-      cpu: data.cpu,
-      gpu: data.gpu,
-      weight: data.weight,
-    };
-
-    const smartwatchFeatures = {
-      ram: data.ram,
-      storage: data.storage,
-      screenSize: data.screenSize,
-      chipset: data.chipset,
-      os: data.os,
-      weight: data.weight,
-    };
-
-    const selectedFeatures =
-      data.category === "6912c239c714dc8badfdbe30"
-        ? laptopFeatures
-        : data.category === "690b39962d29378e5b3d6194"
-          ? smartwatchFeatures
-          : {};
-
-    const features = Object.entries(selectedFeatures)
-      .filter(([_, value]) => value != null && value !== "")
-      .map(([name, value]) => ({ name, value: value.toString() }));
+    const features = getFeatures(data, data.category);
 
     formData.append("title", data.title || "");
     formData.append("name", data.name || "");
@@ -73,15 +50,27 @@ function FormContainer({
       });
     }
 
-    console.log("features:", features);
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/product", {
+        method: "POST",
+        body: formData,
+      });
 
-    const res = await fetch("/api/product", {
-      method: "POST",
-      body: formData,
-    });
+      if (res.ok) {
+        Swal.fire({
+          title: "محصول با موفقیت ثبت شد",
+          icon: "success",
+          confirmButtonText: "باشه",
+        });
+      }
 
-    const response = await res.json();
-    console.log("پاسخ:", response);
+      const response = await res.json();
+    } catch (error) {
+      console.error("خطا در ارسال فرم:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -378,7 +367,7 @@ function FormContainer({
             type="submit"
             className="bg-blue-500 text-white p-2 rounded-xl cursor-pointer transition-all hover:bg-blue-600"
           >
-            ایجاد محصول
+            {isLoading ? <BeatLoader size={9} color="white" /> : "ارسال محصول"}
           </button>
         </div>
       </form>
