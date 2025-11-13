@@ -53,3 +53,27 @@ export async function PATCH(
     );
   }
 }
+
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+
+    const { searchParams } = new URL(req.url);
+    const page = JSON.parse(searchParams.get("page")) || 1;
+
+    const skip = (Number(page) - 1) * 4;
+
+    const comments = await commentModel
+      .find({ product: { _id: id } })
+      .skip(skip)
+      .limit(4)
+      .lean();
+
+    console.log(comments);
+
+    return NextResponse.json({ data: comments }, { status: 200 });
+  } catch (error) {}
+}

@@ -28,14 +28,6 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
-  const isAdmin = await authAdmin();
-  
-  if (!isAdmin) {
-    return new Response(JSON.stringify({ message: "Unauthorized access" }), {
-      status: 401,
-    });
-  }
-
   try {
     await db();
 
