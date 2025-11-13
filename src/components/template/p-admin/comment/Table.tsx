@@ -3,9 +3,12 @@
 import Modal from "@/components/module/Modal/Modal";
 import { useState } from "react";
 import CommentDetails from "./CommentDetail";
+import Swal from "sweetalert2";
 
 const jalaali = require("jalaali-js");
-function Table({ comments }: { comments: any[] }) {
+
+
+const Table = ({ comments }: { comments: any[] }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [comment, setComment] = useState({});
   const getDaysAgo = (createdAt: string) => {
@@ -55,9 +58,17 @@ function Table({ comments }: { comments: any[] }) {
 
   const onAccept = async () => {
 
-    // const 
+    const res = await fetch(`/api/comment/${comment._id}`, {
+      method: "PATCH",
+    });
+
+    if (res.ok) {
+      Swal.fire({
+        title:'با موفقعیت قبول شد'
+      }).then(res => {})
 
   }
+}
   return (
     <>
       <div className="mt-5">
@@ -126,11 +137,11 @@ function Table({ comments }: { comments: any[] }) {
         </div>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={onClose} title="جزئیات کامنت" acceptLabel='قبول' declineLabel="رد">
+      <Modal onAccept={onAccept} isOpen={isModalOpen} onClose={onClose} title="جزئیات کامنت" acceptLabel='قبول' declineLabel="رد">
         <CommentDetails body={comment.body} likesCount={comment.likesCount} dislikesCount={comment.dislikesCount} createdAt={comment.createdAt} product={comment.product?.title} />
       </Modal>
     </>
   );
-}
+};
 
 export default Table;

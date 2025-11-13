@@ -70,6 +70,7 @@ const Modal: React.FC<ModalProps> = ({
             <button
               data-modal-hide="static-modal"
               type="button"
+              onClick={onAccept}
               className=" bg-blue-500  text-white rounded-xl cursor-pointer transition-all hover:bg-blue-600 bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
             >
               {acceptLabel}
