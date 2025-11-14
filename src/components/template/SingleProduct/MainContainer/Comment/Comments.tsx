@@ -10,15 +10,15 @@ function Comments({ findProductID }: { findProductID: string }) {
 
   useEffect(() => {
     getComment();
-  }, []);
+  }, [currentPage]);
 
   const getComment = async () => {
     const res = await fetch(
-      `http://localhost:3000/api/comment/${findProductID}?page=1`
+      `http://localhost:3000/api/comment/${findProductID}?page=${currentPage}`
     );
 
     const response = await res.json();
-    console.log(response.data);
+    console.log(response.totalPages);
     setComments(response.data);
     setTotalPages(response.totalPages);
   };

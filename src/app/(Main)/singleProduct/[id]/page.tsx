@@ -27,9 +27,6 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
   const findProduct = await productModel.findOne({ _id: id }).lean();
 
   console.log(findProduct);
-  
-
-
 
   return (
     <>
@@ -56,7 +53,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
               delivery={findProduct.delivery}
               name={findProduct.title}
               id={findProduct._id}
-              img={findProduct.images[0]|| findProduct.images[1]}
+              img={findProduct.images[0] || findProduct.images[1]}
             />
           </div>
         </div>
@@ -66,6 +63,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
             isLoggedIn={isLoggedIn}
             userID={user?.user?._id}
             findProductID={findProduct._id}
+            features={JSON.parse(JSON.stringify(findProduct.features))}
             longDescription={findProduct.longDescription}
           />
         </div>

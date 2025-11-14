@@ -75,7 +75,10 @@ export async function GET(
 
     console.log(comments);
 
-    const total = await commentModel.countDocuments({});
+    const total = await commentModel.countDocuments({
+      isApproved: true,
+      product: { _id: id },
+    });
 
     const totalPages = Math.ceil(total / 4);
 
