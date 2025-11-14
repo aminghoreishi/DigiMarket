@@ -31,7 +31,7 @@ function SwiperProduct({ title, images, price, _id }) {
             <div className="size-4 bg-zinc-300 rounded-full"></div>
           </div>
           <div className="flex items-start gap-x-1 text-xs text-zinc-500">
-            <span>
+            <span className="font-danaMed ss02">
               <span>(12)</span>
               <span>3.9</span>
             </span>

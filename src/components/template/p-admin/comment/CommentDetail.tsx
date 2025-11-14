@@ -3,11 +3,13 @@ import { get } from "http";
 import React from "react";
 
 interface CommentDetailsProps {
-  body: string;
-  likesCount: number;
-  dislikesCount: number;
-  createdAt: string;
-  product: string;
+  body: string | undefined;
+  likesCount: number | undefined;
+  dislikesCount: number | undefined;
+  createdAt: string | undefined;
+  product: {
+    title: string | undefined;
+  } | undefined;
 }
 
 const CommentDetails: React.FC<CommentDetailsProps> = ({
@@ -39,7 +41,7 @@ const CommentDetails: React.FC<CommentDetailsProps> = ({
         </div>
         <div className="flex items-center gap-5 text-sm">
           <p>محصول:</p>
-          <p className="text-xs">{product}</p>
+          <p className="text-xs">{product?.title}</p>
         </div>
       </div>
     </div>

@@ -5,7 +5,6 @@ import "swiper/css";
 import SwiperProduct from "@/components/module/SwiperProduct/SwiperProduct";
 
 function SwiperProductContainer({ products = [] }) {
-  // جلوگیری از ارور در رندر اول
   if (!Array.isArray(products) || products.length === 0) {
     return (
       <div className="text-center text-zinc-400 py-10">

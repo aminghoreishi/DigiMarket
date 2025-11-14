@@ -7,12 +7,28 @@ import Swal from "sweetalert2";
 import { getDaysAgo } from "@/utils/cal";
 import Pagination from "@/components/module/Pagination/Pagination";
 
-type TableProps = { comments: any[] };
+type CommentType = {
+  _id: string;
+  body: string | undefined;
+  createdAt: string | undefined;
+  isApproved: boolean | undefined;
+  likesCount: number | undefined;
+  dislikesCount: number | undefined;
+  product: {
+    title: string | undefined;
+  } | undefined;
+};
 
-const Table = ({ comments , totalPages }: { comments: any[] }) => {
+const Table = ({
+  comments,
+  totalPages,
+}: {
+  comments: CommentType[];
+  totalPages: number;
+}) => {
   const [commentState, setCommentState] = useState([...comments]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [comment, setComment] = useState({});
+  const [comment, setComment] = useState<CommentType | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -46,7 +62,7 @@ const Table = ({ comments , totalPages }: { comments: any[] }) => {
   };
 
   const onAccept = async () => {
-    const res = await fetch(`/api/comment/${comment._id}`, {
+    const res = await fetch(`/api/comment/${comment?._id}`, {
       method: "PATCH",
     });
 
@@ -138,7 +154,7 @@ const Table = ({ comments , totalPages }: { comments: any[] }) => {
       </div>
 
       <Modal
-        isApproved={comment.isApproved}
+        isApproved={comment?.isApproved}
         onAccept={onAccept}
         isOpen={isModalOpen}
         onClose={onClose}
@@ -147,11 +163,11 @@ const Table = ({ comments , totalPages }: { comments: any[] }) => {
         declineLabel="رد"
       >
         <CommentDetails
-          body={comment.body}
-          likesCount={comment.likesCount}
-          dislikesCount={comment.dislikesCount}
-          createdAt={comment.createdAt}
-          product={comment.product?.title}
+          body={comment?.body}
+          likesCount={comment?.likesCount}
+          dislikesCount={comment?.dislikesCount}
+          createdAt={comment?.createdAt}
+          product={comment?.product?.title}
         />
       </Modal>
 

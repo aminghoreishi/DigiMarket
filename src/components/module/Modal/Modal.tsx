@@ -11,6 +11,7 @@ interface ModalProps {
   onAccept?: () => void;
   onDecline?: () => void;
   showFooter?: boolean;
+  isApproved?: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
