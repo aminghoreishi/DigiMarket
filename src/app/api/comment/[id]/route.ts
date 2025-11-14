@@ -67,7 +67,7 @@ export async function GET(
     const skip = (Number(page) - 1) * 4;
 
     const comments = await commentModel
-      .find({ product: { _id: id } })
+      .find({ product: { _id: id }, isApproved: true })
       .skip(skip)
       .limit(4)
       .populate("user")
