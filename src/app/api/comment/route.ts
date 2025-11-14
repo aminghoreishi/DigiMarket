@@ -1,7 +1,6 @@
 import db from "@/config/db";
 import commentModel from "@/models/comment";
-import { authAdmin } from "@/utils/auth";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
@@ -28,16 +27,35 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     await db();
 
-    const comments = await commentModel.find({}).populate("product").lean();
+    const { searchParams } = new URL(req.url);
+    const page = JSON.parse(searchParams.get("page") || "1");
 
-    return new Response(JSON.stringify({ data: comments }), { status: 200 });
+    const skip = (Number(page) - 1) * 7;
+
+    const comments = await commentModel
+      .find({})
+      .sort({ createdAt: -1 })
+      .populate("product")
+      .skip(skip)
+      .limit(7)
+      .lean();
+
+    const totalComments = await commentModel.countDocuments({});
+    const totalPages = Math.ceil(totalComments / 7);
+
+    return NextResponse.json(
+      { data: comments, totalPages },
+      {
+        status: 200,
+      }
+    );
   } catch (error) {
     console.error("Error fetching comments:", error);
-    return new Response(
+    return NextResponse.json(
       JSON.stringify({ message: "خطا در دریافت دیدگاه‌ها" }),
       { status: 500 }
     );

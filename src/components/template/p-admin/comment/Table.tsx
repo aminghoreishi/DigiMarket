@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import CommentDetails from "./CommentDetail";
 import Swal from "sweetalert2";
 import { getDaysAgo } from "@/utils/cal";
+import Pagination from "@/components/module/Pagination/Pagination";
 
 type TableProps = { comments: any[] };
 
-const Table = ({ comments }: { comments: any[] }) => {
+const Table = ({ comments , totalPages }: { comments: any[] }) => {
   const [commentState, setCommentState] = useState([...comments]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [comment, setComment] = useState({});
@@ -28,6 +29,7 @@ const Table = ({ comments }: { comments: any[] }) => {
       if (res.ok) {
         const data = await res.json();
         setCommentState(data.data);
+        console.log(data.data);
       }
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -95,7 +97,7 @@ const Table = ({ comments }: { comments: any[] }) => {
                     scope="row"
                     className="px-6 ss02 py-4 font-medium text-gray-900 whitespace-nowrap"
                   >
-                    {index + 1}
+                    {(currentPage - 1) * 7 + index + 1}
                   </th>
                   <td className="px-6 ss02 py-4">
                     {getDaysAgo(comment.createdAt)}
@@ -152,6 +154,14 @@ const Table = ({ comments }: { comments: any[] }) => {
           product={comment.product?.title}
         />
       </Modal>
+
+      {totalPages && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
+      )}
     </>
   );
 };
