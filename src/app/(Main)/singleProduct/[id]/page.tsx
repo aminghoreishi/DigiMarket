@@ -41,7 +41,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
               </div>
               <div className="">
                 <BredCrumbs />
-                <Info features={findProduct.features} />
+                <Info features={findProduct.features}  findProductID={findProduct._id} />
               </div>
             </div>
           </div>
@@ -49,6 +49,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
             <Cart
               isLoggedIn={isLoggedIn}
               price={findProduct.price}
+              colors={findProduct.colors}
               count={findProduct.count}
               delivery={findProduct.delivery}
               name={findProduct.title}
@@ -62,6 +63,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
           <MainContainer
             isLoggedIn={isLoggedIn}
             userID={user?.user?._id}
+            
             findProductID={findProduct._id}
             features={JSON.parse(JSON.stringify(findProduct.features))}
             longDescription={findProduct.longDescription}

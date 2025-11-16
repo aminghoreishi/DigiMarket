@@ -1,8 +1,13 @@
-import { AiOutlineMessage } from "react-icons/ai";
-import { FaStar } from "react-icons/fa6";
 import { CiCircleInfo } from "react-icons/ci";
 import FeatureContainer from "../FeatureContainer/FeatureContainer";
-function Info({features}) {
+import CommentRate from "./CommentRate";
+function Info({
+  features,
+  findProductID,
+}: {
+  features: any[];
+  findProductID: string;
+}) {
   return (
     <div className="mt-5">
       <div>
@@ -15,22 +20,14 @@ function Info({features}) {
           Asus Zenbook S 13 OLED UX5304VA-NQ003 13.3 Inch Laptop
         </p>
       </div>
-      <div className="flex items-center mt-3 gap-3">
-        <div className="flex items-center font-danaMed text-orange-400 text-sm gap-2">
-          <AiOutlineMessage />
-          <p className="font-danaMed ss02">
-            <span>2</span> دیدگاه
-          </p>
-        </div>
-        <div className="text-sm flex items-center gap-2" dir="rtl">
-          <p className=" font-danaMed ss02">(72) 4.4</p>
-          <FaStar />
-        </div>
+      <div>
+        <CommentRate findProductID={findProductID.toString()} />
       </div>
+
       <div className="mt-3 border-b-2 border-zinc-200 pb-5">
         <FeatureContainer features={features} />
       </div>
-      
+
       <div className="flex items-center gap-3 mt-5 text-zinc-500">
         <div>
           <CiCircleInfo size={20} />

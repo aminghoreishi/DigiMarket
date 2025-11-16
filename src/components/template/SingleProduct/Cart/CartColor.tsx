@@ -1,21 +1,22 @@
-function CartColor() {
+import { toEnglish } from "@/utils/color";
+
+function CartColor({ colors }: { colors: string[] }) {
   return (
     <div>
       <h2 className="font-danaMed">رنگ:</h2>
 
       <div className="flex items-center mt-2 gap-2">
-        <div className="border-2 flex  items-center p-2 font-danaMed text-xs gap-x-1 cursor-pointer rounded-xl border-zinc-200">
-          <div className="size-4 bg-gray-200 rounded-full"></div>
-          <p>خاکستری</p>
-        </div>
-        <div className="border-2 flex  items-center p-2 font-danaMed text-xs gap-x-1 cursor-pointer rounded-xl border-zinc-200">
-          <div className="size-4 bg-gray-200 rounded-full"></div>
-          <p>خاکستری</p>
-        </div>
-        <div className="border-2 flex  items-center p-2 font-danaMed text-xs gap-x-1 cursor-pointer rounded-xl border-zinc-200">
-          <div className="size-4 bg-gray-400 rounded-full"></div>
-          <p>خاکستری</p>
-        </div>
+        {colors.map((color, index) => (
+          <div
+            key={index}
+            className={`border-2 flex  items-center p-2 font-danaMed text-xs gap-x-1 cursor-pointer rounded-xl border-zinc-200 `}
+          >
+            <div
+              className={`size-4 bg-${toEnglish(color)}-500 rounded-full`}
+            ></div>
+            <p>{color}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

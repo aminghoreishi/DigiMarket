@@ -30,7 +30,7 @@ function Comments({ findProductID }: { findProductID: string }) {
         <Comment key={comment._id} comment={comment} />
       ))}
 
-      {totalPages && (
+      {totalPages > 1 && (
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

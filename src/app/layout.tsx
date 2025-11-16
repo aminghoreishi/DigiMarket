@@ -2,6 +2,7 @@ import "./styles/globals.css";
 
 import ClientProviders from "./providers";
 
+
 export const metadata = {
   title: "DigiMarket",
   description: "فروشگاه دیجیتال",
@@ -16,6 +17,7 @@ export default function RootLayout({
     <html lang="fa">
       <body dir="rtl">
         <ClientProviders>{children}</ClientProviders>
+       
       </body>
     </html>
   );

@@ -62,7 +62,7 @@ export async function GET(
     const { id } = await params;
 
     const { searchParams } = new URL(req.url);
-    const page = JSON.parse(searchParams.get("page") || "1");
+    const page = JSON.parse(searchParams.get("page"));
 
     const skip = (Number(page) - 1) * 4;
 
@@ -81,6 +81,10 @@ export async function GET(
     });
 
     const totalPages = Math.ceil(total / 4);
+
+    if (!page) {
+      return NextResponse.json({ data: comments, totalPages }, { status: 200 });
+    }
 
     return NextResponse.json({ data: comments, totalPages }, { status: 200 });
   } catch (error) {}

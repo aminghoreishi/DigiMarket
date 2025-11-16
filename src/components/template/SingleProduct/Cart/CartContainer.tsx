@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import CartAddCount from "./CartAddCount";
+import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 function CartContainer({
   count,
   name,
@@ -39,9 +41,19 @@ function CartContainer({
           }
         });
         localStorage.setItem("product", JSON.stringify(cart));
+        toast.success("محصول به سبد خرید اضافه شد", {
+          style: { fontFamily: "dana", fontSize: "14px" },
+          className: "!font-danaMed",
+          duration: 3000,
+        });
       } else {
         cart.push(cartObject);
         localStorage.setItem("product", JSON.stringify(cart));
+        toast.success("محصول به سبد خرید اضافه شد", {
+          style: { fontFamily: "dana", fontSize: "14px" },
+          className: "!font-danaMed",
+          duration: 3000,
+        });
       }
     } else {
       cart.push(cartObject);
@@ -57,6 +69,18 @@ function CartContainer({
 
   return (
     <>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          className: "!font-danaMed",
+          duration: 3000,
+          style: {
+            fontSize: "14px",
+            fontFamily: "dana",
+          },
+        }}
+      />
       <div>
         <CartAddCount
           countServer={count}
