@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import CartAddCount from "./CartAddCount";
 import toast from "react-hot-toast";
-import { Toaster } from "react-hot-toast";
+
 function CartContainer({
   count,
   name,
@@ -17,6 +17,12 @@ function CartContainer({
   img: string;
 }) {
   const [countCart, setCountCart] = useState(1);
+
+  useEffect(() => {
+    if (countCart > count) {
+      setCountCart(count);
+    }
+  }, [countCart]);
 
   const addProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -61,26 +67,8 @@ function CartContainer({
     }
   };
 
-  useEffect(() => {
-    if (countCart > count) {
-      setCountCart(count);
-    }
-  }, [countCart]);
-
   return (
     <>
-      <Toaster
-        position="top-right"
-        reverseOrder={false}
-        toastOptions={{
-          className: "!font-danaMed",
-          duration: 3000,
-          style: {
-            fontSize: "14px",
-            fontFamily: "dana",
-          },
-        }}
-      />
       <div>
         <CartAddCount
           countServer={count}

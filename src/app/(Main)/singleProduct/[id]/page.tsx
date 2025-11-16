@@ -7,7 +7,6 @@ import Info from "@/components/template/SingleProduct/Info/Info";
 import MainContainer from "@/components/template/SingleProduct/MainContainer/MainContainer";
 import SwiperImage from "@/components/template/SingleProduct/SwiperImage/SwiperImage";
 import { authUser } from "@/utils/auth";
-import commentModel from "@/models/comment";
 
 type findProductType = {
   _id: string;
@@ -41,7 +40,10 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
               </div>
               <div className="">
                 <BredCrumbs />
-                <Info features={findProduct.features}  findProductID={findProduct._id} />
+                <Info
+                  features={findProduct.features}
+                  findProductID={findProduct._id}
+                />
               </div>
             </div>
           </div>
@@ -63,7 +65,6 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
           <MainContainer
             isLoggedIn={isLoggedIn}
             userID={user?.user?._id}
-            
             findProductID={findProduct._id}
             features={JSON.parse(JSON.stringify(findProduct.features))}
             longDescription={findProduct.longDescription}

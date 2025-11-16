@@ -1,5 +1,6 @@
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
+import { memo } from "react";
 
 function CommentContainer({
   isLoggedIn,
@@ -10,6 +11,8 @@ function CommentContainer({
   findProductID: string;
   userID: string;
 }) {
+  console.log("findProduct", findProductID);
+
   return (
     <div className="border-t-2 font-danaMed border-zinc-200 pt-5">
       <h2>دیدگاه ها</h2>
@@ -19,15 +22,21 @@ function CommentContainer({
           <CommentForm
             userID={userID}
             isLoggedIn={isLoggedIn}
-            findProductID={JSON.parse(JSON.stringify(findProductID))}
+            findProductID={findProductID}
           />
         </div>
-        <div className="xl:col-span-9">
-          <Comments findProductID={findProductID.toString()} />
-        </div>
+        <CommentCon findProductID={findProductID} />
       </div>
     </div>
   );
 }
+
+const CommentCon = memo(({ findProductID }: { findProductID: string }) => {
+  return (
+    <div className="xl:col-span-9">
+      <Comments findProductID={findProductID.toString()} />
+    </div>
+  );
+});
 
 export default CommentContainer;

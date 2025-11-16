@@ -1,6 +1,5 @@
 import CartColor from "./CartColor";
 import CartAdd from "./CartAdd";
-import { ToastBar } from "react-hot-toast";
 
 function Cart({
   count,
@@ -21,7 +20,6 @@ function Cart({
 }) {
   return (
     <>
-      
       <div>
         <div>
           <CartColor colors={colors} />

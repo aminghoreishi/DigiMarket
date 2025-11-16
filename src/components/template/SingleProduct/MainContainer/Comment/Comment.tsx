@@ -1,13 +1,14 @@
+import { memo } from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
-function Comment({ comment }: { comment: any }) {
+const Comment = memo(({ comment }: { comment: any }) => {
   console.log(comment);
 
   return (
     <div className="font-danaMed pb-5">
       <h2 className="text-lg">{comment.user.fullName}</h2>
       <div className="flex text-sm max-sm:text-xs items-center gap-2 my-3 border-b-2 border-b-zinc-200 pb-2">
-        <p>{comment.createdAt.slice(0,10)}</p>
+        <p>{comment.createdAt.slice(0, 10)}</p>
         <p className="bg-green-500 text-white px-2 rounded-xl py-1 ">خریدار</p>
       </div>
       <div className="mt-2">
@@ -40,6 +41,6 @@ function Comment({ comment }: { comment: any }) {
       </div>
     </div>
   );
-}
+});
 
 export default Comment;

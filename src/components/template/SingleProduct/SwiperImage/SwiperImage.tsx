@@ -5,10 +5,10 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
-import { useState } from "react";
+import { memo, useState } from "react";
 import Image from "next/image";
 
-function SwiperImage({ images }) {
+const SwiperImage = memo(({ images }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
 
   return (
@@ -94,6 +94,6 @@ function SwiperImage({ images }) {
       </Swiper>
     </div>
   );
-}
+});
 
 export default SwiperImage;
