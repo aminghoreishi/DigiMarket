@@ -9,12 +9,14 @@ function CartContainer({
   id,
   price,
   img,
+  color,
 }: {
   count: number;
   name: string;
   id: string;
   price: number;
   img: string;
+  color: string;
 }) {
   const [countCart, setCountCart] = useState(1);
 
@@ -35,6 +37,7 @@ function CartContainer({
       price,
       count: countCart,
       img,
+      color,
     };
 
     if (cart.length) {
@@ -64,6 +67,11 @@ function CartContainer({
     } else {
       cart.push(cartObject);
       localStorage.setItem("product", JSON.stringify(cart));
+      toast.success("محصول به سبد خرید اضافه شد", {
+        style: { fontFamily: "dana", fontSize: "14px" },
+        className: "!font-danaMed",
+        duration: 3000,
+      });
     }
   };
 

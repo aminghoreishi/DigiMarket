@@ -1,6 +1,7 @@
+"use client";
 import CartColor from "./CartColor";
 import CartAdd from "./CartAdd";
-
+import { useEffect, useMemo, useState } from "react";
 function Cart({
   count,
   price,
@@ -18,11 +19,22 @@ function Cart({
   img: string;
   colors: string[];
 }) {
+  const defaultColor = useMemo(() => colors[0] ?? "", [colors]);
+
+  const [selectedColor, setSelectedColor] = useState<string>(defaultColor);
+
+  useEffect(() => {
+    setSelectedColor(defaultColor);
+  }, [selectedColor , defaultColor]);
   return (
     <>
       <div>
         <div>
-          <CartColor colors={colors} />
+          <CartColor
+            colors={colors}
+            setColor={setSelectedColor}
+            colorv={selectedColor}
+          />
         </div>
         <div>
           <CartAdd
@@ -32,6 +44,7 @@ function Cart({
             name={name}
             id={id}
             img={img}
+            color={selectedColor}
           />
         </div>
       </div>

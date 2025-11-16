@@ -7,6 +7,7 @@ function CartAdd({
   name,
   id,
   img,
+  color,
 }: {
   count: number;
   price: number;
@@ -14,6 +15,7 @@ function CartAdd({
   name: string;
   id: string;
   img: string;
+  color: string;
 }) {
   return (
     <div className="mt-5 select-none">
@@ -28,6 +30,7 @@ function CartAdd({
             id={JSON.parse(JSON.stringify(id))}
             price={JSON.parse(JSON.stringify(price))}
             img={JSON.parse(JSON.stringify(img))}
+            color={JSON.parse(JSON.stringify(color))}
           />
         </div>
       </div>

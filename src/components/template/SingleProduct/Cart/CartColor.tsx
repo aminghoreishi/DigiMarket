@@ -1,6 +1,14 @@
 import { toEnglish } from "@/utils/color";
 
-function CartColor({ colors }: { colors: string[] }) {
+function CartColor({
+  colors,
+  setColor,
+  colorv,
+}: {
+  colors: string[];
+  setColor: (color: string) => void;
+  colorv: string;
+}) {
   return (
     <div>
       <h2 className="font-danaMed">رنگ:</h2>
@@ -9,7 +17,10 @@ function CartColor({ colors }: { colors: string[] }) {
         {colors.map((color, index) => (
           <div
             key={index}
-            className={`border-2 flex  items-center p-2 font-danaMed text-xs gap-x-1 cursor-pointer rounded-xl border-zinc-200 `}
+            className={`border-2 ${color == colorv ? "outline-2 outline-sky-500" : "outline-0"} flex  items-center p-2 font-danaMed text-xs gap-x-1 cursor-pointer rounded-xl border-zinc-200 `}
+            onClick={() => {
+              setColor(color);
+            }}
           >
             <div
               className={`size-4 bg-${toEnglish(color)}-500 rounded-full`}
