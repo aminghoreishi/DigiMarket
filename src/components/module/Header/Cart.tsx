@@ -4,6 +4,7 @@ import Image from "next/image";
 import { RiShoppingCart2Fill } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa6";
 import { AiOutlineMinus } from "react-icons/ai";
+import Link from "next/link";
 
 type CartItem = {
   id: string;
@@ -68,9 +69,11 @@ function Cart() {
         </div>
 
         <div className="absolute bottom-0 left-0 right-0 bg-white p-3 border-t-2 border-zinc-200">
-          <button className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition font-danaMed text-sm">
-            مشاهده سبد خرید
-          </button>
+          <Link href="/cart">
+            <button className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition font-danaMed text-sm">
+              مشاهده سبد خرید
+            </button>
+          </Link>
         </div>
       </div>
     </div>
