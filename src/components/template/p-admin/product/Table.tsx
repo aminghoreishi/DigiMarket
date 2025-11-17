@@ -105,7 +105,7 @@ function Table({ products } : { products: any[] }) {
                 <td className="px-6 py-4">
                   <div className="flex items-center">
                     {pro.colors.map((c: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined) => (
-                      <div>{c}</div>
+                      <div key={c}>{c}</div>
                     ))}
                   </div>
                 </td>

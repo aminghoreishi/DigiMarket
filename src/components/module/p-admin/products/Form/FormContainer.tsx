@@ -8,6 +8,7 @@ import { BeatLoader } from "react-spinners";
 
 import Swal from "sweetalert2";
 import { getFeatures } from "@/utils/productCategory";
+import ModemFields from "./ModemFields";
 
 function FormContainer({
   categories,
@@ -123,34 +124,40 @@ function FormContainer({
             <label className="text-sm" htmlFor="">
               قیمت محصول
             </label>
-            <input
-              type="text"
-              {...register("price", {
-                required: "قیمت الزامی است",
-                pattern: {
-                  value: /^\d{1,3}(,\d{3})*$/,
-                  message: "قیمت باید فقط عدد و جداکننده کاما باشد",
-                },
-                validate: (value) => {
-                  const numericValue = Number(value.replace(/,/g, ""));
-                  if (numericValue < 0) return "قیمت نمی‌تواند منفی باشد";
-                  if (numericValue > 500000000)
-                    return "حداکثر قیمت مجاز ۵۰۰ میلیون تومان است";
-                  return true;
-                },
-              })}
-              onChange={(e) => {
-                const rawValue = e.target.value.replace(/\D/g, "");
-                const formatted = rawValue.replace(
-                  /\B(?=(\d{3})+(?!\d))/g,
-                  ","
-                );
-                e.target.value = formatted;
-                setRawPrice(+rawValue);
-              }}
-              className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
-              placeholder="مثلاً 1,200,000"
-            />
+            <div className="relative">
+              <input
+                type="text"
+                {...register("price", {
+                  required: "قیمت الزامی است",
+                  pattern: {
+                    value: /^\d{1,3}(,\d{3})*$/,
+                    message: "قیمت باید فقط عدد و جداکننده کاما باشد",
+                  },
+                  validate: (value) => {
+                    const numericValue = Number(value.replace(/,/g, ""));
+                    if (numericValue < 0) return "قیمت نمی‌تواند منفی باشد";
+                    if (numericValue > 500000000)
+                      return "حداکثر قیمت مجاز ۵۰۰ میلیون تومان است";
+                    return true;
+                  },
+                })}
+                onChange={(e) => {
+                  const rawValue = e.target.value.replace(/\D/g, "");
+                  const formatted = rawValue.replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    ","
+                  );
+                  e.target.value = formatted;
+                  setRawPrice(+rawValue);
+                }}
+                className="border-2 w-full ss02 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
+                placeholder="مثلاً 1,200,000"
+              />
+
+              <div className="absolute left-3 top-7 transform -translate-y-1/2 text-xs text-gray-500">
+                تومان
+              </div>
+            </div>
 
             {errors.price && (
               <p className="text-red-500 text-xs mt-2">
@@ -183,8 +190,8 @@ function FormContainer({
           {watchedCategory === "6912c239c714dc8badfdbe30" && (
             <LaptopFields register={register} errors={errors} />
           )}
-          {watchedCategory === "690b39962d29378e5b3d6194" && (
-            <SmartwatchFields register={register} errors={errors} />
+          {watchedCategory === "69138a02f035aa5cee9e73bd" && (
+            <ModemFields register={register} errors={errors} />
           )}
 
           <div className="font-danaMed flex flex-col">
@@ -254,11 +261,7 @@ function FormContainer({
               placeholder="مثلاً لپ‌تاپ سبک و مناسب برای کار روزمره"
               {...register("shortDescription", {
                 required: "توضیح کوتاه الزامی است",
-                pattern: {
-                  value: /^[\u0600-\u06FFA-Za-z0-9\s.,()\-_/:%+٪،‌–—]+$/,
-                  message:
-                    "توضیح باید بین ۱۰ تا ۱۲۰ کاراکتر و بدون کاراکتر غیرمجاز باشد",
-                },
+               
               })}
               className={`border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm ${
                 errors.shortDescription ? "border-red-400" : ""
@@ -365,7 +368,7 @@ function FormContainer({
         <div className="mt-5 font-danaMed text-sm">
           <button
             type="submit"
-            className="bg-blue-500 text-white p-2 rounded-xl cursor-pointer transition-all hover:bg-blue-600"
+            className="bg-blue-500 px-4 text-white p-2 rounded-xl cursor-pointer transition-all hover:bg-blue-600"
           >
             {isLoading ? <BeatLoader size={9} color="white" /> : "ارسال محصول"}
           </button>

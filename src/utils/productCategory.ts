@@ -7,13 +7,13 @@ const FEATURES = {
     گرافیک: "gpu",
     وزن: "weight",
   },
-  "690b39962d29378e5b3d6194": {
-    رم: "ram",
-    حافظه: "storage",
-    "اندازه صفحه نمایش": "screenSize",
-    چیپست: "chipset",
-    "سیستم عامل": "os",
-    وزن: "weight",
+  "69138a02f035aa5cee9e73bd": {
+    "نوع آنتن": "kindAnten",
+    "تعداد پورت RJ45": "rj45",
+    "نوع شبکه": "networkType",
+    'فرکانس': "ferquency",
+    'کلیدها': "keys",
+    'وزن': "weight",
   },
 };
 

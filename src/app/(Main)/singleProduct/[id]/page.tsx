@@ -43,6 +43,8 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
                 <Info
                   features={findProduct.features}
                   findProductID={findProduct._id}
+                  title={findProduct.title}
+                  name={findProduct.name}
                 />
               </div>
             </div>
@@ -54,8 +56,8 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
               colors={findProduct.colors}
               count={findProduct.count}
               delivery={findProduct.delivery}
-              name={findProduct.title}
-              id={findProduct._id}
+              name={findProduct.name}
+              id={findProduct._id.toString()}
               img={findProduct.images[0] || findProduct.images[1]}
             />
           </div>

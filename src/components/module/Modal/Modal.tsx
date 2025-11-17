@@ -1,6 +1,4 @@
-// components/Modal.tsx
-import React from "react";
-
+import { IoMdClose } from "react-icons/io";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -9,8 +7,6 @@ interface ModalProps {
   acceptLabel?: string;
   declineLabel?: string;
   onAccept?: () => void;
-  onDecline?: () => void;
-  showFooter?: boolean;
   isApproved?: boolean;
 }
 
@@ -22,8 +18,6 @@ const Modal: React.FC<ModalProps> = ({
   acceptLabel = "I accept",
   declineLabel = "Decline",
   onAccept,
-  onDecline,
-  showFooter = true,
   isApproved = false,
 }) => {
   if (!isOpen) return null;
@@ -47,23 +41,7 @@ const Modal: React.FC<ModalProps> = ({
               className="text-body bg-transparent cursor-pointer hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
               data-modal-hide="static-modal"
             >
-              <svg
-                className="w-5 h-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18 17.94 6M18 18 6.06 6"
-                />
-              </svg>
+              <IoMdClose className="w-5 h-5" />
               <span className="sr-only">Close modal</span>
             </button>
           </div>

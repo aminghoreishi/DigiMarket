@@ -2,11 +2,7 @@
 
 import React, { useState, MouseEvent, useEffect } from "react";
 import { IoIosClose } from "react-icons/io";
-import {
-  UseFormRegister,
-  UseFormSetValue,
-  FieldErrors,
-} from "react-hook-form";
+import { UseFormRegister, UseFormSetValue, FieldErrors } from "react-hook-form";
 
 interface FormValues {
   colors?: string[];
@@ -52,7 +48,7 @@ const ColorSelector: React.FC<ColorSelectorProps> = ({
           placeholder="مثلاً قرمز یا #ff0000"
           {...register("colors", {
             shouldUnregister: true,
-            required: "حداقل یک رنگ باید انتخاب شود", // ✅ الزام فیلد
+
             pattern: {
               value:
                 /^(#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})|[a-zA-Z\u0600-\u06FF]{2,20})$/,

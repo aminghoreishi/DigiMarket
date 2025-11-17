@@ -4,20 +4,22 @@ import CommentRate from "./CommentRate";
 function Info({
   features,
   findProductID,
+  title,
+  name
 }: {
   features: any[];
   findProductID: string;
+  title: string;
+  name: string;
 }) {
   return (
     <div className="mt-5">
       <div>
-        <h2 className="font-danaMed text-lg ss02">
-          لپ تاپ 13.3 اینچی ایسوس مدل Zenbook S 13 OLED UX5304VA
-        </h2>
+        <h2 className="font-danaMed text-lg line-clamp-3 ss02">{title}</h2>
       </div>
       <div className="mt-3">
-        <p className="text-sm text-zinc-400">
-          Asus Zenbook S 13 OLED UX5304VA-NQ003 13.3 Inch Laptop
+        <p className="text-xs text-zinc-400">
+          {name}
         </p>
       </div>
       <div>
