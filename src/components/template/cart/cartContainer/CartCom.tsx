@@ -7,7 +7,7 @@ import { FaPlus } from "react-icons/fa";
 function CartCom({ cart }) {
   const [counter, setCounter] = useState(cart.count);
   const addCounter = () => {
-    if (counter > cart.count) return;
+    if (counter >= cart.mainCount) return;
     setCounter(counter + 1);
   };
   const minusCounter = () => {
