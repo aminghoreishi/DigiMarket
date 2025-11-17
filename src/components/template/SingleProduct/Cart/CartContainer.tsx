@@ -10,6 +10,7 @@ function CartContainer({
   price,
   img,
   color,
+  mainCount,
 }: {
   count: number;
   name: string;
@@ -17,6 +18,7 @@ function CartContainer({
   price: number;
   img: string;
   color: string;
+  mainCount: number;
 }) {
   const [countCart, setCountCart] = useState(1);
 
@@ -38,6 +40,7 @@ function CartContainer({
       count: countCart,
       img,
       color,
+      mainCount,
     };
 
     if (cart.length) {

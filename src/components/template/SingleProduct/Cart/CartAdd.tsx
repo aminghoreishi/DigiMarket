@@ -31,6 +31,7 @@ function CartAdd({
             price={JSON.parse(JSON.stringify(price))}
             img={JSON.parse(JSON.stringify(img))}
             color={JSON.parse(JSON.stringify(color))}
+            mainCount={JSON.parse(JSON.stringify(count))}
           />
         </div>
       </div>
