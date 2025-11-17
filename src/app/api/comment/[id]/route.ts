@@ -89,3 +89,39 @@ export async function GET(
     return NextResponse.json({ data: comments, totalPages }, { status: 200 });
   } catch (error) {}
 }
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const isAdmin = await authAdmin();
+  if (!isAdmin) {
+    return NextResponse.json({ error: "Unauthorized access" }, { status: 401 });
+  }
+  try {
+    await db();
+    const { id } = await params;
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Comment ID is required" },
+        { status: 400 }
+      );
+    }
+    const deletedComment = await commentModel.findByIdAndDelete(id);
+
+    if (!deletedComment) {
+      return NextResponse.json({ error: "Comment not found" }, { status: 404 });
+    }
+    return NextResponse.json(
+      { message: "Comment deleted successfully" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Delete comment error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}

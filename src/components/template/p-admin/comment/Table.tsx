@@ -14,9 +14,11 @@ type CommentType = {
   isApproved: boolean | undefined;
   likesCount: number | undefined;
   dislikesCount: number | undefined;
-  product: {
-    title: string | undefined;
-  } | undefined;
+  product:
+    | {
+        title: string | undefined;
+      }
+    | undefined;
 };
 
 const Table = ({
@@ -59,6 +61,33 @@ const Table = ({
 
   const onClose = () => {
     setIsModalOpen(false);
+  };
+
+  const removeComment = async (id : string) => {
+    Swal.fire({
+      title: "آیا از حذف این کامنت مطمئن هستید؟",
+      text: "این عملیات قابل بازگشت نیست!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "بله، حذف کن!",
+      cancelButtonText: "لغو",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await fetch(`/api/comment/${id}`, {
+            method: "DELETE",
+          });
+          if (res.ok) {
+            Swal.fire("کامنت با موفقیت حذف شد!", "", "success");
+            getComments(currentPage);
+          }
+        } catch (error) {
+          console.error("Error deleting comment:", error);
+        }
+      }
+    });
   };
 
   const onAccept = async () => {
@@ -132,11 +161,14 @@ const Table = ({
 
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
+                      <button onClick={() => removeComment(comment._id)} className="border-2 disabled:cursor-not-allowed disabled:opacity-60 transition-all rounded-xl hover:bg-red-500 hover:text-white border-red-500 text-red-500 px-3 py-2 cursor-pointer">
+                        حذف
+                      </button>
                       <button
                         disabled={!comment.isApproved}
                         className="border-2 disabled:cursor-not-allowed disabled:opacity-60 transition-all rounded-xl hover:bg-red-500 hover:text-white border-red-500 text-red-500 px-3 py-2 cursor-pointer"
                       >
-                        حذف
+                        رد
                       </button>
                       <button
                         disabled={comment.isApproved}
@@ -171,7 +203,7 @@ const Table = ({
         />
       </Modal>
 
-      {totalPages && (
+      {totalPages > 1&& (
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
