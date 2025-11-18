@@ -1,4 +1,4 @@
-import CartContainer from "@/components/template/cart/cartContainer/CartContainer";
+
 import MainCart from "@/components/template/cart/MainCart/MainCart";
 import TopSec from "@/components/template/cart/TopSec/TopSec";
 

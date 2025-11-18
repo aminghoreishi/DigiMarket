@@ -1,19 +1,18 @@
-"use client";
-import { useEffect, useState } from "react";
 import CartCom from "./CartCom";
-function CartContainer() {
-  const [carts, setCarts] = useState([]);
-  useEffect(() => {
-    const carts = localStorage.getItem("product");
-    if (carts?.length) setCarts(JSON.parse(carts));
-  }, []);
+
+export default function CartContainer({ carts, onUpdateCount }: { 
+  carts: any[], 
+  onUpdateCount: (id: number, count: number) => void 
+}) {
   return (
-    <div className="border-2 flex flex-col divide-y-2 border-zinc-200 rounded-xl p-3">
+    <div className="border-2 flex flex-col divide-y-2 border-zinc-200 rounded-xl">
       {carts.map((cart) => (
-        <CartCom key={cart.id} cart={cart} />
+        <CartCom 
+          key={cart.id} 
+          cart={cart} 
+          onUpdateCount={onUpdateCount} 
+        />
       ))}
     </div>
   );
 }
-
-export default CartContainer;

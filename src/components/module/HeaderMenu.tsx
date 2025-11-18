@@ -69,6 +69,9 @@ async function HeaderMenu() {
               )}
             </li>
           ))}
+          <li className="font-danaMed">
+            <Link href="/cart">سبد خرید</Link>
+          </li>
         </ul>
       </div>
     </div>
