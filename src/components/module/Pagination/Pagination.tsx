@@ -10,7 +10,7 @@ function Pagination({
   return (
     <div
       dir="ltr"
-      className="flex *:cursor-pointer font-danaMed justify-center items-center gap-2 mt-6"
+      className="flex max-sm:text-xs *:cursor-pointer font-danaMed justify-center items-center gap-2 mt-6"
     >
       <button
         onClick={() => setCurrentPage(currentPage - 1)}
@@ -25,7 +25,7 @@ function Pagination({
           key={p}
           onClick={() => setCurrentPage(p)}
           className={`px-3 py-1 ss02 rounded ${
-            p === currentPage ? "bg-blue-600 text-white" : "bg-gray-200"
+            p === currentPage ? "bg-orange-600 text-white" : "bg-gray-200"
           }`}
         >
           {p}
