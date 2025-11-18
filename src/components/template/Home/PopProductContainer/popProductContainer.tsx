@@ -15,7 +15,6 @@ function PopProductContainer() {
         <PopProductCom />
         <PopProductCom />
         <PopProductCom />
-        <PopProductCom />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import CartContainer from "../cartContainer/CartContainer";
 import CartSummary from "../CartSummary/CartSummary";
 
-export default function MainCart() {
+export default function MainCart({isUserLoggedIn}: {isUserLoggedIn: any}) {
   const [carts, setCarts] = useState<any[]>([]);
 
  
@@ -32,12 +32,12 @@ export default function MainCart() {
   return (
     <div className="grid max-lg:grid-cols-1 lg:grid-cols-12 gap-6 font-danaMed">
       <div className="col-span-12 md:col-span-8 lg:col-span-9">
-        <CartContainer carts={carts} onUpdateCount={updateCount} />
+        <CartContainer carts={carts} onUpdateCount={updateCount} setCarts={setCarts} />
       </div>
 
       <div className="col-span-12 md:col-span-4 lg:col-span-3">
         <div className="mt-8 sticky top-20">
-          <CartSummary total={total} />
+          <CartSummary total={total} isUserLoggedIn={isUserLoggedIn} />
         </div>
       </div>
     </div>

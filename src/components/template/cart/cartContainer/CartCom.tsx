@@ -1,16 +1,19 @@
 "use client";
 import { toEnglish } from "@/utils/color";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineMinus } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
-
+import { FaRegTrashCan } from "react-icons/fa6";
 export default function CartCom({
   cart,
   onUpdateCount,
+  setCarts,
 }: {
   cart: any;
   onUpdateCount: (id: number, count: number) => void;
+  setCarts: (carts: any[]) => void;
 }) {
   const [count, setCount] = useState(cart.count);
 
@@ -30,15 +33,27 @@ export default function CartCom({
 
   const totalPrice = count * cart.price;
 
+  const removeProduct = (id: number) => {
+    const data = localStorage.getItem("product");
+    if (data) {
+      const products = JSON.parse(data);
+      const filtered = products.filter((item: any) => item.id !== id);
+      localStorage.setItem("product", JSON.stringify(filtered));
+      setCarts(filtered);
+    }
+  };
+
   return (
-    <div className="flex p-4 max-sm:gap-3 gap-5 items-center">
-      <Image
-        src={cart.img}
-        alt=""
-        width={120}
-        height={120}
-        className="rounded-lg"
-      />
+    <div className="flex p-4 relative overflow-hidden group max-sm:gap-3 gap-5 items-center">
+      <Link href={`/singleProduct/${cart.id}`}>
+        <Image
+          src={cart.img}
+          alt=""
+          width={120}
+          height={120}
+          className="rounded-lg"
+        />
+      </Link>
 
       <div className="flex-1">
         <div className="flex justify-between max-sm:gap-5 items-center mb-3">
@@ -68,6 +83,15 @@ export default function CartCom({
             {totalPrice.toLocaleString("fa-IR")} تومان
           </p>
         </div>
+      </div>
+
+      <div className="absolute transition-all group-hover:opacity-100 opacity-0 top-0 right-0">
+        <button
+          onClick={() => removeProduct(cart.id)}
+          className="bg-red-500 text-white cursor-pointer rounded-lg px-4 py-1 text-xs"
+        >
+          <FaRegTrashCan className="size-5 " />
+        </button>
       </div>
     </div>
   );

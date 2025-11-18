@@ -9,6 +9,7 @@ async function Category() {
 
   const category = (await subCategoryModel
     .find({})
+    .limit(4)
     .lean()) as unknown as Category[];
 
   return (
