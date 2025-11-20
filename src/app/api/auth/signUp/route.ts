@@ -60,12 +60,10 @@ export async function POST(req: NextRequest) {
     });
 
     const response = NextResponse.json(
+
       { message: "ثبت‌نام با موفقیت انجام شد" },
       { status: 201 }
     );
-
-    const isProd = process.env.NODE_ENV === "production";
-    const domain = process.env.COOKIE_DOMAIN;
 
     const headers = new Headers();
     headers.append("Set-Cookie", `token=${accessToken};path=/;httpOnly=true`);
@@ -81,7 +79,7 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error("Signup error:", error);
     return NextResponse.json(
-      { message: "خطایی در سرور رخ داد" },
+      { message: error.message },
       { status: 500 }
     );
   }

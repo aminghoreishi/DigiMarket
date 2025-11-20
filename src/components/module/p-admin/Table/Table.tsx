@@ -1,4 +1,4 @@
-import React from "react";
+
 
 function Table({ headers, content }) {
   return (

@@ -7,7 +7,7 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { BeatLoader } from "react-spinners";
-import { signIn } from "next-auth/react";
+// import { signIn } from "next-auth/react";
 import Swal from "sweetalert2";
 import Link from "next/link";
 
@@ -55,7 +55,7 @@ function Page() {
 
       const response = await res.json();
 
-      // console.log(response);
+      console.log(response);
 
       if (res.status === 201) {
         Swal.fire({

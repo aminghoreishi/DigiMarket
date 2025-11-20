@@ -3,8 +3,8 @@ import SwiperProductContainer from "@/components/module/SwiperProductContainer/S
 function SwiperPop({ products }) {
   if (!products) {
     return (
-      <div className="text-center text-zinc-400 py-10">
-        در حال بارگذاری محصولات...
+      <div className="text-center font-danaMed text-zinc-400 py-10">
+      هیچ محصولی وجود ندارد!
       </div>
     );
   }
