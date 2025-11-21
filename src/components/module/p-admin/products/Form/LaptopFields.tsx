@@ -84,12 +84,12 @@ function LaptopFields({ register, errors }) {
           <input
             {...register("cpu", {
               required: "پردازنده الزامی است",
-              pattern: {
-                value:
-                  /^(?:(Intel\s*(Core\s*)?(i[3579]|Xeon)\s*[A-Za-z0-9\- ]{0,20})|(AMD\s*(Ryzen\s*\d?\s*[A-Za-z0-9\- ]{0,20}))|(Apple\s*)?(M\d(\s*(Pro|Max|Ultra))?)?)$/i,
-                message:
-                  "فرمت CPU معتبر نیست (مثلاً Intel i7-13700H یا Ryzen 7 9800X3D)",
-              },
+              // pattern: {
+              //   value:
+              //     /^(?:(Intel\s*(Core\s*)?(i[3579]|Xeon)\s*[A-Za-z0-9\- ]{0,20})|(AMD\s*(Ryzen\s*\d?\s*[A-Za-z0-9\- ]{0,20}))|(Apple\s*)?(M\d(\s*(Pro|Max|Ultra))?)?)$/i,
+              //   message:
+              //     "فرمت CPU معتبر نیست (مثلاً Intel i7-13700H یا Ryzen 7 9800X3D)",
+              // },
             })}
             type="text"
             className="border-2 rounded-xl px-3 py-2 text-sm border-zinc-200 outline-0 transition-all focus:ring-2 focus:ring-blue-500 mt-2"
@@ -104,12 +104,12 @@ function LaptopFields({ register, errors }) {
           <input
             {...register("gpu", {
               required: "کارت گرافیک الزامی است",
-              pattern: {
-                value:
-                  /^(?:(RTX|GTX|Radeon)\s?[A-Za-z0-9\s\-]{2,30}|(Apple\s*)?M\d(\s*\(integrated\))?|Integrated\s*Graphics)$/i,
-                message:
-                  "فرمت GPU معتبر نیست (مثلاً RTX 4060 یا Radeon RX 6800M)",
-              },
+              // pattern: {
+              //   value:
+              //     /^(?:(RTX|GTX|Radeon|intel)\s?[A-Za-z0-9\s\-]{2,30}|(Apple\s*)?M\d(\s*\(integrated\))?|Integrated\s*Graphics)$/i,
+              //   message:
+              //     "فرمت GPU معتبر نیست (مثلاً RTX 4060 یا Radeon RX 6800M)",
+              // },
             })}
             type="text"
             placeholder="RTX 4060"

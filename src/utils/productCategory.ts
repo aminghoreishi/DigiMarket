@@ -1,5 +1,5 @@
 const FEATURES = {
-  "6912c239c714dc8badfdbe30": {
+  "691f23faec42752defd3841c": {
     رم: "ramLap",
     حافظه: "storageLap",
     "اندازه صفحه نمایش": "screenSize",

@@ -9,6 +9,7 @@ import { BeatLoader } from "react-spinners";
 import Swal from "sweetalert2";
 import { getFeatures } from "@/utils/productCategory";
 import ModemFields from "./ModemFields";
+import Tag from "./Tag";
 
 function FormContainer({
   categories,
@@ -43,6 +44,7 @@ function FormContainer({
     formData.append("longDescription", data.longDescription || "");
     formData.append("shortDescription", data.shortDescription || "");
     formData.append("colors", JSON.stringify(data.colors || []));
+    formData.append("tags", JSON.stringify(data.tags || []));
     formData.append("features", JSON.stringify(features));
 
     if (data.images?.length > 0) {
@@ -187,7 +189,7 @@ function FormContainer({
               </p>
             )}
           </div>
-          {watchedCategory === "6912c239c714dc8badfdbe30" && (
+          {watchedCategory === "691f23faec42752defd3841c" && (
             <LaptopFields register={register} errors={errors} />
           )}
           {watchedCategory === "69138a02f035aa5cee9e73bd" && (
@@ -311,6 +313,10 @@ function FormContainer({
             setValue={setValue}
             errors={errors}
           />
+
+          <Tag    register={register}
+            setValue={setValue}
+            errors={errors}  />
 
           <div className="font-danaMed flex flex-col">
             <label className="text-sm" htmlFor="">

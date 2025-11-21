@@ -84,6 +84,16 @@ function FormCheck() {
               className="w-full border-2 max-sm:text-xs rounded-xl text-sm border-zinc-200 outline-0 mt-2 p-2 mt-1"
             />
           </div>
+            <div className="col-span-12">
+          <div className="flex justify-between">
+            <div>
+              <button>پست پیشتاز</button>
+            </div>
+                 <div>
+              <button>پست عادی</button>
+            </div>
+          </div>
+          </div>
         </div>
       </form>
     </div>
