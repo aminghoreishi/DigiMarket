@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export default function FormCheck() {
-  const [deliveryMethod, setDeliveryMethod] = useState<"express" | "courier">("express");
+export default function FormCheck({fullName , deliveryMethod, setDeliveryMethod}: {fullName: string, deliveryMethod: "express" | "courier", setDeliveryMethod: React.Dispatch<React.SetStateAction<"express" | "courier">>}) {
 
   return (
     <div className="border-2 border-zinc-200 rounded-xl p-5 md:p-8">
@@ -15,6 +14,7 @@ export default function FormCheck() {
           <input
             type="text"
             id="fullName"
+            defaultValue={fullName}
             required
             className="w-full px-4 py-2.5 text-sm border-2 border-zinc-200 rounded-xl outline-none focus:border-orange-500 transition-colors"
             placeholder="مثال: علی رضایی"

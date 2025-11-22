@@ -1,12 +1,20 @@
-import FormCheck from "./FormCheck";
+'use client'
+import { useState } from "react";
 
-function Checkout() {
+import FormCheck from "./FormCheck";
+import Summary from "./Summary";
+
+function Checkout({fullName}: {fullName: string}) {
+    const [deliveryMethod, setDeliveryMethod] = useState<"express" | "courier">("express");
+
   return (
-    <div className="grid grid-cols-12 mt-8">
+    <div className="grid grid-cols-12 gap-5 mt-8">
       <div className="col-span-8">
-        <FormCheck />
+        <FormCheck fullName={fullName} deliveryMethod={deliveryMethod} setDeliveryMethod={setDeliveryMethod} />
       </div>
-      <div className="col-span-4">Summary</div>
+      <div className="col-span-4">
+        <Summary deliveryMethod={deliveryMethod} />
+      </div>
     </div>
   );
 }
