@@ -36,7 +36,7 @@ function Summary({deliveryMethod}: {deliveryMethod: "express" | "courier"}) {
 
         <div className="mt-6 border-t-2 border-zinc-200 pt-4 flex justify-between items-center">
             <h3 className="font-danaMed">جمع کل</h3>
-            <p className="font-danaMed text-lg">{totalPrice} تومان</p>
+            <p className="font-danaMed text-lg">{totalPrice.toLocaleString('fa-IR')} تومان</p>
         </div>
     </div>
   )
