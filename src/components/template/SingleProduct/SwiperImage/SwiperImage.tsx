@@ -70,7 +70,7 @@ const SwiperImage = memo(({ images }) => {
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper mt-4"
+        className="mySwiper mt-4 max-sm:!h-20"
         breakpoints={{
           320: { slidesPerView: 3.5 },
           480: { slidesPerView: 4.5 },
@@ -79,7 +79,7 @@ const SwiperImage = memo(({ images }) => {
         }}
       >
         {images.map((image, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={index} >
             <div className="w-full border-2 border-zinc-200 h-20 cursor-pointer relative rounded overflow-hidden">
               <Image
                 src={image}
