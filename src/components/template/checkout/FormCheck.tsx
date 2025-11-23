@@ -1,12 +1,21 @@
 "use client";
 import { useState } from "react";
 
-export default function FormCheck({fullName , deliveryMethod, setDeliveryMethod}: {fullName: string, deliveryMethod: "express" | "courier", setDeliveryMethod: React.Dispatch<React.SetStateAction<"express" | "courier">>}) {
-
+export default function FormCheck({
+  fullName,
+  deliveryMethod,
+  setDeliveryMethod,
+}: {
+  fullName: string;
+  deliveryMethod: "express" | "courier";
+  setDeliveryMethod: React.Dispatch<
+    React.SetStateAction<"express" | "courier">
+  >;
+}) {
   return (
     <div className="border-2 border-zinc-200 rounded-xl p-5 md:p-8">
       <form className="grid grid-cols-12 gap-6 font-danaMed">
-        {/* نام و نام خانوادگی + شماره تماس اصلی */}
+     
         <div className="col-span-12 md:col-span-6">
           <label htmlFor="fullName" className="block text-sm mb-1">
             نام و نام خانوادگی
@@ -14,7 +23,7 @@ export default function FormCheck({fullName , deliveryMethod, setDeliveryMethod}
           <input
             type="text"
             id="fullName"
-            defaultValue={fullName}
+            defaultValue={fullName || ""}
             required
             className="w-full px-4 py-2.5 text-sm border-2 border-zinc-200 rounded-xl outline-none focus:border-orange-500 transition-colors"
             placeholder="مثال: علی رضایی"
@@ -34,7 +43,7 @@ export default function FormCheck({fullName , deliveryMethod, setDeliveryMethod}
           />
         </div>
 
-        {/* آدرس اول */}
+      
         <div className="col-span-12">
           <label htmlFor="address1" className="block text-sm mb-1">
             آدرس اول <span className="text-red-500">*</span>
@@ -48,7 +57,7 @@ export default function FormCheck({fullName , deliveryMethod, setDeliveryMethod}
           />
         </div>
 
-        {/* آدرس دوم (اختیاری) */}
+  
         <div className="col-span-12">
           <label htmlFor="address2" className="block text-sm mb-1">
             آدرس دوم (اختیاری)
@@ -61,7 +70,7 @@ export default function FormCheck({fullName , deliveryMethod, setDeliveryMethod}
           />
         </div>
 
-        {/* روش ارسال */}
+      
         <fieldset className="col-span-12">
           <legend className="text-sm mb-3">روش ارسال</legend>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -105,7 +114,7 @@ export default function FormCheck({fullName , deliveryMethod, setDeliveryMethod}
           </div>
         </fieldset>
 
-        {/* دکمه ثبت سفارش */}
+      
         <div className="col-span-12">
           <button
             type="submit"

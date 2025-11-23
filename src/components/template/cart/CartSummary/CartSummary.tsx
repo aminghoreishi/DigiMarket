@@ -6,9 +6,11 @@ import toast from "react-hot-toast";
 function CartSummary({
   total,
   isUserLoggedIn,
+  setStep,
 }: {
   total: number;
   isUserLoggedIn: any;
+  setStep: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const router = useRouter();
 
@@ -18,7 +20,9 @@ function CartSummary({
       return;
     }
 
-    router.push("/checkout");
+    setStep("checkout");
+
+    
   };
   return (
     <div className="p-3 font-danaMed">

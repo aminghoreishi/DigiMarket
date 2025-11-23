@@ -1,3 +1,4 @@
+import MainCartContainer from "@/components/template/cart/Main/MainCart";
 import MainCart from "@/components/template/cart/MainCart/MainCart";
 import TopSec from "@/components/template/cart/TopSec/TopSec";
 import db from "@/config/db";
@@ -10,15 +11,7 @@ async function page() {
 
   console.log("isUserLoggedIn:", isUserLoggedIn.user);
 
-  return (
-    <div className="container mx-auto">
-      <TopSec />
-
-      <div>
-        <MainCart isUserLoggedIn={isUserLoggedIn.user} />
-      </div>
-    </div>
-  );
+  return <MainCartContainer isUserLoggedIn={isUserLoggedIn.user} />;
 }
 
 export default page;

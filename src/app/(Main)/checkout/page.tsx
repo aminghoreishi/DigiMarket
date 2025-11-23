@@ -10,7 +10,7 @@ async function page() {
   return (
     <div className="container mx-auto">
       <TopSec />
-      <Checkout fullName={user.user.fullName}  />
+      <Checkout fullName={user.user?.fullName}  />
     </div>
   );
 }

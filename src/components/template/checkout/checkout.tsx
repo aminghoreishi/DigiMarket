@@ -4,13 +4,13 @@ import { useState } from "react";
 import FormCheck from "./FormCheck";
 import Summary from "./Summary";
 
-function Checkout({fullName}: {fullName: string}) {
+function Checkout({isUserLoggedIn}: {isUserLoggedIn: null | {id: string; fullName: string; email: string;}}) {
     const [deliveryMethod, setDeliveryMethod] = useState<"express" | "courier">("express");
 
   return (
     <div className="grid grid-cols-12 gap-5 mt-8">
       <div className="col-span-8">
-        <FormCheck fullName={fullName} deliveryMethod={deliveryMethod} setDeliveryMethod={setDeliveryMethod} />
+        <FormCheck fullName={isUserLoggedIn?.fullName || ""} deliveryMethod={deliveryMethod} setDeliveryMethod={setDeliveryMethod} />
       </div>
       <div className="col-span-4">
         <Summary deliveryMethod={deliveryMethod} />
