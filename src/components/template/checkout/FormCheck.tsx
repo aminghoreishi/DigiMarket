@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
 
 type FormData = {
   user: string;
   phone: string;
   address1: string;
   address2?: string;
+  userId: string;
 };
 
 export default function FormCheck({
@@ -16,6 +16,7 @@ export default function FormCheck({
   deliveryMethod,
   setDeliveryMethod,
   allPrice,
+  userId,
 }: {
   fullName: string;
   deliveryMethod: "express" | "courier";
@@ -45,7 +46,6 @@ export default function FormCheck({
       }));
 
       console.log(itemsForOrder.productId);
-      
 
       setCarts(itemsForOrder); // حالا carts واقعاً آرایه است
     } catch (err) {
@@ -54,21 +54,38 @@ export default function FormCheck({
     }
   }, []);
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     console.log(data);
 
     const savedData = {
       ...data,
+      user: userId,
       deliveryMethod,
-      status: deliveryMethod,
       products: carts.map((item) => ({
-        productId: item.productId,
-        quantity: item.quantity,
+        product: item.productId,
+        count: item.quantity,
       })),
-      totalPrice: allPrice, 
+      totalPrice: allPrice,
     };
 
-    console.log(savedData);
+    const res = await fetch("/api/order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(savedData),
+    });
+
+    const responseData = await res.json();
+    console.log(responseData);
+
+    if (res.ok) {
+      console.log("Order submitted successfully");
+      // می‌توانید اینجا کارهای بعد از موفقیت را انجام دهید
+    } else {
+      console.error("Error submitting order");
+      // می‌توانید اینجا کارهای بعد از خطا را انجام دهید
+    }
   };
 
   return (
@@ -85,7 +102,7 @@ export default function FormCheck({
             type="text"
             id="fullName"
             defaultValue={fullName || ""}
-            {...register("user", { required: true })}
+            {...register("fullName", { required: true })}
             required
             className="w-full px-4 py-2.5 text-sm border-2 border-zinc-200 rounded-xl outline-none focus:border-orange-500 transition-colors"
             placeholder="مثال: علی رضایی"

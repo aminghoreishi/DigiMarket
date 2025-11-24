@@ -10,7 +10,7 @@ function Checkout({isUserLoggedIn , allPrice}: {isUserLoggedIn: null | {id: stri
   return (
     <div className="grid grid-cols-12 gap-5 mt-8">
       <div className="col-span-8">
-        <FormCheck allPrice={allPrice}   fullName={isUserLoggedIn?.fullName || ""} deliveryMethod={deliveryMethod} setDeliveryMethod={setDeliveryMethod} />
+        <FormCheck allPrice={allPrice} userId={isUserLoggedIn?._id || ""} fullName={isUserLoggedIn?.fullName || ""} deliveryMethod={deliveryMethod} setDeliveryMethod={setDeliveryMethod} />
       </div>
       <div className="col-span-4">
         <Summary deliveryMethod={deliveryMethod} allPrice={allPrice} />

@@ -7,6 +7,21 @@ const order = new mongoose.Schema(
       ref: "user",
       required: true,
     },
+    phone: {
+      type: String,
+      required: true,
+    },
+    address1: {
+      type: String,
+      required: true,
+    },
+    address2: {
+      type: String,
+    },
+    fullName: {
+      type: String,
+      required: true,
+    },
     products: [
       {
         product: {
@@ -24,6 +39,11 @@ const order = new mongoose.Schema(
     ],
     totalPrice: {
       type: Number,
+      required: true,
+    },
+    deliveryMethod: {
+      type: String,
+      enum: ["express", "courier"],
       required: true,
     },
     status: {
