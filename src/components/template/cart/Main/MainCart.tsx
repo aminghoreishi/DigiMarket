@@ -10,6 +10,7 @@ function MainCartContainer({
   isUserLoggedIn: null | { id: string; fullName: string; email: string };
 }) {
   const [step, setStep] = useState("cart");
+  const [allPrice, setAllPrice] = useState(0);
   return (
     <div className="container mx-auto">
       <TopSec step={step} />
@@ -17,12 +18,12 @@ function MainCartContainer({
       <div>
         {step === "cart" && (
           <div>
-            <MainCart isUserLoggedIn={isUserLoggedIn} setStep={setStep} />
+            <MainCart setAllPrice={setAllPrice} isUserLoggedIn={isUserLoggedIn} setStep={setStep} />
           </div>
         )}
         {step === "checkout" && (
           <div>
-            <Checkout isUserLoggedIn={isUserLoggedIn} />
+            <Checkout allPrice={allPrice} isUserLoggedIn={isUserLoggedIn} />
           </div>
         )}
       </div>

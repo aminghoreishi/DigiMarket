@@ -6,9 +6,11 @@ import CartSummary from "../CartSummary/CartSummary";
 export default function MainCart({
   isUserLoggedIn,
   setStep,
+  setAllPrice,
 }: {
   isUserLoggedIn: any;
   setStep: React.Dispatch<React.SetStateAction<string>>;
+  setAllPrice: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const [carts, setCarts] = useState<any[]>([]);
 
@@ -19,6 +21,11 @@ export default function MainCart({
     }
     console.log(data);
   }, []);
+
+  useEffect(() => {
+    const total = carts.reduce((sum, item) => sum + item.price * item.count, 0);
+    setAllPrice(total);
+  }, [carts]);
 
   const updateCount = (id: number, newCount: number) => {
     setCarts((prev) => {
@@ -31,6 +38,7 @@ export default function MainCart({
   };
 
   const total = carts.reduce((sum, item) => sum + item.price * item.count, 0);
+  
 
   return (
     <div className="grid max-lg:grid-cols-1 lg:grid-cols-12 gap-6 font-danaMed">

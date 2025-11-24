@@ -1,21 +1,82 @@
 "use client";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { log } from "util";
+
+type FormData = {
+  user: string;
+  phone: string;
+  address1: string;
+  address2?: string;
+};
 
 export default function FormCheck({
   fullName,
   deliveryMethod,
   setDeliveryMethod,
+  allPrice,
 }: {
   fullName: string;
   deliveryMethod: "express" | "courier";
   setDeliveryMethod: React.Dispatch<
     React.SetStateAction<"express" | "courier">
   >;
+  allPrice: number;
 }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setValue,
+  } = useForm<FormData>({ mode: "all" });
+
+  const [carts, setCarts] = useState<any[]>([]);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("product");
+      const data = raw ? JSON.parse(raw) : [];
+
+      const itemsForOrder = data.map((item: any) => ({
+        productId: item.id,
+        quantity: item.count || 1,
+      }));
+
+      console.log(itemsForOrder.productId);
+      
+
+      setCarts(itemsForOrder); // حالا carts واقعاً آرایه است
+    } catch (err) {
+      console.error("خطا در خواندن سبد خرید", err);
+      setCarts([]);
+    }
+  }, []);
+
+  const onSubmit = (data: FormData) => {
+    console.log(data);
+
+    const savedData = {
+      ...data,
+      deliveryMethod,
+      status: deliveryMethod,
+      products: carts.map((item) => ({
+        productId: item.productId,
+        quantity: item.quantity,
+      })),
+      totalPrice: allPrice, 
+    };
+
+    console.log(savedData);
+  };
+
   return (
     <div className="border-2 border-zinc-200 rounded-xl p-5 md:p-8">
-      <form className="grid grid-cols-12 gap-6 font-danaMed">
-     
+      <form
+        className="grid grid-cols-12 gap-6 font-danaMed"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="col-span-12 md:col-span-6">
           <label htmlFor="fullName" className="block text-sm mb-1">
             نام و نام خانوادگی
@@ -24,6 +85,7 @@ export default function FormCheck({
             type="text"
             id="fullName"
             defaultValue={fullName || ""}
+            {...register("user", { required: true })}
             required
             className="w-full px-4 py-2.5 text-sm border-2 border-zinc-200 rounded-xl outline-none focus:border-orange-500 transition-colors"
             placeholder="مثال: علی رضایی"
@@ -36,6 +98,7 @@ export default function FormCheck({
           </label>
           <input
             type="tel"
+            {...register("phone", { required: true })}
             id="phone"
             required
             className="w-full px-4 py-2.5 text-sm border-2 border-zinc-200 rounded-xl outline-none focus:border-orange-500 transition-colors"
@@ -43,7 +106,6 @@ export default function FormCheck({
           />
         </div>
 
-      
         <div className="col-span-12">
           <label htmlFor="address1" className="block text-sm mb-1">
             آدرس اول <span className="text-red-500">*</span>
@@ -52,25 +114,25 @@ export default function FormCheck({
             id="address1"
             required
             rows={3}
+            {...register("address1", { required: true })}
             className="w-full px-4 py-2.5 text-sm border-2 border-zinc-200 rounded-xl outline-none resize-none focus:border-orange-500 transition-colors"
             placeholder="خیابان، کوچه، پلاک، واحد، طبقه و ..."
           />
         </div>
 
-  
         <div className="col-span-12">
           <label htmlFor="address2" className="block text-sm mb-1">
             آدرس دوم (اختیاری)
           </label>
           <textarea
             id="address2"
+            {...register("address2")}
             rows={3}
             className="w-full px-4 py-2.5 text-sm border-2 border-zinc-200 rounded-xl outline-none resize-none focus:border-orange-500 transition-colors"
             placeholder="در صورت نیاز به آدرس دوم..."
           />
         </div>
 
-      
         <fieldset className="col-span-12">
           <legend className="text-sm mb-3">روش ارسال</legend>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -114,7 +176,6 @@ export default function FormCheck({
           </div>
         </fieldset>
 
-      
         <div className="col-span-12">
           <button
             type="submit"
