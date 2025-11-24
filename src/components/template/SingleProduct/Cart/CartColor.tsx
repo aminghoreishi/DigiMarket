@@ -1,6 +1,7 @@
 import { toEnglish } from "@/utils/color";
+import React, { memo } from "react";
 
-function CartColor({
+const CartColor: React.FC = ({
   colors,
   setColor,
   colorv,
@@ -8,7 +9,7 @@ function CartColor({
   colors: string[];
   setColor: (color: string) => void;
   colorv: string;
-}) {
+}) => {
   return (
     <div>
       <h2 className="font-danaMed">رنگ:</h2>
@@ -31,6 +32,8 @@ function CartColor({
       </div>
     </div>
   );
-}
+};
+
+CartColor.displayName = "CartColor";
 
 export default CartColor;

@@ -7,6 +7,7 @@ import Info from "@/components/template/SingleProduct/Info/Info";
 import MainContainer from "@/components/template/SingleProduct/MainContainer/MainContainer";
 import SwiperImage from "@/components/template/SingleProduct/SwiperImage/SwiperImage";
 import { authUser } from "@/utils/auth";
+import { memo } from "react";
 
 type findProductType = {
   _id: string;
@@ -49,18 +50,16 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
               </div>
             </div>
           </div>
-          <div className="  xl:col-span-3">
-            <Cart
-              isLoggedIn={isLoggedIn}
-              price={findProduct.price}
-              colors={findProduct.colors}
-              count={findProduct.count}
-              delivery={findProduct.delivery}
-              name={findProduct.name}
-              id={findProduct._id.toString()}
-              img={findProduct.images[0] || findProduct.images[1]}
-            />
-          </div>
+          <CartContainer
+            isLoggedIn={isLoggedIn}
+            price={findProduct.price}
+            colors={findProduct.colors}
+            count={findProduct.count}
+            delivery={findProduct.delivery}
+            name={findProduct.name}
+            id={findProduct._id.toString()}
+            img={findProduct.images[0] || findProduct.images[1]}
+          />
         </div>
 
         <div className="mt-8">
@@ -77,5 +76,24 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
     </>
   );
 }
+
+const CartContainer = memo(
+  ({ isLoggedIn, price, colors, count, delivery, name, id, img }) => {
+    return (
+      <div className=" xl:col-span-3">
+        <Cart
+          isLoggedIn={isLoggedIn}
+          price={price}
+          colors={colors}
+          count={count}
+          delivery={delivery}
+          name={name}
+          id={id}
+          img={img}
+        />
+      </div>
+    );
+  }
+);
 
 export default page;

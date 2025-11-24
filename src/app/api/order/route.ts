@@ -1,11 +1,22 @@
+import db from "@/config/db";
 import orderModel from "@/models/order";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
+    await db();
     const body = await request.json();
-    const { user, phone, address1, fullName, address2, deliveryMethod, products, totalPrice, status } = body;
-    
+    const {
+      user,
+      phone,
+      address1,
+      fullName,
+      address2,
+      deliveryMethod,
+      products,
+      totalPrice,
+      status,
+    } = body;
 
     await orderModel.create({
       user,
@@ -26,7 +37,10 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Error creating order:", error);
     return NextResponse.json(
-      { message: error instanceof Error ? error.message : "Internal Server Error" },
+      {
+        message:
+          error instanceof Error ? error.message : "Internal Server Error",
+      },
       { status: 500 }
     );
   }

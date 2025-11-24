@@ -20,9 +20,7 @@ const MainContainer = memo(
   }) => {
     return (
       <div>
-        <div>
-          <Navbar />
-        </div>
+        <NavbarContainer />
         <div className="mt-5">
           <Description longDescription={longDescription} />
         </div>
@@ -43,5 +41,16 @@ const MainContainer = memo(
     );
   }
 );
+
+const NavbarContainer = memo(() => {
+  return (
+    <div>
+      <Navbar />
+    </div>
+  );
+});
+
+MainContainer.displayName = "MainContainer";
+NavbarContainer.displayName = "NavbarContainer";
 
 export default MainContainer;

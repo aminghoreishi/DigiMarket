@@ -1,7 +1,7 @@
 "use client";
 import CartColor from "./CartColor";
 import CartAdd from "./CartAdd";
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 function Cart({
   count,
   price,
@@ -25,17 +25,15 @@ function Cart({
 
   useEffect(() => {
     setSelectedColor(defaultColor);
-  }, [selectedColor , defaultColor]);
+  }, [selectedColor, defaultColor]);
   return (
     <>
       <div>
-        <div>
-          <CartColor
-            colors={colors}
-            setColor={setSelectedColor}
-            colorv={selectedColor}
-          />
-        </div>
+        <CartColorContainer
+          colors={colors}
+          selectedColor={selectedColor}
+          setSelectedColor={setSelectedColor}
+        />
         <div>
           <CartAdd
             count={count}
@@ -51,5 +49,27 @@ function Cart({
     </>
   );
 }
+
+const CartColorContainer = memo(
+  ({
+    colors,
+    selectedColor,
+    setSelectedColor,
+  }: {
+    colors: string[];
+    selectedColor: string;
+    setSelectedColor: React.Dispatch<React.SetStateAction<string>>;
+  }) => {
+    return (
+      <div>
+        <CartColor
+          colors={colors}
+          setColor={setSelectedColor}
+          colorv={selectedColor}
+        />
+      </div>
+    );
+  }
+);
 
 export default Cart;
