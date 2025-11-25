@@ -22,10 +22,10 @@ function CartContainer({
   mainCount: number;
 }) {
   const [countCart, setCountCart] = useState(1);
-  const [cart, setCart] = useState<any[]>([]); // تغییر مهم: cart از state
+  const [cart, setCart] = useState<any[]>([]); 
   const [isProductInCart, setIsProductInCart] = useState(false);
 
-  // لود اولیه
+ 
   useEffect(() => {
     const savedCart = JSON.parse(localStorage.getItem("product") || "[]");
     setCart(savedCart);
@@ -37,12 +37,12 @@ function CartContainer({
     }
   }, [id]);
 
-  // همگام‌سازی isProductInCart
+ 
   useEffect(() => {
     setIsProductInCart(cart.some((p: any) => p.id === id));
   }, [cart, id]);
 
-  // محدود کردن تعداد
+
   useEffect(() => {
     if (countCart > count) {
       setCountCart(count);
@@ -50,10 +50,10 @@ function CartContainer({
     }
   }, [countCart, count]);
 
-  // تابع اصلی: اضافه یا آپدیت محصول
-  // فقط این تابع رو اضافه/جایگزین کن
+ 
+
   const updateCartQuantity = (newCount?: number) => {
-    const finalCount = newCount ?? countCart; // اگه عدد داد، از اون استفاده کن
+    const finalCount = newCount ?? countCart; 
 
     const updatedCart = cart.map((item: any) => {
       if (item.id === id) {
@@ -80,10 +80,10 @@ function CartContainer({
 
     setCart(updatedCart);
     localStorage.setItem("product", JSON.stringify(updatedCart));
-    setCountCart(finalCount); // اینجا آپدیت کن!
+    setCountCart(finalCount); 
   };
 
-  // حذف محصول
+
   const handleProductRemoved = () => {
     const updatedCart = cart.filter((item: any) => item.id !== id);
     setCart(updatedCart);
@@ -94,19 +94,19 @@ function CartContainer({
 
   return (
     <>
-      {/* شمارنده فقط وقتی محصول توی سبد هست */}
+    
       {isProductInCart && (
         <CartAddCount
           countServer={count}
           countCart={countCart}
           setCountCart={setCountCart}
-          updateCartQuantity={updateCartQuantity} // این مهمه
+          updateCartQuantity={updateCartQuantity} 
           handleProductRemoved={handleProductRemoved}
           id={id}
         />
       )}
 
-      {/* دکمه افزودن به سبد خرید */}
+
       {!isProductInCart && (
         <div className="mt-4">
           <button
@@ -118,7 +118,7 @@ function CartContainer({
         </div>
       )}
 
-      {/* دکمه مشاهده سبد خرید */}
+  
       {isProductInCart && (
         <div className="mt-4">
           <Link href="/cart">

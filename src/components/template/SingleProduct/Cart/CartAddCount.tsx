@@ -16,7 +16,6 @@ function CartAddCount({
 }) {
   return (
     <div className="rounded-xl border-2 border-zinc-200 flex justify-between items-center px-4 py-3">
-      {/* فقط + */}
       <div
         onClick={() => {
           if (countCart < countServer) {
@@ -28,7 +27,6 @@ function CartAddCount({
         <FiPlus className="text-green-500 text-xl" />
       </div>
 
-      {/* نمایش تعداد */}
       <div className="font-danaMed text-lg  ss02">
         {countCart}
         {countCart >= countServer && (
@@ -36,7 +34,6 @@ function CartAddCount({
         )}
       </div>
 
-      {/* فقط - یا حذف */}
       <div>
         {countCart <= 1 ? (
           <FaRegTrashAlt
