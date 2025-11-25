@@ -5,11 +5,39 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import Image from "next/image";
-
-const SwiperImage = memo(({ images }) => {
+import { FaHeart } from "react-icons/fa";
+import { BeatLoader, BounceLoader } from "react-spinners";
+const SwiperImage = memo(({ images, id }: { images: string[]; id: string }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+  const [isExits, setIsExits] = useState(null);
+
+  useEffect(() => {
+    const findWhich = JSON.parse(localStorage.getItem("which") || "[]");
+    if (findWhich.length) {
+      const isExits = findWhich.find((item: any) => item === id);
+      if (isExits) {
+        setIsExits(true);
+      } else {
+        setIsExits(false);
+      }
+    }
+  }, []);
+
+  const addWhich = () => {
+    const which = JSON.parse(localStorage.getItem("which") || "[]");
+    if (which.length) {
+      const isExits = which.find((item) => item === id);
+      if (!isExits) {
+        localStorage.setItem("which", JSON.stringify([...which, id]));
+        setIsExits(true);
+      }
+    } else {
+      localStorage.setItem("which", JSON.stringify([id]));
+      setIsExits(true);
+    }
+  };
 
   return (
     <div className="gallery-container">
@@ -45,21 +73,21 @@ const SwiperImage = memo(({ images }) => {
           {/* add more slides as needed */}
         </Swiper>
 
-        <div className="absolute top-4 right-4 z-10 cursor-pointer bg-black/50 p-1 rounded">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-white hover:text-red-500 transition-colors"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+        <div
+          className={`absolute top-4 right-4 z-10 cursor-pointer ${isExits ? "bg-black/50" : ""} p-1 rounded`}
+          onClick={addWhich}
+        >
+          {isExits !== null && (
+            <FaHeart
+              color={isExits ? "red" : "white"}
+              className={`text-white ${isExits ? "text-red-500" : ""} hover:text-red-500 transition-colors`}
             />
-          </svg>
+          )}
+
+          {isExits === null && (
+          <div className="size-8 bg-gray-500 animate-bounce rounded-full
+          "></div>
+          )}
         </div>
       </div>
 
@@ -79,7 +107,7 @@ const SwiperImage = memo(({ images }) => {
         }}
       >
         {images.map((image, index) => (
-          <SwiperSlide key={index} >
+          <SwiperSlide key={index}>
             <div className="w-full border-2 border-zinc-200 h-20 cursor-pointer relative rounded overflow-hidden">
               <Image
                 src={image}

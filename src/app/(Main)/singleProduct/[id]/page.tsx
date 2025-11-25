@@ -36,7 +36,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
               <div>
                 <div>
-                  <SwiperImage images={findProduct.images} />
+                  <SwiperImage images={findProduct.images} id={findProduct._id.toString()} />
                 </div>
               </div>
               <div className="">
