@@ -66,7 +66,7 @@ export default function CartCom({
               onClick={plus}
               className="text-green-600 max-sm:size-3 cursor-pointer"
             />
-            <span className=" max-sm:text-xs text-center ss02">{count}</span>
+            <span className=" max-sm:text-xs text-center ss02">{count} {count === cart.mainCount && <span className="text-xs text-red-500 mx-2">حداکثر تعداد</span>}</span>
             <AiOutlineMinus
               onClick={minus}
               className="text-red-600 max-sm:size-3 cursor-pointer"
