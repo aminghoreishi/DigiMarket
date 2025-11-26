@@ -7,7 +7,7 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { BeatLoader } from "react-spinners";
-import { signIn } from "next-auth/react";
+
 import Swal from "sweetalert2";
 import Link from "next/link";
 
@@ -169,16 +169,7 @@ function Page() {
           </div>
 
           {/* Google Sign-up */}
-          <div className="mt-5">
-            <button
-              type="button"
-              onClick={() => signIn("google", { callbackUrl: "/" })}
-              className="text-black flex items-center border-2 border-zinc-200 justify-center gap-2 w-full rounded-xl py-2 cursor-pointer text-xs"
-            >
-              <p>ثبت نام با گوگل</p>
-              <FcGoogle size={15} />
-            </button>
-          </div>
+         
         </form>
 
         <hr className="text-zinc-400" />
