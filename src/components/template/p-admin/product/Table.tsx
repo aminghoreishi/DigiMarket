@@ -1,10 +1,44 @@
 "use client";
+import Pagination from "@/components/module/Pagination/Pagination";
 import Image from "next/image";
-import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useState } from "react";
+import {
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  useEffect,
+  useState,
+} from "react";
 import Swal from "sweetalert2";
 
-function Table({ products } : { products: any[] }) {
+function Table({ products }: { products: any[] }) {
   const [proSatate, setProSatate] = useState([...products]);
+  const [currentPage, setCurrentPage] = useState(2);
+  const [totalPages, settotalPages] = useState(0);
+
+  useEffect(() => {
+    if (currentPage === 1 && products?.length) {
+      setProSatate(products);
+    } else {
+      getProducts(currentPage);
+    }
+  }, [currentPage, products]);
+
+  const getProducts = async (page: number) => {
+    try {
+      const res = await fetch(`/api/product/admin?page=${page}`);
+      if (res.ok) {
+        const data = await res.json();
+        setProSatate(data.data);
+        settotalPages(data.totalPages);
+        console.log(data.totalPages);
+        console.log(data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
   const removeProduct = async (id: string) => {
     Swal.fire({
       title: "آیا از حذف این محصول مطمئن هستید؟",
@@ -104,9 +138,39 @@ function Table({ products } : { products: any[] }) {
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center">
-                    {pro.colors.map((c: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined) => (
-                      <div key={c}>{c}</div>
-                    ))}
+                    {pro.colors.map(
+                      (
+                        c:
+                          | string
+                          | number
+                          | bigint
+                          | boolean
+                          | ReactElement<
+                              unknown,
+                              string | JSXElementConstructor<any>
+                            >
+                          | Iterable<ReactNode>
+                          | ReactPortal
+                          | Promise<
+                              | string
+                              | number
+                              | bigint
+                              | boolean
+                              | ReactPortal
+                              | ReactElement<
+                                  unknown,
+                                  string | JSXElementConstructor<any>
+                                >
+                              | Iterable<ReactNode>
+                              | null
+                              | undefined
+                            >
+                          | null
+                          | undefined
+                      ) => (
+                        <div key={c}>{c}</div>
+                      )
+                    )}
                   </div>
                 </td>
                 <td className="px-6 py-4">
@@ -127,6 +191,13 @@ function Table({ products } : { products: any[] }) {
           </tbody>
         </table>
       </div>
+      {currentPage > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
+      )}
     </div>
   );
 }

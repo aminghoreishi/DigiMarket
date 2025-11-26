@@ -7,6 +7,8 @@ async function page() {
   const products = await productModel
     .find({})
     .populate("category", "subCategory")
+    .limit(4)
+    .skip(0)
     .lean();
   console.log(products);
 

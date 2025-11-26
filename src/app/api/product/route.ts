@@ -101,7 +101,7 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   try {
     await db();
-    const products = await productModel.find({}).lean();
+    const products = await productModel.find({}).lean()
     return NextResponse.json(products, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
