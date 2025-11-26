@@ -10,7 +10,9 @@ async function page() {
     .limit(4)
     .skip(0)
     .lean();
-  console.log(products);
+
+    const totalProducts = await productModel.countDocuments({});
+    const totalPages = Math.ceil(totalProducts / 4);
 
   return (
     <div>
@@ -24,7 +26,7 @@ async function page() {
             </button>
           </Link>
         </div>
-        <Table products={JSON.parse(JSON.stringify(products))} />
+        <Table products={JSON.parse(JSON.stringify(products))} totalPages={totalPages} />
       </div>
     </div>
   );

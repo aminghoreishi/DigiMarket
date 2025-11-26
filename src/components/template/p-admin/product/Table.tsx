@@ -11,10 +11,16 @@ import {
 } from "react";
 import Swal from "sweetalert2";
 
-function Table({ products }: { products: any[] }) {
+function Table({
+  products,
+  totalPages,
+}: {
+  products: any[];
+  totalPages: number;
+}) {
   const [proSatate, setProSatate] = useState([...products]);
-  const [currentPage, setCurrentPage] = useState(2);
-  const [totalPages, settotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPagesState, setTotalPagesState] = useState(totalPages);
 
   useEffect(() => {
     if (currentPage === 1 && products?.length) {
@@ -30,7 +36,8 @@ function Table({ products }: { products: any[] }) {
       if (res.ok) {
         const data = await res.json();
         setProSatate(data.data);
-        settotalPages(data.totalPages);
+        setTotalPagesState(data.totalPages);
+
         console.log(data.totalPages);
         console.log(data.data);
       }
@@ -195,7 +202,7 @@ function Table({ products }: { products: any[] }) {
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
+          totalPages={totalPagesState}
         />
       )}
     </div>
