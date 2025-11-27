@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import Swal from "sweetalert2";
+import SearchBar from "./SearchBar";
 
 function Table({
   products,
@@ -84,6 +85,9 @@ function Table({
 
   return (
     <div className="mt-5">
+      <div className="my-5">
+        <SearchBar removeProduct={removeProduct} />
+      </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-600">
           <thead className="text-xs font-danaMed text-gray-700 uppercase bg-gray-100">
@@ -198,7 +202,7 @@ function Table({
           </tbody>
         </table>
       </div>
-      {currentPage > 0 && (
+      {currentPage > 1 && (
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
