@@ -12,11 +12,16 @@ const MainContainer = memo(
     userID,
     longDescription,
     features,
+    tags,
+    findProduct,
   }: {
     isLoggedIn: boolean;
     findProductID: string;
     longDescription: string;
     userID: string;
+    features: { title: string; description: string }[];
+    tags: { _id: string; name: string }[];
+    findProduct: any;
   }) => {
     return (
       <div>
@@ -35,7 +40,7 @@ const MainContainer = memo(
           />
         </div>
         <div className="mt-5">
-          <RelatedPro />
+          <RelatedPro tags={tags} findProductID={findProductID.toString()} />
         </div>
       </div>
     );

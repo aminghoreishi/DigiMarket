@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     const category = formData.get("category")?.toString() || "";
     const longDescription = formData.get("longDescription")?.toString() || "";
     const shortDescription = formData.get("shortDescription")?.toString() || "";
-
+    const tags = formData.get("tags")?.toString() || "[]";
     const colorsRaw = formData.get("colors")?.toString() || "[]";
     const featuresRaw = formData.get("features")?.toString() || "[]";
 
@@ -64,6 +64,7 @@ export async function POST(req: NextRequest) {
       category,
       longDescription,
       shortDescription,
+      tags: JSON.parse(formData.get("tags")?.toString() || "[]"),
       colors,
       features,
       images: imagePaths,
@@ -101,7 +102,7 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   try {
     await db();
-    const products = await productModel.find({}).lean()
+    const products = await productModel.find({}).lean();
     return NextResponse.json(products, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {

@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import SwiperProduct from "@/components/module/SwiperProduct/SwiperProduct";
 
-function SwiperRel() {
+function SwiperRel({ products }: { products: any[] }) {
   return (
     <div className="mt-5">
       <Swiper
@@ -34,30 +34,11 @@ function SwiperRel() {
         }}
         className="mySwiper !h-[400px]"
       >
-        {/* <SwiperSlide>
-          <SwiperProduct />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SwiperProduct />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SwiperProduct />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SwiperProduct />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SwiperProduct />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SwiperProduct />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SwiperProduct />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SwiperProduct />
-        </SwiperSlide> */}
+        {products.map((product) => (
+          <SwiperSlide key={product._id}>
+            <SwiperProduct {...product} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

@@ -1,5 +1,4 @@
 import TopBar from "@/components/module/p-admin/TopBar/TopBar";
-import SearchBar from "@/components/template/p-admin/product/SearchBar";
 import Table from "@/components/template/p-admin/product/Table";
 import productModel from "@/models/product";
 import Link from "next/link";

@@ -66,6 +66,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
           <MainContainer
             isLoggedIn={isLoggedIn}
             userID={user?.user?._id}
+            tags={JSON.parse(JSON.stringify(findProduct.tags))}
             findProductID={findProduct._id}
             features={JSON.parse(JSON.stringify(findProduct.features))}
             longDescription={findProduct.longDescription}
