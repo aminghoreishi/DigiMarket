@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
     const longDescription = formData.get("longDescription")?.toString() || "";
     const shortDescription = formData.get("shortDescription")?.toString() || "";
     const tags = formData.get("tags")?.toString() || "[]";
+    const subCategory = formData.get("subCategory")?.toString() || "";
     const colorsRaw = formData.get("colors")?.toString() || "[]";
     const featuresRaw = formData.get("features")?.toString() || "[]";
 
@@ -60,6 +61,7 @@ export async function POST(req: NextRequest) {
       count,
       name,
       delivery,
+      subCategory,
       category,
       longDescription,
       shortDescription,

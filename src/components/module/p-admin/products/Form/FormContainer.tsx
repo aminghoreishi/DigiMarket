@@ -231,7 +231,7 @@ function FormContainer({
           {watchedSubCategory === "691f23faec42752defd3841c" && (
             <LaptopFields register={register} errors={errors} />
           )}
-          {watchedCategory === "69138a02f035aa5cee9e73bd" && (
+          {watchedSubCategory === "6929d711419625c80ab876f4" && (
             <ModemFields register={register} errors={errors} />
           )}
 

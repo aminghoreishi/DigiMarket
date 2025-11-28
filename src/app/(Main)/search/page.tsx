@@ -42,7 +42,7 @@ async function page({
 
   const findedProducts = await productModel
     .find(filter)
-    .populate("category")
+    .populate("subCategory")
     .lean();
 
   console.log(findedProducts);

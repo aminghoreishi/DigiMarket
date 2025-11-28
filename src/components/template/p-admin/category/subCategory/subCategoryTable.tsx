@@ -142,7 +142,7 @@ function SubCategoryTable({
         </table>
       </div>
 
-      {totalPages && (
+      {totalPages !== 1 && (
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
