@@ -1,7 +1,13 @@
 "use client";
+import { useSearchParams } from "next/dist/client/components/navigation";
+import { useRouter } from "nextjs-toploader/app";
+
 import { useState } from "react";
 
 export default function PriceRangeFilter() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100_000_000);
 
@@ -10,6 +16,22 @@ export default function PriceRangeFilter() {
 
   const formatPrice = (price: number) => {
     return price.toLocaleString("fa-IR") + " تومان";
+  };
+
+  const updateUrl = () => {
+    const params = new URLSearchParams(searchParams);
+    if (minPrice > 0) {
+      params.set("min_price", minPrice.toString());
+    } else {
+      params.delete("min_price");
+    }
+    if (maxPrice < MAX) {
+      params.set("max_price", maxPrice.toString());
+    } else {
+      params.delete("max_price");
+    }
+    window.dispatchEvent(new CustomEvent("nextjs-route-change-start"));
+    router.push(`?${params.toString()}`);
   };
 
   return (
@@ -39,6 +61,7 @@ export default function PriceRangeFilter() {
           onChange={(e) => {
             const value = Math.min(Number(e.target.value), maxPrice - 500_000);
             setMinPrice(value);
+            updateUrl();
           }}
           className="absolute w-full h-10 bg-transparent appearance-none pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none] [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-orange-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:bg-orange-500 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0"
         />
@@ -51,6 +74,7 @@ export default function PriceRangeFilter() {
           onChange={(e) => {
             const value = Math.max(Number(e.target.value), minPrice + 500_000);
             setMaxPrice(value);
+            updateUrl();
           }}
           className="absolute w-full h-10 bg-transparent appearance-none pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-orange-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:bg-orange-500 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0"
         />

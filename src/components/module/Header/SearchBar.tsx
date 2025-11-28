@@ -9,7 +9,6 @@ function SearchBar() {
 
   const searchProduct = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      window.dispatchEvent(new CustomEvent("nextjs-route-change-start"));
       router.push(`/search?query=${value}`);
     }
   };

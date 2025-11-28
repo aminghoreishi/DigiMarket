@@ -13,6 +13,11 @@ async function page({
   const name = Array.isArray(query) ? query[0] : query || "";
   console.log(name);
 
+  const minPrice = searchParams.min_price ? Number(searchParams.min_price) : 0;
+  const maxPrice = searchParams.max_price
+    ? Number(searchParams.max_price)
+    : undefined;
+
   await db();
 
   const findedProducts = await productModel.find({
@@ -20,13 +25,20 @@ async function page({
       { name: { $regex: name, $options: "i" } },
       { longDescription: { $regex: name, $options: "i" } },
     ],
+
+    price: {
+      $gte: minPrice,
+      ...(maxPrice && { $lte: maxPrice }),
+    },
   });
 
   console.log(findedProducts);
 
   return (
     <div className="container mx-auto font-danaMed">
-      <h2 className="mt-12 max-sm:text-base text-2xl">نتیجه جستجو برای "لپ تاپ گیمینگ"</h2>
+      <h2 className="mt-12 max-sm:text-base text-2xl">
+        نتیجه جستجو برای "لپ تاپ گیمینگ"
+      </h2>
 
       <div className="mt-8">
         <Search findedProducts={JSON.parse(JSON.stringify(findedProducts))} />

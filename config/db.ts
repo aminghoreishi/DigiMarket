@@ -4,15 +4,17 @@ import "@/models/subSubCategory";
 
 import mongoose from "mongoose";
 
-declare global {
-  var mongoose: {
-    conn: mongoose.Mongoose | null;
-    promise: Promise<mongoose.Mongoose> | null;
-  };
-}
-
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/digimarket";
+
+declare global {
+  var mongoose:
+    | {
+        conn: mongoose.Mongoose | null;
+        promise: Promise<mongoose.Mongoose> | null;
+      }
+    | undefined;
+}
 
 let cached = global.mongoose;
 
@@ -20,18 +22,32 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
-const db = async () => {
-  if (cached.conn) return cached.conn;
-
-  if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI, {
-      serverApi: { version: "1", strict: true, deprecationErrors: true },
-    });
+async function db() {
+  if (cached.conn) {
+    return cached.conn;
   }
 
-  cached.conn = await cached.promise;
-  console.log("Connected to MongoDB");
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false,
+    };
+
+    cached.promise = mongoose
+      .connect(MONGODB_URI, opts)
+      .then((mongooseInstance) => {
+        console.log("Connected to MongoDB");
+        return mongooseInstance;
+      });
+  }
+
+  try {
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
+  }
+
   return cached.conn;
-};
+}
 
 export default db;
