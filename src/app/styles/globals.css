@@ -13,12 +13,10 @@
 }
 
 @utility container {
-  padding-inline: 10px;
+  padding-inline: 8px;
   margin-inline: auto;
 
-  @variant sm {
-    padding-inline: 1px;
-  }
+  
   @variant md {
     padding-inline: 10px;
   }

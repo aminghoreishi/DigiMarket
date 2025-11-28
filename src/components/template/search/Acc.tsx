@@ -11,7 +11,7 @@ function Acc() {
           aria-expanded="true"
           aria-controls="accordion-card-body-1"
         >
-          <span>What is Flowbite?</span>
+          <span>برند ها</span>
           <MdKeyboardArrowDown size={20} />
         </button>
       </h2>
@@ -21,22 +21,7 @@ function Acc() {
         aria-labelledby="accordion-card-heading-1"
       >
         <div className="p-4 md:p-5">
-          <p className="mb-2 text-body">
-            Flowbite is an open-source library of interactive components built
-            on top of Tailwind CSS including buttons, dropdowns, modals,
-            navbars, and more.
-          </p>
-          <p className="text-body">
-            Check out this guide to learn how to{" "}
-            <a
-              href="/docs/getting-started/introduction/"
-              className="text-fg-brand hover:underline"
-            >
-              get started
-            </a>{" "}
-            and start developing websites even faster with components on top of
-            Tailwind CSS.
-          </p>
+      
         </div>
       </div>
 
