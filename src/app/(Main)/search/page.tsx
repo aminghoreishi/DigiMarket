@@ -1,12 +1,9 @@
 import Search from "@/components/template/search/search";
 import db from "@/config/db";
 import productModel from "@/models/product";
-import { NextRequest } from "next/server";
 import React from "react";
 
 async function page({
-  params,
-  req,
   searchParams,
 }: {
   params: { name: string };
