@@ -2,7 +2,6 @@
 import { useForm, useWatch } from "react-hook-form";
 import ColorSelector from "./ColorSelector";
 import LaptopFields from "./LaptopFields";
-import SmartwatchFields from "./SmartwatchFields";
 import { useState } from "react";
 import { BeatLoader } from "react-spinners";
 
@@ -16,6 +15,8 @@ function FormContainer({
 }: {
   categories: { _id: string; title: string }[];
 }) {
+  console.log(categories.subCategory);
+
   const [rawPrice, setRawPrice] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -31,6 +32,17 @@ function FormContainer({
     name: "category",
   });
 
+  const watchedSubCategory = useWatch({
+    control,
+    name: "subCategory",
+  });
+
+  const selectedCategory = categories.find(
+    (cat) => cat._id === watchedCategory
+  );
+
+  const subCategories = selectedCategory?.subCategory || [];
+
   const submitForm = async (data: any) => {
     const formData = new FormData();
     const features = getFeatures(data, data.category);
@@ -41,6 +53,7 @@ function FormContainer({
     formData.append("count", data.count || "");
     formData.append("delivery", data.delivery || "");
     formData.append("category", data.category || "");
+    formData.append("subCategory", data.subCategory || "");
     formData.append("longDescription", data.longDescription || "");
     formData.append("shortDescription", data.shortDescription || "");
     formData.append("colors", JSON.stringify(data.colors || []));
@@ -189,7 +202,33 @@ function FormContainer({
               </p>
             )}
           </div>
-          {watchedCategory === "691f23faec42752defd3841c" && (
+          {watchedCategory === "691f2271ec42752defd3840a" && (
+            <div className="font-danaMed flex flex-col">
+              <label className="text-sm" htmlFor="">
+                دسته بندی محصول
+              </label>
+              <select
+                {...register("subCategory", {
+                  required: "دسته بندی الزامی هست",
+                })}
+                className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-xs"
+              >
+                <option value="">انتخاب دسته بندی</option>
+                {subCategories.map((subCategory) => (
+                  <option key={subCategory._id} value={subCategory._id}>
+                    {subCategory.title}
+                  </option>
+                ))}
+              </select>
+
+              {errors.subCategory && (
+                <p className="text-red-500 text-xs mt-2">
+                  {errors.subCategory.message}
+                </p>
+              )}
+            </div>
+          )}
+          {watchedSubCategory === "691f23faec42752defd3841c" && (
             <LaptopFields register={register} errors={errors} />
           )}
           {watchedCategory === "69138a02f035aa5cee9e73bd" && (
@@ -263,7 +302,6 @@ function FormContainer({
               placeholder="مثلاً لپ‌تاپ سبک و مناسب برای کار روزمره"
               {...register("shortDescription", {
                 required: "توضیح کوتاه الزامی است",
-               
               })}
               className={`border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm ${
                 errors.shortDescription ? "border-red-400" : ""
@@ -314,9 +352,7 @@ function FormContainer({
             errors={errors}
           />
 
-          <Tag    register={register}
-            setValue={setValue}
-            errors={errors}  />
+          <Tag register={register} setValue={setValue} errors={errors} />
 
           <div className="font-danaMed flex flex-col">
             <label className="text-sm" htmlFor="">
