@@ -13,6 +13,10 @@ async function page({
   const name = Array.isArray(query) ? query[0] : query || "";
   console.log(name);
 
+  const ram = searchParams["ram"];
+
+  console.log(ram);
+
   const minPrice = searchParams.min_price ? Number(searchParams.min_price) : 0;
   const maxPrice = searchParams.max_price
     ? Number(searchParams.max_price)
@@ -20,17 +24,24 @@ async function page({
 
   await db();
 
-  const findedProducts = await productModel.find({
+  const filter: any = {
     $or: [
-      { name: { $regex: name, $options: "i" } },
-      { longDescription: { $regex: name, $options: "i" } },
+      { name: { $regex: query, $options: "i" } },
+      { longDescription: { $regex: query, $options: "i" } },
     ],
-
     price: {
       $gte: minPrice,
       ...(maxPrice && { $lte: maxPrice }),
     },
-  });
+  };
+
+  if (ram) {
+    filter.features = {
+      $elemMatch: { name: "رم", value: ram },
+    };
+  }
+
+  const findedProducts = await productModel.find({ ...filter }).lean();
 
   console.log(findedProducts);
 

@@ -1,13 +1,16 @@
-import React from "react";
+"use client";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import PriceRangeFilter from "./Price";
+import { useState } from "react";
+import LaptopFilter from "./LaptopFilter";
 function Acc() {
+  const [isOpenPrice, setIsOpenPrice] = useState(false)
   return (
     <div id="accordion-card" className="text-sm" data-accordion="collapse">
       <h2 id="accordion-card-heading-1">
         <button
           type="button"
-          className="flex items-center border-zinc-200 rounded-xl justify-between w-full p-5 font-medium rtl:text-right text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
+          className="flex items-center border-zinc-200 rounded-xl justify-between w-full p-5 font-medium rtl:text-right text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 aria-expanded:rounded-b-none aria-expanded:shadow-none"
           data-accordion-target="#accordion-card-body-1"
           aria-expanded="true"
           aria-controls="accordion-card-body-1"
@@ -22,25 +25,25 @@ function Acc() {
         aria-labelledby="accordion-card-heading-1"
       >
         <div className="p-4 md:p-5">
-      
+          <LaptopFilter/>
         </div>
       </div>
 
-      <h2 id="accordion-card-heading-1" className="mt-5">
+      <h2 id="accordion-card-heading-1" className="mt-5" onClick={()=>setIsOpenPrice(!isOpenPrice)}>
         <button
           type="button"
-          className="flex items-center border-zinc-200 rounded-xl justify-between w-full p-5 font-medium rtl:text-right text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
+          className={`flex items-center border-zinc-200 ${isOpenPrice ? "rounded-b-none!" : "rounded-b-xl!"}   rounded-xl justify-between w-full p-5 font-medium rtl:text-right text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3`}
           data-accordion-target="#accordion-card-body-1"
           aria-expanded="true"
           aria-controls="accordion-card-body-1"
         >
           <span>قیمت</span>
-          <MdKeyboardArrowDown size={20} />
+          <MdKeyboardArrowDown size={20} className={`${isOpenPrice ? "rotate-180" : ""} transition-transform`} />
         </button>
       </h2>
       <div
         id="accordion-card-body-1"
-        className=" border  rounded-b-xl border-zinc-200 border-t-0 border-default rounded-b-base shadow-xs"
+        className={` border  rounded-b-xl border-zinc-200 border-t-0 border-default rounded-b-base shadow-xs ${isOpenPrice ? "" : "hidden"}`}
         aria-labelledby="accordion-card-heading-1"
       >
         <div className="p-4 md:p-5">
@@ -48,13 +51,10 @@ function Acc() {
         </div>
       </div>
 
-      <h2 id="accordion-card-heading-1">
+      <h2 id="accordion-card-heading-1" className="mt-5">
         <button
           type="button"
-          className="flex items-center border-zinc-200 rounded-xl justify-between w-full p-5 font-medium rtl:text-right text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
-          data-accordion-target="#accordion-card-body-1"
-          aria-expanded="true"
-          aria-controls="accordion-card-body-1"
+          className="flex items-center border-zinc-200 rounded-xl justify-between w-full p-5 font-medium rtl:text-right text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3"
         >
           <span>What is Flowbite?</span>
           <MdKeyboardArrowDown size={20} />
