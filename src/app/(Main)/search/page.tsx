@@ -6,16 +6,15 @@ import React from "react";
 async function page({
   searchParams,
 }: {
-  params: { name: string };
+  params?: { name: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const query = searchParams["query"];
   const name = Array.isArray(query) ? query[0] : query || "";
-  console.log(name);
+  console.log("Search query:", name);
 
   const ram = searchParams["ram"];
-
-  console.log(ram);
+  console.log("Selected RAM:", ram);
 
   const minPrice = searchParams.min_price ? Number(searchParams.min_price) : 0;
   const maxPrice = searchParams.max_price
@@ -26,8 +25,8 @@ async function page({
 
   const filter: any = {
     $or: [
-      { name: { $regex: query, $options: "i" } },
-      { longDescription: { $regex: query, $options: "i" } },
+      { name: { $regex: name, $options: "i" } },
+      { longDescription: { $regex: name, $options: "i" } },
     ],
     price: {
       $gte: minPrice,
@@ -41,14 +40,17 @@ async function page({
     };
   }
 
-  const findedProducts = await productModel.find({ ...filter }).lean();
+  const findedProducts = await productModel
+    .find(filter)
+    .populate("category")
+    .lean();
 
   console.log(findedProducts);
 
   return (
-    <div className="container mx-auto font-danaMed">
-      <h2 className="mt-12 max-sm:text-base text-2xl">
-        نتیجه جستجو برای "لپ تاپ گیمینگ"
+    <div className="container mx-auto font-danaMed px-4 sm:px-6 lg:px-8">
+      <h2 className="mt-12 text-2xl">
+        نتیجه جستجو برای "{name || "همه محصولات"}"
       </h2>
 
       <div className="mt-8">

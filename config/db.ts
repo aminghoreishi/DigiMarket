@@ -1,7 +1,6 @@
 import "@/models/category";
+import "@/models/product";
 import "@/models/subCategory";
-import "@/models/subSubCategory";
-
 import mongoose from "mongoose";
 
 const MONGODB_URI =

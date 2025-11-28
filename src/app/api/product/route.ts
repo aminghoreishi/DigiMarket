@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { writeFile } from "fs/promises";
 import path from "path";
 import productModel from "@/models/product";
-
 export async function POST(req: NextRequest) {
   try {
     await db();
