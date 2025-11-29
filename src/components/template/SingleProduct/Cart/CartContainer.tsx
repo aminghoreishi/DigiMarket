@@ -112,7 +112,10 @@ function CartContainer({
       ) : (
         <div className="mt-4">
           <button
-            onClick={() => updateCartQuantity(1)}
+            onClick={() => {
+              updateCartQuantity(1);
+              setIsOpenModalOff(true);
+            }}
             className="bg-orange-500 hover:bg-orange-600 transition text-white p-3 rounded-lg font-danaMed w-full text-sm"
           >
             افزودن به سبد خرید

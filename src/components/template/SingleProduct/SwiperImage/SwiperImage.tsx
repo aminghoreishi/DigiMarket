@@ -8,7 +8,6 @@ import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import { memo, useEffect, useState } from "react";
 import Image from "next/image";
 import { FaHeart } from "react-icons/fa";
-import { BeatLoader, BounceLoader } from "react-spinners";
 const SwiperImage = memo(({ images, id }: { images: string[]; id: string }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
   const [isExits, setIsExits] = useState(null);
@@ -53,7 +52,7 @@ const SwiperImage = memo(({ images, id }: { images: string[]; id: string }) => {
           navigation={true}
           thumbs={{ swiper: thumbsSwiper }}
           modules={[FreeMode, Navigation, Thumbs]}
-          className="mySwiper2"
+          className="mySwiper2 !-z-10"
         >
           {images.map((image, index) => (
             <SwiperSlide key={index}>
@@ -70,7 +69,7 @@ const SwiperImage = memo(({ images, id }: { images: string[]; id: string }) => {
             </SwiperSlide>
           ))}
 
-          {/* add more slides as needed */}
+       
         </Swiper>
 
         <div
@@ -98,7 +97,7 @@ const SwiperImage = memo(({ images, id }: { images: string[]; id: string }) => {
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper mt-4 max-sm:!h-20"
+        className="mySwiper !-z-50 mt-4 max-sm:!h-20"
         breakpoints={{
           320: { slidesPerView: 3.5 },
           480: { slidesPerView: 4.5 },
