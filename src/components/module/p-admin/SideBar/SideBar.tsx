@@ -65,6 +65,18 @@ function SideBar() {
             <span>کاربران</span>
           </li>
         </Link>
+          <Link href="/admin/offs">
+          <li
+            className={`flex items-center text-sm gap-2 cursor-pointer transition-colors ${
+              route === "/admin/offs"
+                ? "text-blue-500"
+                : "text-gray-700 hover:text-blue-500"
+            }`}
+          >
+            <FiUser size={20} />
+            <span>تخفیفات</span>
+          </li>
+        </Link>
         <li
           className={`flex items-center  relative group text-sm gap-2 cursor-pointer transition-colors ${
             route === "/admin/categories" ||

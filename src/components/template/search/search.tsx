@@ -1,4 +1,3 @@
-import SwiperProduct from "@/components/module/SwiperProduct/SwiperProduct";
 import MyAccordion from "./Acc";
 import Exits from "./Exits";
 import SearchProContainer from "./SearchProContainer";
