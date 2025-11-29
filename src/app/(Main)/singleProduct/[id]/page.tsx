@@ -30,6 +30,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
 
   return (
     <>
+    
       <div className="container mx-auto">
         <div className="grid xl:grid-cols-12 gap-5 mt-5">
           <div className="xl:col-span-9">
