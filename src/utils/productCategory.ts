@@ -7,7 +7,7 @@ const FEATURES = {
     گرافیک: "gpu",
     وزن: "weight",
   },
-  "69138a02f035aa5cee9e73bd": {
+  "6929d711419625c80ab876f4": {
     "نوع آنتن": "kindAnten",
     "تعداد پورت RJ45": "rj45",
     "نوع شبکه": "networkType",

@@ -1,6 +1,7 @@
 import SwiperProduct from "@/components/module/SwiperProduct/SwiperProduct";
 import MyAccordion from "./Acc";
 import Exits from "./Exits";
+import SearchProContainer from "./SearchProContainer";
 function Search({ findedProducts }: { findedProducts: any[] }) {
   return (
     <div className="grid grid-cols-12 gap-5">
@@ -12,15 +13,7 @@ function Search({ findedProducts }: { findedProducts: any[] }) {
       </div>
       <div className="col-span-12 max-sm:row-end-1 md:col-span-8 lg:col-span-9">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 ">
-          {findedProducts.length === 0 ? (
-            <div className="col-span-3 text-center text-gray-500 mt-10">
-              متأسفانه محصولی یافت نشد.
-            </div>
-          ) : (
-            findedProducts.map((item) => (
-              <SwiperProduct key={item._id} {...item} />
-            ))
-          )}
+          <SearchProContainer findedProducts={findedProducts} />
         </div>
       </div>
     </div>

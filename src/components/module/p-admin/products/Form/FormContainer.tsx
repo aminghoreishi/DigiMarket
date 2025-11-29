@@ -45,7 +45,7 @@ function FormContainer({
 
   const submitForm = async (data: any) => {
     const formData = new FormData();
-    const features = getFeatures(data, data.category);
+    const features = getFeatures(data, data.subCategory);
 
     formData.append("title", data.title || "");
     formData.append("name", data.name || "");

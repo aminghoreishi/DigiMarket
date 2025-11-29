@@ -1,8 +1,8 @@
 import Search from "@/components/template/search/search";
 import db from "@/config/db";
 import productModel from "@/models/product";
-import React from "react";
 
+import { redirect } from "next/navigation"; 
 async function page({
   searchParams,
 }: {
@@ -14,6 +14,7 @@ async function page({
   console.log("Search query:", name);
 
   const ram = searchParams["ram"];
+  const numberAnt = searchParams["numberAnt"];
   console.log("Selected RAM:", ram);
 
   const minPrice = searchParams.min_price ? Number(searchParams.min_price) : 0;
@@ -39,6 +40,11 @@ async function page({
       $elemMatch: { name: "رم", value: ram },
     };
   }
+  if (numberAnt) {
+    filter.features = {
+      $elemMatch: { name: "تعداد آنتن", value: numberAnt },
+    };
+  }
 
   const findedProducts = await productModel
     .find(filter)
@@ -46,6 +52,13 @@ async function page({
     .lean();
 
   console.log(findedProducts);
+
+  const hasActiveFilters = ram || numberAnt || minPrice > 0 || maxPrice;
+
+  if (findedProducts.length === 0 && hasActiveFilters) {
+    const cleanUrl = query ? `?query=${encodeURIComponent(query)}` : "/search";
+    redirect(cleanUrl);
+  }
 
   return (
     <div className="container mx-auto font-danaMed px-4 sm:px-6 lg:px-8">
