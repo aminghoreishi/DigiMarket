@@ -38,27 +38,35 @@ export default function MainCart({
   };
 
   const total = carts.reduce((sum, item) => sum + item.price * item.count, 0);
-  
 
   return (
     <div className="grid max-lg:grid-cols-1 lg:grid-cols-12 gap-6 font-danaMed">
-      <div className="col-span-12 md:col-span-8 lg:col-span-9">
-        <CartContainer
-          carts={carts}
-          onUpdateCount={updateCount}
-          setCarts={setCarts}
-        />
-      </div>
+      {carts.length === 0 && (
+        <p className="col-span-12 text-center font-danaMed">
+          سبد خرید شما خالی است
+        </p>
+      )}
+      {carts.length > 0 && (
+        <>
+          <div className="col-span-12 md:col-span-8 lg:col-span-9">
+            <CartContainer
+              carts={carts}
+              onUpdateCount={updateCount}
+              setCarts={setCarts}
+            />
+          </div>
 
-      <div className="col-span-12 md:col-span-4 lg:col-span-3">
-        <div className="mt-8 sticky top-20">
-          <CartSummary
-            total={total}
-            isUserLoggedIn={isUserLoggedIn}
-            setStep={setStep}
-          />
-        </div>
-      </div>
+          <div className="col-span-12 md:col-span-4 lg:col-span-3">
+            <div className="mt-8 sticky top-20">
+              <CartSummary
+                total={total}
+                isUserLoggedIn={isUserLoggedIn}
+                setStep={setStep}
+              />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
