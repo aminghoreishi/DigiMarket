@@ -7,6 +7,8 @@ function Cart({
   price,
   delivery,
   name,
+  isLoggedIn,
+  userID,
   id,
   img,
   colors,
@@ -33,13 +35,16 @@ function Cart({
           colors={colors}
           selectedColor={selectedColor}
           setSelectedColor={setSelectedColor}
+       
         />
         <div>
           <CartAdd
             count={count}
             price={price}
+               isLoggedIn={isLoggedIn}
             delivery={delivery}
             name={name}
+            userID={userID}
             id={id}
             img={img}
             color={selectedColor}

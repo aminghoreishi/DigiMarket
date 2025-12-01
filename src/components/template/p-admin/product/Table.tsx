@@ -38,9 +38,6 @@ function Table({
         const data = await res.json();
         setProSatate(data.data);
         setTotalPagesState(data.totalPages);
-
-        console.log(data.totalPages);
-        console.log(data.data);
       }
     } catch (error) {
       console.error("Error fetching products:", error);

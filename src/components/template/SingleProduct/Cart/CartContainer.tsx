@@ -9,8 +9,11 @@ function CartContainer({
   count,
   name,
   id,
-  price,
+  userID,
+  priceState,
+  setPriceState,
   img,
+  isLoggedIn,
   color,
   mainCount,
 }: {
@@ -36,6 +39,7 @@ function CartContainer({
     if (item) {
       setCountCart(item.count);
       setIsProductInCart(true);
+      setPriceState(item.price);
     } else {
       setCountCart(1);
       setIsProductInCart(false);
@@ -68,7 +72,7 @@ function CartContainer({
       newCart.push({
         id,
         name,
-        price,
+        price: priceState,
         count: quantity,
         img,
         color,
@@ -89,7 +93,16 @@ function CartContainer({
 
   return (
     <>
-      {isOpenModalOff && <ModelOff />}
+      {isOpenModalOff && (
+        <ModelOff
+          setPriceState={setPriceState}
+          id={id}
+          setIsOpenModalOff={setIsOpenModalOff}
+          userID={userID}
+          isLoggedIn={isLoggedIn}
+          updateCartQuantity={updateCartQuantity}
+        />
+      )}
 
       {isProductInCart ? (
         <>
@@ -113,7 +126,7 @@ function CartContainer({
         <div className="mt-4">
           <button
             onClick={() => {
-              updateCartQuantity(1);
+              // updateCartQuantity(1);
               setIsOpenModalOff(true);
             }}
             className="bg-orange-500 hover:bg-orange-600 transition text-white p-3 rounded-lg font-danaMed w-full text-sm"

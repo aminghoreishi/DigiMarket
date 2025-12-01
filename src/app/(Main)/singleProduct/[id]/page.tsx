@@ -22,7 +22,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
   const isLoggedIn = !!user.user;
   const { id } = await params;
 
-  console.log(id);
+  console.log(user.user._id);
 
   const findProduct = await productModel.findOne({ _id: id }).lean();
 
@@ -30,14 +30,16 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
 
   return (
     <>
-    
       <div className="container mx-auto">
         <div className="grid xl:grid-cols-12 gap-5 mt-5">
           <div className="xl:col-span-9">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
               <div>
                 <div>
-                  <SwiperImage images={findProduct.images} id={findProduct._id.toString()} />
+                  <SwiperImage
+                    images={findProduct.images}
+                    id={findProduct._id.toString()}
+                  />
                 </div>
               </div>
               <div className="">
@@ -54,6 +56,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
           <CartContainer
             isLoggedIn={isLoggedIn}
             price={findProduct.price}
+            userID={user?.user?._id}
             colors={findProduct.colors}
             count={findProduct.count}
             delivery={findProduct.delivery}
@@ -80,7 +83,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
 }
 
 const CartContainer = memo(
-  ({ isLoggedIn, price, colors, count, delivery, name, id, img }) => {
+  ({ isLoggedIn, price, colors, count, delivery, name, id, img , userID }) => {
     return (
       <div className=" xl:col-span-3">
         <Cart
@@ -90,6 +93,7 @@ const CartContainer = memo(
           count={count}
           delivery={delivery}
           name={name}
+          userID={userID}
           id={id}
           img={img}
         />

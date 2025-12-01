@@ -5,9 +5,6 @@ import Link from "next/link";
 
 async function page() {
   const categories = await categoryModel.find({}).lean();
-
-  console.log(categories);
-
   return (
     <div>
       <TopBar title="دسته بندی ها" />

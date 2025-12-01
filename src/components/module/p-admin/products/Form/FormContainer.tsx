@@ -15,8 +15,6 @@ function FormContainer({
 }: {
   categories: { _id: string; title: string }[];
 }) {
-  console.log(categories.subCategory);
-
   const [rawPrice, setRawPrice] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
   const {

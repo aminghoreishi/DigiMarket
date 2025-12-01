@@ -24,6 +24,16 @@ const offs = new mongoose.Schema(
       required: true,
       default: 0,
     },
+    user: {
+      type: [
+        {
+          type: mongoose.Types.ObjectId,
+          ref: "user",
+          required: true,
+        },
+      ],
+      default: [],
+    },
   },
   {
     timestamps: true,
