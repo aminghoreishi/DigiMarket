@@ -35,18 +35,18 @@ export async function POST(req: NextRequest) {
     );
 
     if (!offsModels) {
-      return NextResponse.json({ message: "کد وجود ندارد" });
+      return NextResponse.json({ message: "کد وجود ندارد" } , {status: 400});
     } else if (offsModels.use > offsModels.max) {
       return NextResponse.json({ messgahe: "کد به حداکثر رسیده" });
     } else
       return NextResponse.json({
         success: true,
-        discount: offsModels.discount, // ← این خط حیاتیه!
+        discount: offsModels.discount,
         message: "کد تخفیف با موفقیت اعمال شد",
       });
   } catch (error) {
     return NextResponse.json(
-      { message: error.message || "خطا در استفاده از کد تخفیف" },
+      { message: "خطا در استفاده از کد تخفیف" },
       {
         status: 500,
       }
