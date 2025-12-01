@@ -1,126 +1,132 @@
 "use client";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/navigation";
-import "swiper/css/thumbs";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
-import { memo, useEffect, useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { FaHeart } from "react-icons/fa";
-const SwiperImage = memo(({ images, id }: { images: string[]; id: string }) => {
-  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
-  const [isExits, setIsExits] = useState(null);
+
+export default function SwiperImage({ images, id }: { images: string[]; id: string }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
-    const findWhich = JSON.parse(localStorage.getItem("which") || "[]");
-    if (findWhich.length) {
-      const isExits = findWhich.find((item: any) => item === id);
-      if (isExits) {
-        setIsExits(true);
-      } else {
-        setIsExits(false);
-      }
+    try {
+      const data = localStorage.getItem("which") || "[]";
+      const arr = JSON.parse(data);
+      setIsLiked(arr.includes(id));
+    } catch (e) {
+      // silent
     }
-  }, []);
+  }, [id]);
 
-  const addWhich = () => {
-    const which = JSON.parse(localStorage.getItem("which") || "[]");
-    if (which.length) {
-      const isExits = which.find((item) => item === id);
-      if (!isExits) {
-        localStorage.setItem("which", JSON.stringify([...which, id]));
-        setIsExits(true);
+  const toggleLike = () => {
+    try {
+      const data = localStorage.getItem("which") || "[]";
+      const arr: string[] = JSON.parse(data);
+
+      if (arr.includes(id)) {
+        const filtered = arr.filter((x) => x !== id);
+        localStorage.setItem("which", JSON.stringify(filtered));
+        setIsLiked(false);
+      } else {
+        arr.push(id);
+        localStorage.setItem("which", JSON.stringify(arr));
+        setIsLiked(true);
       }
-    } else {
-      localStorage.setItem("which", JSON.stringify([id]));
-      setIsExits(true);
+    } catch (e) {
+      console.error(e);
     }
   };
+
+  const goNext = () => setActiveIndex((i) => (i + 1) % images.length);
+  const goPrev = () => setActiveIndex((i) => (i - 1 + images.length) % images.length);
 
   return (
     <div className="gallery-container">
       <div className="relative">
-        <Swiper
-          style={
-            {
-              ["--swiper-navigation-color" as string]: "#fff",
-              ["--swiper-pagination-color" as string]: "#fff",
-            } as React.CSSProperties
-          }
-          spaceBetween={10}
-          navigation={true}
-          thumbs={{ swiper: thumbsSwiper }}
-          modules={[FreeMode, Navigation, Thumbs]}
-          className="mySwiper2 !-z-10"
-        >
-          {images.map((image, index) => (
-            <SwiperSlide key={index}>
-              <div className="w-full h-56 sm:h-72 md:h-96 lg:h-[400px] relative">
-                <Image
-                  src={image}
-                  alt="gallery"
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 400px"
-                  priority
-                />
-              </div>
-            </SwiperSlide>
-          ))}
+      
+        <div className="relative w-full h-56 sm:h-72 md:h-96 lg:h-[400px]">
+          <Image
+            src={images[activeIndex]}
+            alt="محصول"
+            fill
+            className="object-contain"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 400px"
+            priority
+          />
+
+         
+          {images.length > 1 && (
+            <>
+              <button
+                onClick={goPrev}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all backdrop-blur-sm"
+              >
+                <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              <button
+                onClick={goNext}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all backdrop-blur-sm"
+              >
+                <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </>
+          )}
 
        
-        </Swiper>
+          <button
+            onClick={toggleLike}
+            className="absolute top-4 right-4 z-20 bg-black/50 backdrop-blur-sm p-3 rounded-full hover:scale-110 active:scale-95 transition-all"
+          >
+            <svg
+              className={`w-7 h-7 transition-all duration-300 ${
+                isLiked ? "fill-red-500 text-red-500" : "text-white"
+              }`}
+              viewBox="0 0 24 24"
+              fill={isLiked ? "currentColor" : "none"}
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+          </button>
 
-        <div
-          className={`absolute top-4 right-4 z-10 cursor-pointer ${isExits ? "bg-black/50" : ""} p-1 rounded`}
-          onClick={addWhich}
-        >
-          {isExits !== null && (
-            <FaHeart
-              color={isExits ? "red" : "white"}
-              className={`text-white ${isExits ? "text-red-500" : ""} hover:text-red-500 transition-colors`}
-            />
-          )}
-
-          {isExits === null && (
-          <div className="size-8 bg-gray-500 animate-bounce rounded-full
-          "></div>
+        
+          {images.length > 1 && (
+            <div className="absolute bottom-4 ss02 text-xs left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-sm text-white px-4 py-2 rounded-full  font-medium">
+              {activeIndex + 1} / {images.length}
+            </div>
           )}
         </div>
-      </div>
 
-      <Swiper
-        onSwiper={setThumbsSwiper}
-        spaceBetween={8}
-        slidesPerView={4.5}
-        freeMode={true}
-        watchSlidesProgress={true}
-        modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper !-z-50 mt-4 max-sm:!h-20"
-        breakpoints={{
-          320: { slidesPerView: 3.5 },
-          480: { slidesPerView: 4.5 },
-          768: { slidesPerView: 5.5 },
-          1024: { slidesPerView: 6.5 },
-        }}
-      >
-        {images.map((image, index) => (
-          <SwiperSlide key={index}>
-            <div className="w-full border-2 border-zinc-200 h-20 cursor-pointer relative rounded overflow-hidden">
-              <Image
-                src={image}
-                alt={`thumb-${index}`}
-                fill
-                className="object-contain"
-                sizes="80px"
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      
+        {images.length > 1 && (
+          <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
+            {images.map((src, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveIndex(i)}
+                className={`flex-shrink-0 w-20 h-20 rounded overflow-hidden border-2 transition-all ${
+                  activeIndex === i
+                    ? "border-white ring-4 ring-white/50 scale-105"
+                    : "border-zinc-200 hover:border-zinc-400"
+                }`}
+              >
+                <Image
+                  src={src}
+                  alt={`thumb ${i + 1}`}
+                  width={80}
+                  height={80}
+                  className="object-cover w-full h-full"
+                />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
-});
-
-export default SwiperImage;
+}
