@@ -1,9 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 
-function SwiperProduct({ title, images, price, _id }) {
-  // console.log({ title, images, price });
-
+function SwiperProduct({
+  name,
+  images,
+  price,
+  _id,
+}: {
+  name: string;
+  images: string[];
+  price: number;
+  _id: string;
+}) {
   return (
     <div className="border-2 px-4 py-3 border-gray-200 rounded-xl">
       <div className="flex justify-center">
@@ -12,7 +20,7 @@ function SwiperProduct({ title, images, price, _id }) {
           className="!size-52"
           width={200}
           height={200}
-          alt={title || "product"}
+          alt={name || "product"}
         />
       </div>
       <div>
@@ -20,7 +28,7 @@ function SwiperProduct({ title, images, price, _id }) {
         <div className="cursor-pointer">
           <Link href={`/singleProduct/${_id}`}>
             <span className="text-zinc-800 font-danaMed text-xs md:text-sm h-8 lg:h-10 line-clamp-2 mt-2">
-              {title}
+              {name}
             </span>
           </Link>
         </div>

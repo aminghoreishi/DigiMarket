@@ -3,7 +3,13 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
-export default function SwiperImage({ images, id }: { images: string[]; id: string }) {
+export default function SwiperImage({
+  images,
+  id,
+}: {
+  images: string[];
+  id: string;
+}) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
 
@@ -37,12 +43,12 @@ export default function SwiperImage({ images, id }: { images: string[]; id: stri
   };
 
   const goNext = () => setActiveIndex((i) => (i + 1) % images.length);
-  const goPrev = () => setActiveIndex((i) => (i - 1 + images.length) % images.length);
+  const goPrev = () =>
+    setActiveIndex((i) => (i - 1 + images.length) % images.length);
 
   return (
     <div className="gallery-container">
       <div className="relative">
-      
         <div className="relative w-full h-56 sm:h-72 md:h-96 lg:h-[400px]">
           <Image
             src={images[activeIndex]}
@@ -53,30 +59,48 @@ export default function SwiperImage({ images, id }: { images: string[]; id: stri
             priority
           />
 
-         
           {images.length > 1 && (
             <>
               <button
                 onClick={goPrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all backdrop-blur-sm"
+                className="absolute left-4 top-1/2 -translate-y-1/2 -z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all backdrop-blur-sm"
               >
-                <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+                <svg
+                  className="size-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={3}
+                    d="M15 19l-7-7 7-7"
+                  />
                 </svg>
               </button>
 
               <button
                 onClick={goNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all backdrop-blur-sm"
+                className="absolute right-4 top-1/2 -translate-y-1/2 -z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all backdrop-blur-sm"
               >
-                <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+                <svg
+                  className="size-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={3}
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
               </button>
             </>
           )}
 
-       
           <button
             onClick={toggleLike}
             className="absolute top-4 right-4 z-20 bg-black/50 backdrop-blur-sm p-3 rounded-full hover:scale-110 active:scale-95 transition-all"
@@ -94,7 +118,6 @@ export default function SwiperImage({ images, id }: { images: string[]; id: stri
             </svg>
           </button>
 
-        
           {images.length > 1 && (
             <div className="absolute bottom-4 ss02 text-xs left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-sm text-white px-4 py-2 rounded-full  font-medium">
               {activeIndex + 1} / {images.length}
@@ -102,7 +125,6 @@ export default function SwiperImage({ images, id }: { images: string[]; id: stri
           )}
         </div>
 
-      
         {images.length > 1 && (
           <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
             {images.map((src, i) => (

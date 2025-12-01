@@ -2,7 +2,14 @@
 import { useForm, useWatch } from "react-hook-form";
 import ColorSelector from "./ColorSelector";
 import LaptopFields from "./LaptopFields";
-import { useState } from "react";
+import {
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  useState,
+} from "react";
 import { BeatLoader } from "react-spinners";
 
 import Swal from "sweetalert2";
@@ -13,7 +20,7 @@ import Tag from "./Tag";
 function FormContainer({
   categories,
 }: {
-  categories: { _id: string; title: string }[];
+  categories: { _id: string; title: string; subCategory?: { _id: string; title: string }[] }[];
 }) {
   const [rawPrice, setRawPrice] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +48,7 @@ function FormContainer({
 
   const subCategories = selectedCategory?.subCategory || [];
 
-  const submitForm = async (data: any) => {
+  async function submitForm(data: any) {
     const formData = new FormData();
     const features = getFeatures(data, data.subCategory);
 
@@ -60,7 +67,7 @@ function FormContainer({
 
     if (data.images?.length > 0) {
       Array.from(data.images).forEach((file) => {
-        formData.append("images", file);
+        formData.append("images", file as File);
       });
     }
 
@@ -85,7 +92,7 @@ function FormContainer({
     } finally {
       setIsLoading(false);
     }
-  };
+  }
 
   return (
     <div>
@@ -109,7 +116,7 @@ function FormContainer({
             />
             {errors.title && (
               <p className="text-red-500 text-xs mt-2">
-                {errors.title.message}
+                {errors.title.message as string}
               </p>
             )}
           </div>
@@ -130,7 +137,9 @@ function FormContainer({
               className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
             />
             {errors.name && (
-              <p className="text-red-500 text-xs mt-2">{errors.name.message}</p>
+              <p className="text-red-500 text-xs mt-2">
+                {errors.name.message as string}
+              </p>
             )}
           </div>
           <div className="font-danaMed flex flex-col">
@@ -174,7 +183,7 @@ function FormContainer({
 
             {errors.price && (
               <p className="text-red-500 text-xs mt-2">
-                {errors.price.message}
+                {errors.price.message as string}
               </p>
             )}
           </div>
@@ -196,7 +205,7 @@ function FormContainer({
 
             {errors.category && (
               <p className="text-red-500 text-xs mt-2">
-                {errors.category.message}
+                {errors.category.message as string}
               </p>
             )}
           </div>
@@ -212,16 +221,49 @@ function FormContainer({
                 className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-xs"
               >
                 <option value="">انتخاب دسته بندی</option>
-                {subCategories.map((subCategory) => (
-                  <option key={subCategory._id} value={subCategory._id}>
-                    {subCategory.title}
-                  </option>
-                ))}
+                {subCategories.map(
+                  (subCategory: {
+                    _id: Key | readonly string[] | null | undefined;
+                    title:
+                      | string
+                      | number
+                      | bigint
+                      | boolean
+                      | ReactElement<
+                          unknown,
+                          string | JSXElementConstructor<any>
+                        >
+                      | Iterable<ReactNode>
+                      | ReactPortal
+                      | Promise<
+                          | string
+                          | number
+                          | bigint
+                          | boolean
+                          | ReactPortal
+                          | ReactElement<
+                              unknown,
+                              string | JSXElementConstructor<any>
+                            >
+                          | Iterable<ReactNode>
+                          | null
+                          | undefined
+                        >
+                      | null
+                      | undefined;
+                  }) => (
+                    <option
+                      key={subCategory._id?.toString()}
+                      value={subCategory._id?.toString()}
+                    >
+                      {subCategory.title}
+                    </option>
+                  )
+                )}
               </select>
-
               {errors.subCategory && (
                 <p className="text-red-500 text-xs mt-2">
-                  {errors.subCategory.message}
+                  {errors.subCategory.message as string}
                 </p>
               )}
             </div>
@@ -287,7 +329,7 @@ function FormContainer({
 
             {errors.images && (
               <p className="text-red-500 text-xs mt-2">
-                {errors.images.message}
+                {errors.images.message as string}
               </p>
             )}
           </div>
