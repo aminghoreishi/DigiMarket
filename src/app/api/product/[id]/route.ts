@@ -38,3 +38,29 @@ export async function GET(
     );
   }
 }
+
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const id = params.id;
+    const body = await request.json();
+    const updatedProduct = await productModel.findByIdAndUpdate(id, body, {
+      new: true,
+    });     
+
+    if (!updatedProduct) {
+      return NextResponse.json({ message: "محصول یافت نشد" }, { status: 404 });
+    }
+    return NextResponse.json(
+      { message: "محصول با موفقیت به‌روزرسانی شد", updatedProduct },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: error.message  },
+      { status: 500 }
+    );
+  }
+} 

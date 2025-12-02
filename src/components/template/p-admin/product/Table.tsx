@@ -86,7 +86,7 @@ function Table({
 
   return (
     <>
-      {isModalOpen && <EditModal setIsModalOpen={setIsModalOpen} product={product} />}
+      {isModalOpen && <EditModal getProducts={getProducts} currentPage={currentPage} setIsModalOpen={setIsModalOpen} product={product} />}
 
       <div className="mt-5">
         <div className="my-5">

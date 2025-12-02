@@ -2,14 +2,20 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { MdOutlineFileUpload } from "react-icons/md";
+import { BeatLoader } from "react-spinners";
 export default function EditProductModal({
   setIsModalOpen,
   product,
+  getProducts,
+  currentPage,
 }: {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   product: any;
+  getProducts: () => Promise<void>;
+  currentPage: number;
 }) {
   const [title, setTitle] = useState(product?.title || "");
   const [price, setPrice] = useState(product?.price || 0);
@@ -23,6 +29,7 @@ export default function EditProductModal({
   );
   const [name, setName] = useState(product?.name || "");
   const [images, setImages] = useState(product?.images || []);
+  const [isLoading, setIsLoading] = useState(false);
 
   console.log(product);
 
@@ -55,16 +62,54 @@ export default function EditProductModal({
         const base64String = reader.result as string;
         setImages((prev) => [...prev, base64String]);
       };
-      reader.readAsDataURL(file); 
+      reader.readAsDataURL(file);
     });
 
-  
     e.target.value = "";
   };
 
-  
   const removeImage = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const editProduct = async () => {
+    try {
+      setIsLoading(true);
+      const res = await fetch(
+        `http://localhost:3000/api/product/${product._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            name,
+            price,
+            count,
+            colors: color,
+            delivery,
+            shortDescription: shortDes,
+            longDescription,
+            images,
+          }),
+        }
+      );
+
+      const response = await res.json();
+      console.log(response);
+
+      if (res.ok) {
+        toast.success("محصول با موفقیت ویرایش شد");
+        setIsModalOpen(false);
+        getProducts(currentPage);
+      } else {
+        toast.error("خطا در ویرایش محصول. لطفاً دوباره تلاش کنید.");
+      }
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -210,7 +255,6 @@ export default function EditProductModal({
                 />
               </div>
 
-             
               <div>
                 <label className="block mb-3 text-sm font-medium text-heading">
                   تصاویر محصول
@@ -273,7 +317,6 @@ export default function EditProductModal({
                   ))}
                 </div>
 
-              
                 {images.length === 0 && (
                   <p className="text-center text-gray-400 mt-4 text-sm">
                     هنوز عکسی آپلود نشده
@@ -290,8 +333,16 @@ export default function EditProductModal({
             >
               لغو
             </button>
-            <button className="px-8 py-3 bg-brand text-black rounded-xl font-medium hover:bg-brand-strong transition shadow-md">
-              ذخیره تغییرات
+            <button
+              onClick={editProduct}
+              disabled={isLoading}
+              className="px-8 py-3 bg-brand text-black rounded-xl font-medium hover:bg-brand-strong transition shadow-md"
+            >
+              {isLoading ? (
+                <BeatLoader size={8} color="black" />
+              ) : (
+                "ویرایش محصول"
+              )}
             </button>
           </div>
         </div>
