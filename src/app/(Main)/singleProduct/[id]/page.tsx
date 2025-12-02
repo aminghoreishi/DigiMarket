@@ -9,14 +9,6 @@ import SwiperImage from "@/components/template/SingleProduct/SwiperImage/SwiperI
 import { authUser } from "@/utils/auth";
 import { memo } from "react";
 
-type findProductType = {
-  _id: string;
-  images: string[];
-  price: number;
-  count: number;
-  delivery: boolean;
-};
-
 async function page({ params }: { params: Promise<{ id: string }> }) {
   const user = await authUser();
   const isLoggedIn = !!user.user;
