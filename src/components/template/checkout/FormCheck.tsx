@@ -2,6 +2,7 @@
 
 import { use, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "nextjs-toploader/app";
 
 type FormData = {
   user: string;
@@ -25,6 +26,8 @@ export default function FormCheck({
   >;
   allPrice: number;
 }) {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -80,8 +83,8 @@ export default function FormCheck({
     console.log(responseData);
 
     if (res.ok) {
-      console.log("Order submitted successfully");
-      // می‌توانید اینجا کارهای بعد از موفقیت را انجام دهید
+      localStorage.removeItem("product");
+      router.push("/");
     } else {
       console.error("Error submitting order");
       // می‌توانید اینجا کارهای بعد از خطا را انجام دهید

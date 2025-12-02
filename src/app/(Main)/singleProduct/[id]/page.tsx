@@ -8,17 +8,14 @@ import MainContainer from "@/components/template/SingleProduct/MainContainer/Mai
 import SwiperImage from "@/components/template/SingleProduct/SwiperImage/SwiperImage";
 import { authUser } from "@/utils/auth";
 import { memo } from "react";
+import db from "@/config/db";
 
 async function page({ params }: { params: Promise<{ id: string }> }) {
+  await db();
   const user = await authUser();
   const isLoggedIn = !!user.user;
   const { id } = await params;
-
-  console.log(user.user._id);
-
   const findProduct = await productModel.findOne({ _id: id }).lean();
-
-  console.log(findProduct);
 
   return (
     <>
@@ -75,7 +72,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
 }
 
 const CartContainer = memo(
-  ({ isLoggedIn, price, colors, count, delivery, name, id, img , userID }) => {
+  ({ isLoggedIn, price, colors, count, delivery, name, id, img, userID }) => {
     return (
       <div className=" xl:col-span-3">
         <Cart

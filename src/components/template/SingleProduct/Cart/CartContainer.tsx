@@ -104,36 +104,51 @@ function CartContainer({
         />
       )}
 
-      {isProductInCart ? (
-        <>
-          <CartAddCount
-            countServer={count}
-            countCart={countCart}
-            setCountCart={setCountCart}
-            updateCartQuantity={updateCartQuantity}
-            handleProductRemoved={handleProductRemoved}
-            id={id}
-          />
-          <div className="mt-4">
-            <Link href="/cart">
-              <button className="bg-green-500 hover:bg-green-600 transition text-white p-3 rounded-lg font-danaMed w-full text-sm">
-                مشاهده سبد خرید
-              </button>
-            </Link>
-          </div>
-        </>
-      ) : (
+      {count === 0 && (
         <div className="mt-4">
           <button
-            onClick={() => {
-              // updateCartQuantity(1);
-              setIsOpenModalOff(true);
-            }}
-            className="bg-orange-500 hover:bg-orange-600 transition text-white p-3 rounded-lg font-danaMed w-full text-sm"
+            disabled
+            className="bg-gray-400 cursor-not-allowed text-white p-3 rounded-lg font-danaMed w-full text-sm"
           >
-            افزودن به سبد خرید
+            ناموجود در انبار
           </button>
         </div>
+      )}
+
+      {count > 0 && (
+        <>
+          {isProductInCart ? (
+            <>
+              <CartAddCount
+                countServer={count}
+                countCart={countCart}
+                setCountCart={setCountCart}
+                updateCartQuantity={updateCartQuantity}
+                handleProductRemoved={handleProductRemoved}
+                id={id}
+              />
+              <div className="mt-4">
+                <Link href="/cart">
+                  <button className="bg-green-500 hover:bg-green-600 transition text-white p-3 rounded-lg font-danaMed w-full text-sm">
+                    مشاهده سبد خرید
+                  </button>
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="mt-4">
+              <button
+                onClick={() => {
+                  // updateCartQuantity(1);
+                  setIsOpenModalOff(true);
+                }}
+                className="bg-orange-500 hover:bg-orange-600 transition text-white p-3 rounded-lg font-danaMed w-full text-sm"
+              >
+                افزودن به سبد خرید
+              </button>
+            </div>
+          )}
+        </>
       )}
     </>
   );
