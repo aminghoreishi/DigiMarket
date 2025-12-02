@@ -4,11 +4,7 @@ import { authUser } from "@/utils/auth";
 
 async function page() {
   await db();
-
   const isUserLoggedIn = await authUser();
-
-  console.log("isUserLoggedIn:", isUserLoggedIn.user);
-
   return <MainCartContainer isUserLoggedIn={isUserLoggedIn.user} />;
 }
 
