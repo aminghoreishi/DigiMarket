@@ -25,7 +25,14 @@ function CartDetail({ delivery, price, count }: { delivery: boolean | number; pr
           <p className="text-2xl">{price.toLocaleString("fa-IR")}</p>
           <p>تومان</p>
         </div>
-        {count < 5 && (
+        {
+          count === 0 && (
+            <div>
+              <p className="text-xs font-danaMed text-red-500">این محصول در انبار موجود نیست</p>
+            </div>
+          )
+        }
+        { count !== 0 && count < 5 && (
           <div>
             <p className="text-xs font-danaMed text-orange-500">
               تنها <span>{count}</span> عدد در انبار باقی مانده
