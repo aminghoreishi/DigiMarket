@@ -63,7 +63,7 @@ export default function SwiperImage({
             <>
               <button
                 onClick={goPrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 -z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all backdrop-blur-sm"
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all backdrop-blur-sm"
               >
                 <svg
                   className="size-3"
@@ -82,7 +82,7 @@ export default function SwiperImage({
 
               <button
                 onClick={goNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 -z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all backdrop-blur-sm"
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all backdrop-blur-sm"
               >
                 <svg
                   className="size-3"
@@ -118,11 +118,7 @@ export default function SwiperImage({
             </svg>
           </button>
 
-          {images.length > 1 && (
-            <div className="absolute bottom-4 ss02 text-xs left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-sm text-white px-4 py-2 rounded-full  font-medium">
-              {activeIndex + 1} / {images.length}
-            </div>
-          )}
+         
         </div>
 
         {images.length > 1 && (

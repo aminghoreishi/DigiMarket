@@ -86,7 +86,7 @@ const ModelOff = memo(
       <div className="min-h-screen fixed inset-0 flex items-center justify-center p-5 text-center">
         <div
           onClick={() => setIsOpenModalOff(false)}
-          className="bg-black/60  min-h-screen w-full fixed inset-0 z-40"
+          className="bg-black/60  min-h-screen w-full fixed inset-0 z-50"
         ></div>
         <div className="bg-white rounded-xl z-50  p-5 max-w-md w-full shadow-lg">
           <h2 className="font-danaMed text-lg mb-4">ایا کد تخفیف دارید؟</h2>

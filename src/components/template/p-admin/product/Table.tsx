@@ -11,6 +11,7 @@ import {
 } from "react";
 import Swal from "sweetalert2";
 import SearchBar from "./SearchBar";
+import EditModal from "./EditModal";
 
 function Table({
   products,
@@ -22,6 +23,9 @@ function Table({
   const [proSatate, setProSatate] = useState([...products]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPagesState, setTotalPagesState] = useState(totalPages);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
     if (currentPage === 1 && products?.length) {
@@ -81,132 +85,142 @@ function Table({
   };
 
   return (
-    <div className="mt-5">
-      <div className="my-5">
-        <SearchBar removeProduct={removeProduct} />
-      </div>
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-600">
-          <thead className="text-xs font-danaMed text-gray-700 uppercase bg-gray-100">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                عکس محصول
-              </th>
-              <th scope="col" className="px-6 py-3">
-                اسم محصول
-              </th>
-              <th scope="col" className="px-6 py-3">
-                دسته بندی محصول
-              </th>
-              <th scope="col" className="px-6 py-3">
-                قیمت
-              </th>
-              <th scope="col" className="px-6 py-3">
-                مقدار
-              </th>
-              <th scope="col" className="px-6 py-3">
-                رنگ
-              </th>
-              <th scope="col" className="px-6 py-3">
-                عملیات
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {proSatate.length === 0 && (
+    <>
+      {isModalOpen && <EditModal setIsModalOpen={setIsModalOpen} product={product} />}
+
+      <div className="mt-5">
+        <div className="my-5">
+          <SearchBar removeProduct={removeProduct} />
+        </div>
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-600">
+            <thead className="text-xs font-danaMed text-gray-700 uppercase bg-gray-100">
               <tr>
-                <td colSpan={7} className="text-center font-danaMed py-4">
-                  هیچ محصولی یافت نشد.
-                </td>
-              </tr>
-            )}
-            {proSatate.map((pro) => (
-              <tr
-                key={pro._id}
-                className="odd:bg-white font-danaMed even:bg-gray-50 border-b border-gray-200"
-              >
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                >
-                  <Image
-                    src={`http://localhost:3000${pro.images[0] || pro.images[1]}`}
-                    alt="product"
-                    width={100}
-                    height={100}
-                  />
+                <th scope="col" className="px-6 py-3">
+                  عکس محصول
                 </th>
-                <td className="px-6 py-4">{pro.name}</td>
-                <td className="px-6 py-4">Laptop</td>
-                <td className="px-6 py-4">
-                  {pro.price.toLocaleString("fa-IR")}
-                </td>
-                <td className="px-6 py-4">
-                  {pro.count.toLocaleString("fa-IR")}
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center">
-                    {pro.colors.map(
-                      (
-                        c:
-                          | string
-                          | number
-                          | bigint
-                          | boolean
-                          | ReactElement<
-                              unknown,
-                              string | JSXElementConstructor<any>
-                            >
-                          | Iterable<ReactNode>
-                          | ReactPortal
-                          | Promise<
-                              | string
-                              | number
-                              | bigint
-                              | boolean
-                              | ReactPortal
-                              | ReactElement<
-                                  unknown,
-                                  string | JSXElementConstructor<any>
-                                >
-                              | Iterable<ReactNode>
-                              | null
-                              | undefined
-                            >
-                          | null
-                          | undefined
-                      ) => (
-                        <div key={c}>{c}</div>
-                      )
-                    )}
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <button className="text-blue-600 hover:underline">
-                      ویرایش
-                    </button>
-                    <button
-                      className="text-red-600 hover:underline mr-2"
-                      onClick={() => removeProduct(pro._id)}
-                    >
-                      حذف
-                    </button>
-                  </div>
-                </td>
+                <th scope="col" className="px-6 py-3">
+                  اسم محصول
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  دسته بندی محصول
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  قیمت
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  مقدار
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  رنگ
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  عملیات
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {proSatate.length === 0 && (
+                <tr>
+                  <td colSpan={7} className="text-center font-danaMed py-4">
+                    هیچ محصولی یافت نشد.
+                  </td>
+                </tr>
+              )}
+              {proSatate.map((pro) => (
+                <tr
+                  key={pro._id}
+                  className="odd:bg-white font-danaMed even:bg-gray-50 border-b border-gray-200"
+                >
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                  >
+                    <Image
+                      src={`http://localhost:3000${pro.images[0] || pro.images[1]}`}
+                      alt="product"
+                      width={100}
+                      height={100}
+                    />
+                  </th>
+                  <td className="px-6 py-4">{pro.name}</td>
+                  <td className="px-6 py-4">Laptop</td>
+                  <td className="px-6 py-4">
+                    {pro.price.toLocaleString("fa-IR")}
+                  </td>
+                  <td className="px-6 py-4">
+                    {pro.count.toLocaleString("fa-IR")}
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center">
+                      {pro.colors.map(
+                        (
+                          c:
+                            | string
+                            | number
+                            | bigint
+                            | boolean
+                            | ReactElement<
+                                unknown,
+                                string | JSXElementConstructor<any>
+                              >
+                            | Iterable<ReactNode>
+                            | ReactPortal
+                            | Promise<
+                                | string
+                                | number
+                                | bigint
+                                | boolean
+                                | ReactPortal
+                                | ReactElement<
+                                    unknown,
+                                    string | JSXElementConstructor<any>
+                                  >
+                                | Iterable<ReactNode>
+                                | null
+                                | undefined
+                              >
+                            | null
+                            | undefined
+                        ) => (
+                          <div key={c}>{c}</div>
+                        )
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => {
+                          setIsModalOpen(true);
+                          setProduct(pro);
+                        }}
+                        className="text-blue-600 hover:underline"
+                      >
+                        ویرایش
+                      </button>
+                      <button
+                        className="text-red-600 hover:underline mr-2"
+                        onClick={() => removeProduct(pro._id)}
+                      >
+                        حذف
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {currentPage > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPagesState}
+          />
+        )}
       </div>
-      {currentPage > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPagesState}
-        />
-      )}
-    </div>
+    </>
   );
 }
 

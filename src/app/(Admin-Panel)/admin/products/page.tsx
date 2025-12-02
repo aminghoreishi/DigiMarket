@@ -1,9 +1,11 @@
 import TopBar from "@/components/module/p-admin/TopBar/TopBar";
 import Table from "@/components/template/p-admin/product/Table";
+import db from "@/config/db";
 import productModel from "@/models/product";
 import Link from "next/link";
 
 async function page() {
+  await db();
   const products = await productModel
     .find({})
     .populate("category", "subCategory")
@@ -19,7 +21,6 @@ async function page() {
       <TopBar title="محصولات" />
 
       <div dir="rtl">
-      
         <div className="flex justify-end">
           <Link href="/admin/products/createProduct">
             <button className="px-4 py-2 bg-blue-500 transition-all cursor-pointer hover:bg-blue-600 text-white rounded-md mt-4 font-danaMed text-xs">

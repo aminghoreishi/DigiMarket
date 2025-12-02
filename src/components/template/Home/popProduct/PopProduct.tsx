@@ -5,7 +5,7 @@ import productModel from "@/models/product";
 
 async function PopProduct() {
   await db();
-  const products = await productModel.find({}).lean()
+  const products = await productModel.find({}).limit(6).lean();
 
   return (
     <div className="mt-12">
