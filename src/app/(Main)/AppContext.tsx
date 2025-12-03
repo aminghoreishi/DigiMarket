@@ -6,16 +6,16 @@ import {
   useState,
 } from "react";
 
-// تعریف نوع داده‌های Context
+
 interface AppContextType {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-// ایجاد Context
+
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-// هوک برای دسترسی به Context
+
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (!context) {
@@ -24,7 +24,7 @@ export const useAppContext = () => {
   return context;
 };
 
-// Provider برای Context
+
 export const AppContextProvider = ({
   children,
 }: {
