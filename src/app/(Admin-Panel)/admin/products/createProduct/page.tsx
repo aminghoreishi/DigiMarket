@@ -9,9 +9,6 @@ async function page() {
     .find({})
     .populate("subCategory")
     .lean();
-
-  console.log(categories);
-
   return (
     <div>
       <FormContainer categories={JSON.parse(JSON.stringify(categories))} />

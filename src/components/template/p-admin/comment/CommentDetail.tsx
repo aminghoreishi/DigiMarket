@@ -7,9 +7,12 @@ interface CommentDetailsProps {
   likesCount: number | undefined;
   dislikesCount: number | undefined;
   createdAt: string | undefined;
-  product: {
-    title: string | undefined;
-  } | undefined;
+  product:
+    | {
+        title: string | undefined;
+      }
+    | undefined;
+  
 }
 
 const CommentDetails: React.FC<CommentDetailsProps> = ({
@@ -37,7 +40,7 @@ const CommentDetails: React.FC<CommentDetailsProps> = ({
         </div>
         <div className="flex items-center gap-5 text-sm">
           <p>تاریخ ایجاد:</p>
-          <p>{getDaysAgo(createdAt)}</p>
+          <p>{getDaysAgo(createdAt || "")}</p>
         </div>
         <div className="flex items-center gap-5 text-sm">
           <p>محصول:</p>

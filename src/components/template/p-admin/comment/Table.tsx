@@ -63,7 +63,7 @@ const Table = ({
     setIsModalOpen(false);
   };
 
-  const removeComment = async (id : string) => {
+  const removeComment = async (id: string) => {
     Swal.fire({
       title: "آیا از حذف این کامنت مطمئن هستید؟",
       text: "این عملیات قابل بازگشت نیست!",
@@ -90,8 +90,8 @@ const Table = ({
     });
   };
 
-  const onAccept = async () => {
-    const res = await fetch(`/api/comment/${comment?._id}`, {
+  const onAccept = async (id: string) => {
+    const res = await fetch(`/api/comment/${comment?._id ?? id}`, {
       method: "PATCH",
     });
 
@@ -108,6 +108,39 @@ const Table = ({
       });
     }
   };
+
+  const approveComment = (id: string) => {
+    Swal.fire({
+      title: "آیا از تایید این کامنت مطمئن هستید؟",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "بله، تایید کن!",
+      cancelButtonText: "لغو",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        onAccept(id);
+      }
+    });
+  };
+
+  const rejectComment = (id: string) => {
+    Swal.fire({
+      title: "آیا از رد این کامنت مطمئن هستید؟",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "بله، رد کن!",
+      cancelButtonText: "لغو",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        onAccept(id);
+      }
+    });
+  };
+
   return (
     <>
       <div className="mt-5">
@@ -145,7 +178,7 @@ const Table = ({
                     {(currentPage - 1) * 7 + index + 1}
                   </th>
                   <td className="px-6 ss02 py-4">
-                    {getDaysAgo(comment.createdAt)}
+                    {getDaysAgo(comment.createdAt ?? "")}
                   </td>
                   <td className="px-6 py-4">
                     {comment.isApproved ? "بله" : "خیر"}
@@ -161,17 +194,22 @@ const Table = ({
 
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <button onClick={() => removeComment(comment._id)} className="border-2 disabled:cursor-not-allowed disabled:opacity-60 transition-all rounded-xl hover:bg-red-500 hover:text-white border-red-500 text-red-500 px-3 py-2 cursor-pointer">
+                      <button
+                        onClick={() => removeComment(comment._id)}
+                        className="border-2 disabled:cursor-not-allowed disabled:opacity-60 transition-all rounded-xl hover:bg-red-500 hover:text-white border-red-500 text-red-500 px-3 py-2 cursor-pointer"
+                      >
                         حذف
                       </button>
                       <button
                         disabled={!comment.isApproved}
+                        onClick={() => rejectComment(comment._id)}
                         className="border-2 disabled:cursor-not-allowed disabled:opacity-60 transition-all rounded-xl hover:bg-red-500 hover:text-white border-red-500 text-red-500 px-3 py-2 cursor-pointer"
                       >
                         رد
                       </button>
                       <button
                         disabled={comment.isApproved}
+                        onClick={() => approveComment(comment._id)}
                         className="border-2 disabled:cursor-not-allowed disabled:opacity-60 transition-all rounded-xl hover:bg-blue-500 hover:text-white border-blue-500 text-blue-500 px-3 py-2 cursor-pointer"
                       >
                         تایید
@@ -199,11 +237,11 @@ const Table = ({
           likesCount={comment?.likesCount}
           dislikesCount={comment?.dislikesCount}
           createdAt={comment?.createdAt}
-          product={comment?.product?.title}
+          product={comment?.product}
         />
       </Modal>
 
-      {totalPages > 1&& (
+      {totalPages > 1 && (
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

@@ -22,7 +22,6 @@ async function page() {
         <Table
           totalPages={totalPages}
           comments={JSON.parse(JSON.stringify(comments))}
-          initialPage={1}
         />
       </div>
     </div>

@@ -25,7 +25,7 @@ export async function POST(req : NextRequest) {
     );
   } catch (error) {
     return NextResponse.json(
-      { message: error.message || "خطا در ایجاد تخفیف" },
+      { message: error instanceof Error ? error.message : "خطا در ایجاد تخفیف" },
       {
         status: 500,
       }

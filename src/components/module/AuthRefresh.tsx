@@ -9,9 +9,9 @@ export default function AuthRefresh() {
 
   useEffect(() => {
     const checkTokenExpired = () => {
-      const tokenExpired = document.querySelector(
+      const tokenExpired = (document.querySelector(
         'meta[name="x-token-expired"]'
-      )?.content;
+      ) as HTMLMetaElement)?.content;
 
       if (tokenExpired === "true") {
         refreshToken();

@@ -14,11 +14,7 @@ async function page() {
     .lean();
 
   const total = await subCategoryModel.countDocuments({});
-
   const totalPages = Math.ceil(total / 3);
-
-  console.log(subCategories);
-
   return (
     <div>
       <TopBar title="زیر دسته بندی ها" />

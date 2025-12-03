@@ -349,6 +349,7 @@ export default function EditProductModal({
             </button>
           </div>
         </div>
+        </div>
       </div>
     </>
   );

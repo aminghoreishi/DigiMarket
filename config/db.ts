@@ -23,6 +23,10 @@ if (!cached) {
 }
 
 async function db() {
+  if (!cached) {
+    cached = global.mongoose = { conn: null, promise: null };
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
@@ -41,7 +45,7 @@ async function db() {
   }
 
   try {
-    cached.conn = await cached.promise;
+    cached!.conn = await cached!.promise;
   } catch (e) {
     cached.promise = null;
     throw e;
