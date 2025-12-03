@@ -102,7 +102,7 @@ export default function EditProductModal({
       if (res.ok) {
         toast.success("محصول با موفقیت ویرایش شد");
         setIsModalOpen(false);
-        getProducts(currentPage);
+        getProducts();
       } else {
         toast.error("خطا در ویرایش محصول. لطفاً دوباره تلاش کنید.");
       }
@@ -124,7 +124,10 @@ export default function EditProductModal({
         >
           <div className="flex items-center justify-between px-6 py-5 bg-brand/5 border-b border-gray-200">
             <h3 className="text-xl font-bold text-heading">ویرایش محصول</h3>
-            <button className="p-2 rounded-lg hover:bg-gray-200 transition-colors">
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="p-2 rounded-lg hover:bg-gray-200 transition-colors"
+            >
               <svg
                 className="w-5 h-5"
                 fill="none"
