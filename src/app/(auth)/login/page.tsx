@@ -10,6 +10,7 @@ import { BeatLoader } from "react-spinners";
 
 import Swal from "sweetalert2";
 import Link from "next/link";
+import { handleSignIn } from "@/config/auth";
 
 type FormValues = {
   fullName: string;
@@ -169,8 +170,21 @@ function Page() {
           </div>
 
           {/* Google Sign-up */}
-         
         </form>
+
+        {
+          <div className="px-4 mb-3">
+            <button
+              onClick={() => {
+                handleSignIn();
+              }}
+              className="flex items-center justify-center gap-2 border-2 border-zinc-300 w-full rounded-xl py-2 cursor-pointer text-xs"
+            >
+              <FcGoogle size={18} />
+              ادامه با گوگل
+            </button>
+          </div>
+        }
 
         <hr className="text-zinc-400" />
         <div className="my-3 text-xs flex justify-center">

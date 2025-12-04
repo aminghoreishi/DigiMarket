@@ -2,6 +2,7 @@ import SearchBar from "./SearchBar";
 import Buttons from "./Buttons";
 import MenuMobile from "./MenuMobile";
 import Logo from "./Logo";
+import { SignIn } from "./Login";
 
 function Header() {
   return (
@@ -21,6 +22,10 @@ function Header() {
 
         <div className="hidden lg:block">
           <Buttons />
+        </div>
+
+        <div className="hidden lg:block">
+          <SignIn />
         </div>
       </div>
     </header>
