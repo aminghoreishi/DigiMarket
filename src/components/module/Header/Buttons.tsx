@@ -3,6 +3,12 @@ import { authUser } from "@/utils/auth";
 import { auth } from "@/auth";
 import db from "@/config/db";
 import userModel from "@/models/user";
+import Link from "next/link";
+import { LuUser } from "react-icons/lu";
+import { BsBasket } from "react-icons/bs";
+import { RiAdminLine } from "react-icons/ri";
+import SignOut from "../Auth/SignOut";
+import Cart from "../Cart/Cart";
 
 type IUser = {
   _id: unknown;
