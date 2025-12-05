@@ -1,12 +1,32 @@
 "use client";
-import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 
 function MenuMobile() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname, router]);
+
+    const signOut = async () => {
+    const res = await fetch("/api/auth/signout", {
+      method: "POST",
+    });
+
+    if (res.ok) {
+      router.push("/login");
+      router.refresh();
+    }
+  };
 
   return (
-    <div className="relative">
+    <div className="relative font-danaMed">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
@@ -27,25 +47,28 @@ function MenuMobile() {
           isOpen ? "translate-x-5" : "translate-x-[120%]"
         }`}
       >
-        <div className="p-6">
-          <h3 className="text-lg font-semibold mb-4">منوی اصلی</h3>
-          <ul className="space-y-3">
-            <li>
-              <a href="#" className="block py-2 hover:text-blue-600 transition">
-                خانه
-              </a>
-            </li>
-            <li>
-              <a href="#" className="block py-2 hover:text-blue-600 transition">
-                محصولات
-              </a>
-            </li>
-            <li>
-              <a href="#" className="block py-2 hover:text-blue-600 transition">
-                تماس با ما
-              </a>
-            </li>
+        <div className="px-9 pt-5">
+          <div className="flex justify-center">
+            <Image
+              width={80}
+              height={80}
+              alt="digi"
+              src="/image/logo (1).png"
+            />
+          </div>
+
+          <ul className="mt-5 text-sm flex flex-col gap-5">
+            <Link href="/">
+              <li>صحفه اصلی</li>
+            </Link>
+            <Link href="/cart">
+              <li>سبد خرید</li>
+            </Link>
           </ul>
+
+          <div onClick={signOut} className="mt-5 text-sm border-t-2 pt-3 border-zinc-200">
+            <button>خروج از حساب کاربری</button>
+          </div>
         </div>
       </div>
     </div>
