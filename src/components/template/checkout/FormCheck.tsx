@@ -1,10 +1,11 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "nextjs-toploader/app";
 
 type FormData = {
+  fullName: string;
   user: string;
   phone: string;
   address1: string;
@@ -25,6 +26,7 @@ export default function FormCheck({
     React.SetStateAction<"express" | "courier">
   >;
   allPrice: number;
+  userId: string;
 }) {
   const router = useRouter();
 
@@ -50,7 +52,7 @@ export default function FormCheck({
 
       console.log(itemsForOrder.productId);
 
-      setCarts(itemsForOrder); // حالا carts واقعاً آرایه است
+      setCarts(itemsForOrder);
     } catch (err) {
       console.error("خطا در خواندن سبد خرید", err);
       setCarts([]);
@@ -87,7 +89,6 @@ export default function FormCheck({
       router.push("/");
     } else {
       console.error("Error submitting order");
-      // می‌توانید اینجا کارهای بعد از خطا را انجام دهید
     }
   };
 

@@ -3,8 +3,13 @@
 
 import { useEffect, useState } from "react";
 
+interface CartItem {
+    price: number;
+    count: number;
+}
+
 function Summary({deliveryMethod}: {deliveryMethod: "express" | "courier"}) {
-    const [cart, setCart] = useState([])
+    const [cart, setCart] = useState<CartItem[]>([])
 
     const [totalPrice, setTotalPrice] = useState(0)
     const [subTotal, setSubTotal]  = useState(0)
