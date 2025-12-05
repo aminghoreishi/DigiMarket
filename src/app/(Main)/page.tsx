@@ -16,8 +16,8 @@ function Home() {
       <PopProduct />
       <Banner />
       <NewProduct />
-       <Brand/>
-      <Footer /> 
+      <Brand />
+      <Footer />
     </div>
   );
 }

@@ -17,7 +17,7 @@ export async function POST() {
     path: "/",
   });
 
-  response.cookies.set("next-auth.session-token", "", {
+  response.cookies.set("authjs.session-token", "", {
     httpOnly: true,
     path: "/",
     maxAge: 0,

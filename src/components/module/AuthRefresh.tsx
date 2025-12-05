@@ -9,14 +9,18 @@ export default function AuthRefresh() {
 
   useEffect(() => {
     const checkTokenExpired = () => {
-      const tokenExpired = (document.querySelector(
-        'meta[name="x-token-expired"]'
-      ) as HTMLMetaElement)?.content;
+      const tokenExpired = (
+        document.querySelector(
+          'meta[name="x-token-expired"]'
+        ) as HTMLMetaElement
+      )?.content;
 
       if (tokenExpired === "true") {
         refreshToken();
       }
     };
+
+    console.log("kkkkkkkkkk");
 
     const refreshToken = async () => {
       try {
@@ -25,18 +29,18 @@ export default function AuthRefresh() {
         });
 
         if (!response.ok) {
-          router.push("/login-reg");
+          router.push("/login");
         } else {
           router.refresh();
         }
       } catch (error) {
         console.error("Token refresh failed:", error);
-        router.push("/login-reg");
+        router.push("/login");
       }
     };
 
     const interval = setInterval(async () => {
-      if (pathname.startsWith("/my-account")) {
+      if (pathname.startsWith("/admin")) {
         await refreshToken();
       }
     }, 50000);

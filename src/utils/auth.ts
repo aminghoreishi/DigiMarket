@@ -15,7 +15,7 @@ export const generateAccessToken = (data: { email: string; role: string }) =>
 export const generateRefreshToken = (data: { email: string }) =>
   sign(data, process.env.JWT_SECRET_REFRESH!, { expiresIn: "15d" });
 
-// --- بررسی توکن ---
+
 const verifyAccessToken = (token: string) => {
   try {
     return verify(token, process.env.JWT_SECRET!) as { email: string; role: string };
@@ -25,7 +25,7 @@ const verifyAccessToken = (token: string) => {
   }
 };
 
-// --- رفرش توکن ---
+
 const refreshToken = async () => {
   const refreshTokenValue = cookies().get("refresh-token")?.value;
   if (!refreshTokenValue) throw new Error("No refresh token");
@@ -52,7 +52,7 @@ const refreshToken = async () => {
   return { newAccessToken, response, user };
 };
 
-// --- احراز هویت با رفرش خودکار ---
+
 export const authUser = async () => {
   try {
     await db();

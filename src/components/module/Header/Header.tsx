@@ -2,9 +2,8 @@ import SearchBar from "./SearchBar";
 import Buttons from "./Buttons";
 import MenuMobile from "./MenuMobile";
 import Logo from "./Logo";
-import { SignIn } from "./Login";
 
-function Header() {
+async function Header() {
   return (
     <header className="sticky top-0 z-40 bg-white shadow-lg">
       <div className="container mx-auto flex items-center justify-between py-3">
@@ -22,10 +21,6 @@ function Header() {
 
         <div className="hidden lg:block">
           <Buttons />
-        </div>
-
-        <div className="hidden lg:block">
-          <SignIn />
         </div>
       </div>
     </header>

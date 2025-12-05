@@ -1,14 +1,8 @@
 import { FaRegUser } from "react-icons/fa6";
-
-import { LuUser } from "react-icons/lu";
-import { BsBasket } from "react-icons/bs";
-
-import { RiAdminLine } from "react-icons/ri";
-import Link from "next/link";
 import { authUser } from "@/utils/auth";
-
-import SignOut from "./SignOut";
-import Cart from "./Cart";
+import { auth } from "@/auth";
+import db from "@/config/db";
+import userModel from "@/models/user";
 
 type IUser = {
   _id: unknown;
@@ -19,11 +13,18 @@ type IUser = {
 };
 
 async function Buttons() {
+  await db();
   const user = await authUser();
   const isLoggedIn = !!user.user;
   const isAdmin = user.user?.role === "ADMIN";
   const displayName =
     user.user?.fullName || user.user?.email?.split("@")[0] || "کاربر";
+
+  const session = await auth();
+
+  console.log(session?.user);
+
+  const userFind = await userModel.findOne({ email: session?.user.email });
 
   console.log("User in Buttons:", user);
   console.log("isAdmin in Buttons:", isAdmin);
@@ -32,7 +33,7 @@ async function Buttons() {
 
   return (
     <div className="flex items-center font-danaMed gap-3">
-      {isLoggedIn ? (
+      {isLoggedIn || session?.user ? (
         <>
           <div className="flex relative group items-center gap-x-2 border-2 p-2 rounded-xl border-gray-300 cursor-pointer">
             <p className="text-xs">حساب کاربری</p>
@@ -53,14 +54,14 @@ async function Buttons() {
                   <BsBasket />
                   <p>پنل کاربری</p>
                 </li>
-                {isAdmin && (
+                {userFind?.role === "ADMIN" || isAdmin ? (
                   <Link href="/admin">
                     <li className="flex items-center gap-2">
                       <RiAdminLine />
                       <p>پنل ادمین</p>
                     </li>
                   </Link>
-                )}
+                ) : null}
 
                 <SignOut />
               </ul>

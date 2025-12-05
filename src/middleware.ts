@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { jwtVerify } from "jose";
+import { jwtDecrypt, jwtVerify } from "jose";
 
-export async function middleware(request:NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (pathname.startsWith("/admin")) {
-    const token = request.cookies.get("token")?.value;
-    const refreshToken = request.cookies.get("refresh-token")?.value;
+  const token = request.cookies.get("token")?.value;
+  const refreshToken = request.cookies.get("refresh-token")?.value;
+  const nextAuth = request.cookies.get("authjs.session-token")?.value;
 
-    if (!token && !refreshToken) {
+  if (pathname.startsWith("/admin")) {
+    if (!token && !refreshToken && !nextAuth) {
       return NextResponse.redirect(new URL("/reg", request.url));
     }
 
@@ -23,7 +24,7 @@ export async function middleware(request:NextRequest) {
           }
         }
 
-        return NextResponse.next(); 
+        return NextResponse.next();
       } catch (error) {
         if (refreshToken) {
           return NextResponse.next();
@@ -36,21 +37,73 @@ export async function middleware(request:NextRequest) {
       try {
         const secret = new TextEncoder().encode(process.env.JWT_SECRET_REFRESH);
         await jwtVerify(refreshToken, secret);
-        return NextResponse.next(); s
+        return NextResponse.next();
       } catch (error) {
         return NextResponse.redirect(new URL("/reg", request.url));
       }
     }
+
+    if (nextAuth) {
+      try {
+        const { payload } = await jwtDecrypt(
+          nextAuth,
+          new TextEncoder().encode(
+            process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET!
+          ),
+          {
+            clockTolerance: 15,
+          }
+        );
+
+        const role = (payload as any).role;
+
+        if (role !== "ADMIN") {
+          console.log("دسترسی رد شد - نقش کاربر:", role || "ندارد");
+          return NextResponse.redirect(new URL("/", request.url));
+        }
+
+        console.log("ادمین تأیید شد:", payload.email);
+        return NextResponse.next();
+      } catch (error: any) {
+        console.error("خطا در دیکد توکن NextAuth:", error.message);
+
+        return NextResponse.redirect(new URL("/", request.url));
+      }
+    }
   }
 
-  if (pathname === "/reg") {
-    const token = request.cookies.get("token")?.value;
+  if (pathname.startsWith("/login") || pathname.startsWith("/reg")) {
     if (token) {
       try {
-        await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET));
+        await jwtVerify(
+          token,
+          new TextEncoder().encode(process.env.JWT_SECRET)
+        );
         return NextResponse.redirect(new URL("/", request.url));
-      } catch (error) {
-      }
+      } catch (error) {}
+    }
+    if (refreshToken) {
+      try {
+        await jwtVerify(
+          refreshToken,
+          new TextEncoder().encode(process.env.JWT_SECRET_REFRESH)
+        );
+        return NextResponse.redirect(new URL("/", request.url));
+      } catch (error) {}
+    }
+    if (nextAuth) {
+      try {
+        await jwtDecrypt(
+          nextAuth,
+          new TextEncoder().encode(
+            process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET!
+          ),
+          {
+            clockTolerance: 15,
+          }
+        );
+        return NextResponse.redirect(new URL("/", request.url));
+      } catch (error) {}
     }
   }
 
