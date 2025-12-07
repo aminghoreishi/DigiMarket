@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const order = new mongoose.Schema(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "user",
       required: true,
     },
@@ -40,6 +40,7 @@ const order = new mongoose.Schema(
     totalPrice: {
       type: Number,
       required: true,
+      // max: 1000000000,
     },
     deliveryMethod: {
       type: String,

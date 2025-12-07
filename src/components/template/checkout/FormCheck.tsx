@@ -1,6 +1,6 @@
 "use client";
 
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "nextjs-toploader/app";
 
@@ -29,6 +29,9 @@ export default function FormCheck({
   userId: string;
 }) {
   const router = useRouter();
+
+  console.log(userId);
+  
 
   const {
     register,
@@ -61,6 +64,12 @@ export default function FormCheck({
 
   const onSubmit = async (data: FormData) => {
     console.log(data);
+
+    if (!userId || userId.trim() === "") {
+      alert("کاربر شناسایی نشد. لطفاً دوباره وارد شوید.");
+      router.push("/login");
+      return;
+    }
 
     const savedData = {
       ...data,

@@ -6,6 +6,7 @@ import Checkout from "../../checkout/checkout";
 
 function MainCartContainer({
   isUserLoggedIn,
+  id
 }: {
   isUserLoggedIn: null | { id: string; fullName: string; email: string };
 }) {
@@ -23,7 +24,7 @@ function MainCartContainer({
         )}
         {step === "checkout" && (
           <div>
-            <Checkout allPrice={allPrice} isUserLoggedIn={isUserLoggedIn} />
+            <Checkout id={id}  allPrice={allPrice} isUserLoggedIn={isUserLoggedIn} />
           </div>
         )}
       </div>

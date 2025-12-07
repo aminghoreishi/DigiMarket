@@ -2,6 +2,7 @@ import db from "@/config/db";
 import orderModel from "@/models/order";
 import productModel from "@/models/product";
 import { NextRequest, NextResponse } from "next/server";
+import mongoose from "mongoose";
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest) {
           count: { $gte: requestedCount },
         },
         {
-          $inc: { count: -requestedCount },
+          $inc: { count: -requestedCount, salesCount: requestedCount },
         },
         { new: true }
       );
@@ -47,7 +48,7 @@ export async function POST(request: NextRequest) {
     }
 
     const newOrder = await orderModel.create({
-      user,
+      user: user.toString(),
       phone,
       address1,
       address2,

@@ -13,6 +13,11 @@ const product = new mongoose.Schema({
     type: [String],
     required: true,
   },
+  salesCount: {
+    type: Number,
+    default: 0,
+    index: true, // خیلی مهمه برای سرعت!
+  },
   count: {
     type: Number,
     required: true,
@@ -28,7 +33,7 @@ const product = new mongoose.Schema({
     ref: "category",
     required: true,
   },
-  subCategory: {  
+  subCategory: {
     type: mongoose.Types.ObjectId,
     ref: "subCategory",
     required: true,

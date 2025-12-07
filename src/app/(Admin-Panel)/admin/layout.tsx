@@ -1,4 +1,3 @@
-import Protect from "@/components/module/p-admin/Protect";
 import "../../styles/globals.css";
 import SideBar from "@/components/module/p-admin/SideBar/SideBar";
 
@@ -17,7 +16,6 @@ export default async function AdminLayout({
         <SideBar />
       </div>
 
-      // <Protect/>
       <div className="pr-0 md:pr-[20%] min-h-screen" dir="rtl">
         <div className="max-md:p-5 p-8">{children}</div>
       </div>

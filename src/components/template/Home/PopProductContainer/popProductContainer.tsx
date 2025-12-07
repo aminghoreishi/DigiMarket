@@ -1,6 +1,11 @@
+import db from "@/config/db";
 import PopProductCom from "./PopProductCom";
+import productModel from "@/models/product";
 
-function PopProductContainer() {
+async function PopProductContainer() {
+  await db()
+
+  const products = await productModel.find().sort({ sales: -1 }).limit(8).exec();
   return (
     <div className="container mx-auto mt-12">
       <div className="flex justify-center">
