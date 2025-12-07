@@ -3,30 +3,30 @@ import db from "@/config/db";
 import productModel from "@/models/product";
 
 import { redirect } from "next/navigation";
-import { title } from "process";
+
 async function page({
   searchParams,
 }: {
   params?: { name: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  await db();
   const query = searchParams["query"];
   const name = Array.isArray(query) ? query[0] : query || "";
 
   const ram = searchParams["ram"];
   const numberAnt = searchParams["numberAnt"];
+  const isStock = searchParams["isStock"];
 
   const minPrice = searchParams.min_price ? Number(searchParams.min_price) : 0;
   const maxPrice = searchParams.max_price
     ? Number(searchParams.max_price)
     : undefined;
 
-  await db();
-
   const filter: any = {
     $or: [
       { name: { $regex: name, $options: "i" } },
-      {title: { $regex: name, $options: "i" } },
+      { title: { $regex: name, $options: "i" } },
       { longDescription: { $regex: name, $options: "i" } },
     ],
     price: {
@@ -45,13 +45,17 @@ async function page({
       $elemMatch: { name: "تعداد آنتن", value: numberAnt },
     };
   }
+  if (isStock === "true") {
+    filter.count = { $gt: 0 };
+  }
 
   const findedProducts = await productModel
     .find(filter)
     .populate("subCategory")
     .lean();
 
-  const hasActiveFilters = ram || numberAnt || minPrice > 0 || maxPrice;
+  const hasActiveFilters =
+    ram || numberAnt || isStock === "true" || minPrice > 0 || maxPrice;
 
   if (findedProducts.length === 0 && hasActiveFilters) {
     const cleanUrl = query ? `?query=${encodeURIComponent(query)}` : "/search";

@@ -11,7 +11,6 @@ function LaptopFilter() {
     } else {
       params.delete("ram");
     }
-    window.dispatchEvent(new CustomEvent("nextjs-route-change-start"));
     router.push(`?${params.toString()}`);
   }, [ram]);
   return (

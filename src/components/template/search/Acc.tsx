@@ -11,8 +11,6 @@ function Acc({ subCategory }: { subCategory: any[] }) {
 
   const findSub = subCategory.map((item) => item.title);
 
-  console.log(findSub.includes("مودم"));
-
   return (
     <div id="accordion-card" className="text-sm" data-accordion="collapse">
       <h2

@@ -82,15 +82,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL("/", request.url));
       } catch (error) {}
     }
-    if (refreshToken) {
-      try {
-        await jwtVerify(
-          refreshToken,
-          new TextEncoder().encode(process.env.JWT_SECRET_REFRESH)
-        );
-        return NextResponse.redirect(new URL("/", request.url));
-      } catch (error) {}
-    }
+
     if (nextAuth) {
       try {
         await jwtDecrypt(
