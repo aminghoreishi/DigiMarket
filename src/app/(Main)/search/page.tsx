@@ -2,7 +2,8 @@ import Search from "@/components/template/search/search";
 import db from "@/config/db";
 import productModel from "@/models/product";
 
-import { redirect } from "next/navigation"; 
+import { redirect } from "next/navigation";
+import { title } from "process";
 async function page({
   searchParams,
 }: {
@@ -11,11 +12,9 @@ async function page({
 }) {
   const query = searchParams["query"];
   const name = Array.isArray(query) ? query[0] : query || "";
-  console.log("Search query:", name);
 
   const ram = searchParams["ram"];
   const numberAnt = searchParams["numberAnt"];
-  console.log("Selected RAM:", ram);
 
   const minPrice = searchParams.min_price ? Number(searchParams.min_price) : 0;
   const maxPrice = searchParams.max_price
@@ -27,6 +26,7 @@ async function page({
   const filter: any = {
     $or: [
       { name: { $regex: name, $options: "i" } },
+      {title: { $regex: name, $options: "i" } },
       { longDescription: { $regex: name, $options: "i" } },
     ],
     price: {
@@ -50,8 +50,6 @@ async function page({
     .find(filter)
     .populate("subCategory")
     .lean();
-
-  console.log(findedProducts);
 
   const hasActiveFilters = ram || numberAnt || minPrice > 0 || maxPrice;
 
