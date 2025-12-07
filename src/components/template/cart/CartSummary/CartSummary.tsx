@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/dist/client/components/navigation";
 import toast from "react-hot-toast";
 
 function CartSummary({
@@ -12,17 +11,12 @@ function CartSummary({
   isUserLoggedIn: any;
   setStep: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  const router = useRouter();
-
   const buyFunc = () => {
     if (!isUserLoggedIn) {
       toast.error("لطفا ابتدا وارد حساب کاربری خود شوید");
       return;
     }
-
     setStep("checkout");
-
-    
   };
   return (
     <div className="p-3 font-danaMed">

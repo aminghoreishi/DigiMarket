@@ -5,7 +5,8 @@ import { authUser } from "@/utils/auth";
 async function page() {
   await db();
   const isUserLoggedIn = await authUser();
-  return <MainCartContainer isUserLoggedIn={isUserLoggedIn?.user?._id} id={isUserLoggedIn?.user?._id} />;
+  const isLoggin = isUserLoggedIn.user ? true : false
+  return <MainCartContainer isUserLoggedIn={isLoggin} id={isUserLoggedIn?.user?._id} />;
 }
 
 export default page;
