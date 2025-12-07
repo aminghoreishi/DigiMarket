@@ -12,15 +12,13 @@ async function PopProductContainer() {
     .limit(8)
     .exec();
 
-  console.log(products);
-
   return (
     <div className="container mx-auto mt-12">
       <div className="flex justify-center">
         <h2 className="font-danaMed text-lg">پرفروش ترین محصولات</h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5 divide-y-2 divide-zinc-200">
-        {products.map((product , index) => (
+        {products.map((product, index) => (
           <PopProductCom
             key={product._id}
             title={product.title}

@@ -2,12 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 function SwiperProduct({
-  name,
+  title,
   images,
   price,
   _id,
 }: {
-  name: string;
+  title: string;
   images: string[];
   price: number;
   _id: string;
@@ -20,7 +20,7 @@ function SwiperProduct({
           className="!size-52"
           width={200}
           height={200}
-          alt={name || "product"}
+          alt={title || "product"}
         />
       </div>
       <div>
@@ -28,7 +28,7 @@ function SwiperProduct({
         <div className="cursor-pointer">
           <Link href={`/singleProduct/${_id}`}>
             <span className="text-zinc-800 font-danaMed text-xs md:text-sm h-8 lg:h-10 line-clamp-2 mt-2">
-              {name}
+              {title}
             </span>
           </Link>
         </div>

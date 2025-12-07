@@ -5,8 +5,13 @@ import productModel from "@/models/product";
 
 async function PopProduct() {
   await db();
-  const products = await productModel.find({}).limit(6).lean();
 
+  const products = await productModel
+    .find()
+    .sort({ sales: -1 })
+    .select("title images price")
+    .limit(8)
+    .exec();
   return (
     <div className="mt-12">
       <TopSubject title="محصولات پرفروش" />
