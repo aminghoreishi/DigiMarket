@@ -24,12 +24,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
           <div className="xl:col-span-9">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
               <div>
-                <div>
-                  <SwiperImage
-                    images={findProduct.images}
-                    id={findProduct._id.toString()}
-                  />
-                </div>
+                <SwiperMemo findProduct={findProduct} />
               </div>
               <div className="">
                 <BredCrumbs />
@@ -90,5 +85,16 @@ const CartContainer = memo(
     );
   }
 );
+
+const SwiperMemo = memo(({ findProduct }) => {
+  return (
+    <div>
+      <SwiperImage
+        images={findProduct.images}
+        id={findProduct._id.toString()}
+      />
+    </div>
+  );
+});
 
 export default page;

@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from "next/server";
 import { verify, sign } from "jsonwebtoken";
 import db from "@/config/db";
@@ -8,9 +7,17 @@ export async function POST(req: NextRequest) {
   try {
     await db();
     const refreshToken = req.cookies.get("refresh-token")?.value;
-    if (!refreshToken) return NextResponse.json({ error: "No token" }, { status: 401 });
+    const nextAuth = req.cookies.get("authjs.session-token")?.value;
 
-    const payload = verify(refreshToken, process.env.JWT_SECRET_REFRESH!) as { email: string };
+    if (nextAuth) {
+      return NextResponse.json({ success: true });
+    }
+    if (!refreshToken)
+      return NextResponse.json({ error: "No token" }, { status: 401 });
+
+    const payload = verify(refreshToken, process.env.JWT_SECRET_REFRESH!) as {
+      email: string;
+    };
     const user = await userModel.findOne({ email: payload.email });
 
     if (!user || user.refreshToken !== refreshToken) {

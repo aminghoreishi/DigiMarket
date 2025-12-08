@@ -18,13 +18,23 @@ const CartColor: React.FC = ({
         {colors.map((color, index) => (
           <div
             key={index}
-            className={`border-2 ${color == colorv ? "outline-2  outline-sky-500" : "outline-0"} flex  items-center p-2 font-danaMed text-xs gap-x-1 cursor-pointer rounded-xl border-zinc-200 `}
+            className={`border-2 ${color.trim() == colorv.trim() ? "outline-2  outline-sky-500" : "outline-0"} flex  items-center p-2 font-danaMed text-xs gap-x-1 cursor-pointer rounded-xl border-zinc-200 `}
             onClick={() => {
-              setColor(color);
+              setColor(color.trim());
             }}
           >
             <div
-              className={`size-4 ${color === "مشکی" ? "bg-black" : `bg-${toEnglish(color)}-500`} rounded-full`}
+              className={`
+    size-4 rounded-full
+    ${color.trim() === "مشکی" ? "bg-black" : ""}
+    ${color.trim() === "سفید" ? "bg-white border-2 border-zinc-300" : ""}
+    ${
+      !["مشکی", "سفید"].includes(color.trim())
+        ? `bg-${toEnglish(color)}-500`
+        : ""
+    }
+    shadow-sm
+  `}
             ></div>
             <p>{color}</p>
           </div>

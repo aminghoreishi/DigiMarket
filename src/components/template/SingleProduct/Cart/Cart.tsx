@@ -26,8 +26,10 @@ function Cart({
   const [selectedColor, setSelectedColor] = useState<string>(defaultColor);
 
   useEffect(() => {
-    setSelectedColor(defaultColor);
-  }, [selectedColor, defaultColor]);
+    if (!selectedColor && colors.length > 0) {
+      setSelectedColor(colors[0].trim());
+    }
+  }, [colors]);
   return (
     <>
       <div>
@@ -35,13 +37,12 @@ function Cart({
           colors={colors}
           selectedColor={selectedColor}
           setSelectedColor={setSelectedColor}
-       
         />
         <div>
           <CartAdd
             count={count}
             price={price}
-               isLoggedIn={isLoggedIn}
+            isLoggedIn={isLoggedIn}
             delivery={delivery}
             name={name}
             userID={userID}

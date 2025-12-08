@@ -22,6 +22,8 @@ const ColorSelector: React.FC<ColorSelectorProps> = ({
   const [color, setColor] = useState("");
   const [colorArray, setColorArray] = useState<string[]>([]);
 
+
+
   useEffect(() => {
     setValue("colors", colorArray, { shouldValidate: true });
   }, [colorArray, setValue]);
