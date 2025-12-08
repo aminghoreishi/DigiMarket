@@ -19,9 +19,6 @@ export default function AuthRefresh() {
         refreshToken();
       }
     };
-
-    console.log("kkkkkkkkkk");
-
     const refreshToken = async () => {
       try {
         const response = await fetch("/api/auth/refresh", {

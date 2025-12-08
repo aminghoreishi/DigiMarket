@@ -3,15 +3,10 @@ import Google from "next-auth/providers/google";
 import userModel from "@/models/user";
 import db from "@/config/db";
 import { sign } from "jsonwebtoken";
-import { EncryptJWT, jwtDecrypt } from "jose";
+import { EncryptJWT } from "jose";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [
-    Google({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
-  ],
+  providers: [Google()],
 
   secret: process.env.AUTH_SECRET!,
 
@@ -20,19 +15,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   jwt: {
     async encode({ token }) {
       if (!token) return "";
-      const secret = new TextEncoder().encode(process.env.AUTH_SECRET!);
-      const encrypted = await new EncryptJWT(token)
+      return await new EncryptJWT(token)
         .setProtectedHeader({ alg: "dir", enc: "A256GCM" })
-        .encrypt(secret);
-      return encrypted;
+        .setIssuedAt()
+        .setExpirationTime("30d") // یا 1y یا هر چی می‌خوای
+        .encrypt(new TextEncoder().encode(process.env.AUTH_SECRET!));
     },
-
     async decode({ token }) {
       if (!token) return null;
-      const secret = new TextEncoder().encode(process.env.AUTH_SECRET!);
-      const { payload } = await jwtDecrypt(token, secret, {
-        algorithms: ["dir"],
-      });
+      const { payload } = await import("jose").then(jose =>
+        jose.jwtDecrypt(token, new TextEncoder().encode(process.env.AUTH_SECRET!), {
+          algorithms: ["dir"],
+          contentAlgorithms: ["A256GCM"],
+        })
+      );
       return payload;
     },
   },
@@ -81,5 +77,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
 
-  debug: true,
+  debug: process.env.NODE_ENV === "development",
 });

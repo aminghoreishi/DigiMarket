@@ -16,7 +16,7 @@ const product = new mongoose.Schema({
   salesCount: {
     type: Number,
     default: 0,
-    index: true, // خیلی مهمه برای سرعت!
+    index: true,
   },
   count: {
     type: Number,
@@ -64,7 +64,7 @@ const product = new mongoose.Schema({
     type: Number,
     required: true,
   },
-});
+} , { timestamps: true });
 
 product.virtual("comment", {
   ref: "comment",

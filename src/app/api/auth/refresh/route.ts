@@ -1,4 +1,4 @@
-// app/api/auth/refresh/route.ts
+
 import { NextRequest, NextResponse } from "next/server";
 import { verify, sign } from "jsonwebtoken";
 import db from "@/config/db";
