@@ -3,8 +3,19 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import SwiperProduct from "@/components/module/SwiperProduct/SwiperProduct";
+import { useEffect, useState } from "react";
 
-function SwiperProductContainer({ products = [] }) {
+function SwiperProductContainer({ products }: { products: any[] }) {
+  // const [hydrated, setHydrated] = useState(false);
+
+  // useEffect(() => {
+  //   setHydrated(true);
+  // }, []);
+
+  // if (!hydrated) {
+  //   return null; // یا اسکلتون
+  // }
+
   if (!Array.isArray(products) || products.length === 0) {
     return (
       <div className="text-center text-zinc-400 py-10">
@@ -30,7 +41,13 @@ function SwiperProductContainer({ products = [] }) {
       >
         {products.map((pro) => (
           <SwiperSlide key={pro._id || pro.id || pro.title}>
-            <SwiperProduct {...pro} />
+            <SwiperProduct
+              title={pro.title}
+              images={pro.images}
+              price={pro.price}
+              _id={pro._id}
+              colors={pro.colors}
+            />
           </SwiperSlide>
         ))}
       </Swiper>

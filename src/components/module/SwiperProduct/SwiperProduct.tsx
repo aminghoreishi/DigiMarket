@@ -1,3 +1,5 @@
+import { toEnglish } from "@/utils/color";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,11 +8,13 @@ function SwiperProduct({
   images,
   price,
   _id,
+  colors,
 }: {
   title: string;
   images: string[];
   price: number;
   _id: string;
+  colors: string[];
 }) {
   return (
     <div className="border-2 px-4 py-3 border-gray-200 rounded-xl">
@@ -34,9 +38,14 @@ function SwiperProduct({
         </div>
         <div className="flex items-center justify-between mt-4 border-dashed border-b-[1px] pb-5">
           <div className="flex gap-1.5">
-            <div className="size-4 bg-zinc-800 rounded-full"></div>
-            <div className="size-4 bg-zinc-500 rounded-full"></div>
-            <div className="size-4 bg-zinc-300 rounded-full"></div>
+            {(colors ?? []).map((color, index) => (
+              <div
+                key={index}
+                className="size-4 rounded-full border-2 border-white shadow-md ring-1 ring-gray-300 transition-transform hover:scale-110"
+                style={{ backgroundColor: toEnglish(color) }}
+                title={color}
+              />
+            ))}
           </div>
           <div className="flex items-start gap-x-1 text-xs text-zinc-500">
             <span className="font-danaMed ss02">

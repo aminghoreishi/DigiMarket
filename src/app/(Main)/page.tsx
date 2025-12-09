@@ -7,7 +7,7 @@ import PopProduct from "@/components/template/Home/popProduct/PopProduct";
 import PopProductContainer from "@/components/template/Home/PopProductContainer/popProductContainer";
 import SwiperBanner from "@/components/template/Home/SwiperBanner/SwiperBanner";
 
-function Home() {
+async function Home() {
   return (
     <div>
       <SwiperBanner />

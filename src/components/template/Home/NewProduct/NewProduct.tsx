@@ -9,9 +9,8 @@ async function NewProduct() {
   const products = await productModel
     .find()
     .sort({ createdAt: -1 })
-    .select("title images price")
-    .limit(8)
-    .exec();
+    .select("title images price colors")
+    .limit(8);
   return (
     <div className="mt-12">
       <TopSubject title="جدید ترین محصولات" />

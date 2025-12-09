@@ -28,14 +28,14 @@ async function Buttons() {
 
   const session = await auth();
 
-  console.log(session?.user);
+  // console.log(session?.user);
 
   const userFind = await userModel.findOne({ email: session?.user.email });
 
-  console.log("User in Buttons:", user);
-  console.log("isAdmin in Buttons:", isAdmin);
-  console.log("isLoggedIn in Buttons:", isLoggedIn);
-  console.log("displayName in Buttons:", displayName);
+  // console.log("User in Buttons:", user);
+  // console.log("isAdmin in Buttons:", isAdmin);
+  // console.log("isLoggedIn in Buttons:", isLoggedIn);
+  // console.log("displayName in Buttons:", displayName);
 
   return (
     <div className="flex items-center font-danaMed gap-3">
