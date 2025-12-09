@@ -5,16 +5,24 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 
-function MenuMobile() {
+function MenuMobile({
+  isLoggedIn,
+  isAdmin,
+}: {
+  isLoggedIn: boolean;
+  isAdmin: boolean;
+}) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
+
+  console.log(isAdmin);
 
   useEffect(() => {
     setIsOpen(false);
   }, [pathname, router]);
 
-    const signOut = async () => {
+  const signOut = async () => {
     const res = await fetch("/api/auth/signout", {
       method: "POST",
     });
@@ -64,9 +72,17 @@ function MenuMobile() {
             <Link href="/cart">
               <li>سبد خرید</li>
             </Link>
+            {isAdmin && isLoggedIn && (
+              <Link href="/admin">
+                <li>پنل ادمین</li>
+              </Link>
+            )}
           </ul>
 
-          <div onClick={signOut} className="mt-5 text-sm border-t-2 pt-3 border-zinc-200">
+          <div
+            onClick={signOut}
+            className="mt-5 text-sm border-t-2 pt-3 border-zinc-200"
+          >
             <button>خروج از حساب کاربری</button>
           </div>
         </div>

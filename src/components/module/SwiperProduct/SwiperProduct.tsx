@@ -9,12 +9,14 @@ function SwiperProduct({
   price,
   _id,
   colors,
+  name
 }: {
   title: string;
   images: string[];
   price: number;
   _id: string;
   colors: string[];
+  name: string;
 }) {
   return (
     <div className="border-2 px-4 py-3 border-gray-200 rounded-xl">
@@ -28,7 +30,7 @@ function SwiperProduct({
         />
       </div>
       <div>
-        <p className="text-zinc-400 text-xs">PS5 slim</p>
+        <p className="text-zinc-400 text-xs">{name}</p>
         <div className="cursor-pointer">
           <Link href={`/singleProduct/${_id}`}>
             <span className="text-zinc-800 font-danaMed text-xs md:text-sm h-8 lg:h-10 line-clamp-2 mt-2">
