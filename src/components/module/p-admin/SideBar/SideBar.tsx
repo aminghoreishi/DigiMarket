@@ -10,9 +10,6 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { FaRegComments } from "react-icons/fa6";
 function SideBar() {
   const route = usePathname();
-
-  console.log(route);
-
   return (
     <div dir="rtl" className="h-full overflow-y-auto bg-white pt-5 px-4">
       <div className="flex justify-center w-full mb-8">
@@ -65,7 +62,7 @@ function SideBar() {
             <span>کاربران</span>
           </li>
         </Link>
-          <Link href="/admin/offs">
+        <Link href="/admin/offs">
           <li
             className={`flex items-center text-sm gap-2 cursor-pointer transition-colors ${
               route === "/admin/offs"
