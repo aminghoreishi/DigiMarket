@@ -9,7 +9,7 @@ async function PopProduct() {
   const products = await productModel
     .find()
     .sort({ sales: -1 })
-    .select("title images price colors")
+    .select("title images price colors name")
     .limit(8)
     .exec();
   return (

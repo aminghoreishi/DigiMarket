@@ -49,21 +49,15 @@ function Page() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(obj),
-        credentials: "include", // این خط مهمه!
+        credentials: "include",
       });
 
       const response = await res.json();
       console.log("Login response:", response);
 
       if (res.status === 200) {
-        Swal.fire({
-          title: "با موفقیت وارد شدید",
-          icon: "success",
-          confirmButtonText: "باشه",
-        }).then(() => {
-          route.push("/");
-          route.refresh(); // این خط مهمه!
-        });
+        route.push("/");
+        route.refresh();
       } else {
         Swal.fire({
           title: response.message || "خطا در ورود",
@@ -113,7 +107,6 @@ function Page() {
               )}
             </div>
 
-            {/* Password */}
             <div className="flex flex-col gap-2">
               <label className="text-xs">رمز عبور</label>
               <div className="relative">
@@ -159,7 +152,6 @@ function Page() {
             )}
           </div>
 
-          {/* Submit Button */}
           <div className="mt-5">
             <button
               type="submit"
@@ -168,8 +160,6 @@ function Page() {
               {isLoading ? <BeatLoader size={9} color="white" /> : "وارد شوید"}
             </button>
           </div>
-
-          {/* Google Sign-up */}
         </form>
 
         {

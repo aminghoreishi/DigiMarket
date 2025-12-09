@@ -36,6 +36,7 @@ function SwiperProductContainer({ products }: { products: any[] }) {
               price={pro.price}
               _id={pro._id}
               colors={pro.colors}
+              name={pro.name}
             />
           </SwiperSlide>
         ))}
