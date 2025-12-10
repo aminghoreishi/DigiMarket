@@ -110,6 +110,10 @@ export default function EditProductModal({
     }
   };
 
+  const removeColor = (colorName: string) => {
+    setColor((prev: string[]) => prev.filter((c) => c !== colorName));
+  };
+
   return (
     <div
       onClick={() => setIsModalOpen(false)}
@@ -239,16 +243,23 @@ export default function EditProductModal({
                   <label className="block mb-2 text-sm font-medium text-heading">
                     {fea.name}
                   </label>
-                  <input type="text" value={fea.value} onChange={(e) => {
-                    const updatedFeatures = features.map((feature: { name: string; value: string }) => {
-                      if (feature.name === fea.name) {
-                        return { ...feature, value: e.target.value };
-                      }
-                      return feature;
-                    });
-                    setFeatures(updatedFeatures);
-                    
-                  }} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand focus:border-brand transition" placeholder={fea.name} />
+                  <input
+                    type="text"
+                    value={fea.value}
+                    onChange={(e) => {
+                      const updatedFeatures = features.map(
+                        (feature: { name: string; value: string }) => {
+                          if (feature.name === fea.name) {
+                            return { ...feature, value: e.target.value };
+                          }
+                          return feature;
+                        }
+                      );
+                      setFeatures(updatedFeatures);
+                    }}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand focus:border-brand transition"
+                    placeholder={fea.name}
+                  />
                 </div>
               ))}
             </div>
@@ -286,7 +297,7 @@ export default function EditProductModal({
               </label>
 
               <div className="grid grid-cols-4 sm:grid-cols-6 gap-4">
-                {/* دکمه آپلود */}
+              
                 {images.length < 8 && (
                   <label className="aspect-square cursor-pointer group">
                     <div className="w-full h-full border-2 border-dashed border-brand/50 bg-brand/5 rounded-xl flex flex-col items-center justify-center hover:bg-brand/10 transition-all">
