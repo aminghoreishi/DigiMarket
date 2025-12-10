@@ -46,7 +46,7 @@ async function Buttons() {
             <FaRegUser />
 
             <div className="absolute transition-all duration-300 opacity-0 invisible group-hover:visible group-hover:opacity-100 bg-white top-10  shadow-lg rounded-xl p-4 w-52 -right-24 border-2 border-gray-200">
-              <ul className="text-sm flex flex-col gap-4">
+              <ul className="text-sm flex flex-col gap-4 *:transition-colors *:hover:text-orange-500">
                 <li className="flex items-center gap-2">
                   <LuUser />
                   <p>{displayName}</p>
