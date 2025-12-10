@@ -155,7 +155,7 @@ function Page() {
           <div className="mt-5">
             <button
               type="submit"
-              className="bg-orange-500 text-white w-full rounded-xl py-2 cursor-pointer text-xs"
+              className="bg-orange-500 text-white w-full rounded-xl py-2 cursor-pointer text-sm"
             >
               {isLoading ? <BeatLoader size={9} color="white" /> : "وارد شوید"}
             </button>
