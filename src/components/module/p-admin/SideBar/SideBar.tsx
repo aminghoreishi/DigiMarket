@@ -8,6 +8,9 @@ import { FiUser } from "react-icons/fi";
 import { CiLogout } from "react-icons/ci";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { FaRegComments } from "react-icons/fa6";
+import { RiDiscountPercentLine } from "react-icons/ri";
+import { BiCategory } from "react-icons/bi";
+import { FaCheck } from "react-icons/fa";
 function SideBar() {
   const route = usePathname();
   return (
@@ -70,8 +73,20 @@ function SideBar() {
                 : "text-gray-700 hover:text-blue-500"
             }`}
           >
-            <FiUser size={20} />
+            <RiDiscountPercentLine size={20} />
             <span>تخفیفات</span>
+          </li>
+        </Link>
+        <Link href="/admin/orders">
+          <li
+            className={`flex items-center text-sm gap-2 cursor-pointer transition-colors ${
+              route === "/admin/orders"
+                ? "text-blue-500"
+                : "text-gray-700 hover:text-blue-500"
+            }`}
+          >
+            <FaCheck size={20} />
+            <span>سفارشات</span>
           </li>
         </Link>
         <li
@@ -82,7 +97,7 @@ function SideBar() {
               : "text-gray-700 hover:text-blue-500"
           }`}
         >
-          <SlBasket size={20} />
+          <BiCategory size={20} />
           <Link href="/admin/categories" className="w-full">
             <div className="flex items-center w-full justify-between">
               <span>دسته بندی ها</span>
