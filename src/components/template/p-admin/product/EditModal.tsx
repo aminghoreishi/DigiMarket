@@ -98,7 +98,7 @@ export default function EditProductModal({
       if (res.ok) {
         toast.success("محصول با موفقیت ویرایش شد");
         setIsModalOpen(false);
-        getProducts();
+        getProducts(currentPage);
       } else {
         toast.error("خطا در ویرایش محصول. لطفاً دوباره تلاش کنید.");
       }

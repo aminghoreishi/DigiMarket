@@ -9,9 +9,9 @@ export async function POST(req: NextRequest) {
     const refreshToken = req.cookies.get("refresh-token")?.value;
     const nextAuth = req.cookies.get("authjs.session-token")?.value;
 
-    if (nextAuth) {
-      return NextResponse.json({ success: true });
-    }
+    // if (nextAuth) {
+    //   return NextResponse.json({ success: true });
+    // }
     if (!refreshToken)
       return NextResponse.json({ error: "No token" }, { status: 401 });
 

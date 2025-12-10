@@ -4,7 +4,7 @@ import Link from "next/dist/client/link";
 import SearchBar from "./SearchBar";
 import Table from "./Table";
 import Swal from "sweetalert2";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 function ProductContainer({
   products,
@@ -53,9 +53,7 @@ function ProductContainer({
 
   return (
     <div className="mt-5">
-      <div>
-        <SearchBar removeProduct={removeProduct} />
-      </div>
+      <SearchMemo removeProduct={removeProduct} />
       <div className="flex justify-end">
         <Link href="/admin/products/createProduct">
           <button className="px-4 py-2 bg-blue-500 transition-all cursor-pointer hover:bg-blue-600 text-white rounded-md mt-4 font-danaMed text-xs">
@@ -73,5 +71,13 @@ function ProductContainer({
     </div>
   );
 }
+
+const SearchMemo = memo(({ removeProduct }: { removeProduct?: (id: string) => Promise<void> }) => {
+  return (
+    <div>
+      <SearchBar removeProduct={removeProduct} />
+    </div>
+  );
+});
 
 export default ProductContainer;

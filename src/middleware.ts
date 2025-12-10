@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
 
   if (pathname.startsWith("/admin")) {
     if (!token && !refreshToken && !nextAuth) {
-      return NextResponse.redirect(new URL("/reg", request.url));
+      return NextResponse.redirect(new URL("/login", request.url));
     }
 
     if (token) {
@@ -33,15 +33,15 @@ export async function middleware(request: NextRequest) {
       }
     }
 
-    if (refreshToken) {
-      try {
-        const secret = new TextEncoder().encode(process.env.JWT_SECRET_REFRESH);
-        await jwtVerify(refreshToken, secret);
-        return NextResponse.next();
-      } catch (error) {
-        return NextResponse.redirect(new URL("/reg", request.url));
-      }
-    }
+    // if (refreshToken) {
+    //   try {
+    //     const secret = new TextEncoder().encode(process.env.JWT_SECRET_REFRESH);
+    //     await jwtVerify(refreshToken, secret);
+    //     return NextResponse.next();
+    //   } catch (error) {
+    //     return NextResponse.redirect(new URL("/login", request.url));
+    //   }
+    // }
 
     if (nextAuth) {
       try {
@@ -100,8 +100,7 @@ export async function middleware(request: NextRequest) {
   }
 
   return NextResponse.next();
-
-
-} export const config = {
+}
+export const config = {
   matcher: ["/admin/:path*", "/login", "/reg"],
 };
