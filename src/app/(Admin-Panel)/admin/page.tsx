@@ -1,6 +1,8 @@
 import TopBar from "@/components/module/p-admin/TopBar/TopBar";
+import SwiperProductContainer from "@/components/module/SwiperProductContainer/SwiperProductContainer";
 import Information from "@/components/template/p-admin/Home/Information";
-import OrderTable from "@/components/template/p-admin/Home/OrderTable";
+import OrderTable from "@/components/template/p-admin/Home/Order/OrderTable";
+import ShowProduct from "@/components/template/p-admin/Home/ShowNewPro/ShowProduct";
 import db from "@/config/db";
 import orderModel from "@/models/order";
 import productModel from "@/models/product";
@@ -11,18 +13,32 @@ async function page() {
   const products = await productModel.countDocuments({});
   const users = await userModel.countDocuments({});
   const orders = await orderModel.countDocuments({});
-  const deliveredOrders = await orderModel.countDocuments({status: 'delivered'});
+  const deliveredOrders = await orderModel.countDocuments({
+    status: "delivered",
+  });
 
   const allOrders = await orderModel.find({}).limit(3).lean();
+  const allProducts = await productModel
+    .find({})
+    .sort({ createdAt: -1 })
+    .limit(6)
+    .lean();
   return (
     <div>
       <TopBar title="صحفه اصلی" />
 
       <div>
-        <Information productsCount={products} usersCount={users} ordersCount={orders} />
+        <Information
+          productsCount={products}
+          usersCount={users}
+          ordersCount={orders}
+        />
       </div>
       <div className="mt-10">
-      <OrderTable orders={JSON.parse(JSON.stringify(allOrders))} />
+        <OrderTable orders={JSON.parse(JSON.stringify(allOrders))} />
+      </div>
+      <div className="mt-10">
+        <ShowProduct products={JSON.parse(JSON.stringify(allProducts))} />
       </div>
     </div>
   );

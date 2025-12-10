@@ -1,3 +1,5 @@
+import { getDaysAgo } from "@/utils/cal";
+
 function OrderTable({ orders }: { orders: any[] }) {
   return (
     <>
@@ -22,13 +24,6 @@ function OrderTable({ orders }: { orders: any[] }) {
             </tr>
           </thead>
           <tbody>
-            {/* {proSatate.length === 0 && (
-                    <tr>
-                      <td colSpan={7} className="text-center font-danaMed py-4">
-                        هیچ محصولی یافت نشد.
-                      </td>
-                    </tr>
-                  )} */}
             {orders.map((ord) => (
               <tr
                 key={ord._id}
@@ -41,13 +36,16 @@ function OrderTable({ orders }: { orders: any[] }) {
                   {ord._id}
                 </th>
                 <td className="px-6 py-4">
+                  {getDaysAgo(ord.createdAt ?? "")}{" "}
                   {new Date(ord.createdAt).toLocaleDateString("fa-IR")}
                 </td>
                 <td className="px-6 py-4 ss02 ">
                   {ord.totalPrice.toLocaleString("fa-IR")}
                 </td>
                 <td className="px-6 py-4">
-                  <button className="px-3 py-1 bg-blue-500 text-white rounded-md text-xs">جزییات سفارش</button>
+                  <button className="px-3 py-1 bg-blue-500 text-white rounded-md text-xs">
+                    جزییات سفارش
+                  </button>
                 </td>
               </tr>
             ))}

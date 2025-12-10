@@ -1,13 +1,21 @@
 import { FaShoppingCart } from "react-icons/fa";
-function Information({productsCount , usersCount , ordersCount}: {productsCount: number, usersCount: number, ordersCount: number}) {
+function Information({
+  productsCount,
+  usersCount,
+  ordersCount,
+}: {
+  productsCount: number;
+  usersCount: number;
+  ordersCount: number;
+}) {
   return (
-    <div className="grid grid-cols-4 gap-5 mt-10 font-danaMed">
+    <div className="grid  grid-cols-2 lg:grid-cols-4 gap-5 mt-10 font-danaMed">
       <div className="flex items-center gap-3 bg-blue-500 text-white rounded-xl shadow-lg   py-3 px-2 text-sm">
         <div className="bg-blue-700 p-2 rounded-lg">
           <FaShoppingCart size={20} color="white" />
         </div>
         <div>
-          <div>تعداد محصولات</div>
+          <div className="max-md:text-xs">تعداد محصولات</div>
           <p className="ss02">{productsCount}</p>
         </div>
       </div>
@@ -16,7 +24,7 @@ function Information({productsCount , usersCount , ordersCount}: {productsCount:
           <FaShoppingCart size={20} color="white" />
         </div>
         <div>
-          <div>تعداد کاربران</div>
+          <div className="max-md:text-xs">تعداد کاربران</div>
           <p className="ss02">{usersCount}</p>
         </div>
       </div>
@@ -25,7 +33,7 @@ function Information({productsCount , usersCount , ordersCount}: {productsCount:
           <FaShoppingCart size={20} color="white" />
         </div>
         <div>
-          <div>تعداد سفارش ها</div>
+          <div className="max-md:text-xs">تعداد سفارش ها</div>
           <p className="ss02">{ordersCount}</p>
         </div>
       </div>
@@ -34,7 +42,7 @@ function Information({productsCount , usersCount , ordersCount}: {productsCount:
           <FaShoppingCart size={20} color="white" />
         </div>
         <div>
-          <div>تحویل داده شده</div>
+          <div className="max-md:text-xs">تحویل داده شده</div>
           <p className="ss02">0</p>
         </div>
       </div>

@@ -10,7 +10,7 @@ async function NewProduct() {
     .find()
     .sort({ createdAt: -1 })
     .select("title images price colors name")
-    .limit(8);
+    .limit(6);
   return (
     <div className="mt-12">
       <TopSubject title="جدید ترین محصولات" />

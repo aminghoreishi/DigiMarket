@@ -12,7 +12,7 @@ export default async function AdminLayout({
 }) {
   return (
     <>
-      <div className="fixed top-0 max-md:-right-[300px] lg:right-0 bottom-0 w-full  lg:max-w-[20%] bg-white shadow-2xl z-50 overflow-hidden  block">
+      <div className="fixed top-0  right-0 bottom-0 w-full  lg:max-w-[20%] bg-white shadow-2xl z-50 overflow-hidden  block max-md:hidden">
         <SideBar />
       </div>
       <div className="pr-0 lg:pr-[20%] min-h-screen" dir="rtl">
