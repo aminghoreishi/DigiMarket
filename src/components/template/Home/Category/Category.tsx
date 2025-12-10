@@ -13,25 +13,22 @@ async function Category() {
     .lean()) as unknown as Category[];
 
   return (
-    <div
-      className="container mx-auto mt-5
-    "
-    >
-      <div className="flex justify-center gap-x-3">
+    <div className="container mx-auto mt-5">
+      <div className="flex justify-center flex-wrap">
         {category.map((cat) => (
           <div key={cat._id}>
             <Link href={cat.href}>
               <div className="rounded-xl p-2">
-                <div className="border-2 border-gray-300 px-6 py-3 rounded-lg">
+                <div className="border-2 flex justify-center border-gray-300 px-6 py-3 rounded-lg">
                   <Image
                     src={cat.img}
                     width={100}
                     height={100}
-                    className="  object-cover"
+                    className="object-cover max-sm:size-20"
                     alt="cat"
                   />
                 </div>
-                <div className="flex justify-center mt-2 font-danaMed text-sm">
+                <div className="flex justify-center mt-2 font-danaMed max-sm:text-xs text-sm">
                   <h2>{cat.title}</h2>
                 </div>
               </div>
