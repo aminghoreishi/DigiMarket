@@ -2,7 +2,7 @@
 
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
-import { Key, useState } from "react";
+import { Key, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { MdOutlineFileUpload } from "react-icons/md";
@@ -31,12 +31,8 @@ export default function EditProductModal({
   );
   const [name, setName] = useState(product?.name || "");
   const [images, setImages] = useState(product?.images || []);
+  const [features, setFeatures] = useState(product?.features || []);
   const [isLoading, setIsLoading] = useState(false);
-
-  const removeColor = (colorToRemove: string) => {
-    const newColors = color.filter((c: string) => c !== colorToRemove);
-    setColor(newColors);
-  };
 
   const addColor = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -92,6 +88,7 @@ export default function EditProductModal({
             shortDescription: shortDes,
             longDescription,
             images,
+            features,
           }),
         }
       );
@@ -237,6 +234,23 @@ export default function EditProductModal({
                   </div>
                 )}
               </div>
+              {features.map((fea) => (
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-heading">
+                    {fea.name}
+                  </label>
+                  <input type="text" value={fea.value} onChange={(e) => {
+                    const updatedFeatures = features.map((feature: { name: string; value: string }) => {
+                      if (feature.name === fea.name) {
+                        return { ...feature, value: e.target.value };
+                      }
+                      return feature;
+                    });
+                    setFeatures(updatedFeatures);
+                    
+                  }} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand focus:border-brand transition" placeholder={fea.name} />
+                </div>
+              ))}
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-heading">
@@ -294,7 +308,6 @@ export default function EditProductModal({
                   </label>
                 )}
 
-              
                 {images.map((img: string | StaticImport, index: number) => (
                   <div
                     key={index}
@@ -316,7 +329,6 @@ export default function EditProductModal({
                       </button>
                     </div>
 
-                  
                     <div className="absolute top-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded">
                       {(index as number) + 1}
                     </div>

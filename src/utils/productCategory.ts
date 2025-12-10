@@ -1,5 +1,5 @@
 const FEATURES = {
-  "691f23faec42752defd3841c": {
+  "693928aace7a3b533d3f7eb7": {
     رم: "ramLap",
     حافظه: "storageLap",
     "اندازه صفحه نمایش": "screenSize",
@@ -7,7 +7,7 @@ const FEATURES = {
     گرافیک: "gpu",
     وزن: "weight",
   },
-  "6929d711419625c80ab876f4": {
+  "693929d9ce7a3b533d3f7f18": {
     "نوع آنتن": "kindAnten",
     "تعداد پورت RJ45": "rj45",
     "نوع شبکه": "networkType",

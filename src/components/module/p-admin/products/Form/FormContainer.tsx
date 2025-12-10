@@ -20,7 +20,11 @@ import Tag from "./Tag";
 function FormContainer({
   categories,
 }: {
-  categories: { _id: string; title: string; subCategory?: { _id: string; title: string }[] }[];
+  categories: {
+    _id: string;
+    title: string;
+    subCategory?: { _id: string; title: string }[];
+  }[];
 }) {
   const [rawPrice, setRawPrice] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -268,10 +272,10 @@ function FormContainer({
               )}
             </div>
           )}
-          {watchedSubCategory === "691f23faec42752defd3841c" && (
+          {watchedSubCategory === "693928aace7a3b533d3f7eb7" && (
             <LaptopFields register={register} errors={errors} />
           )}
-          {watchedSubCategory === "6929d711419625c80ab876f4" && (
+          {watchedSubCategory === "693929d9ce7a3b533d3f7f18" && (
             <ModemFields register={register} errors={errors} />
           )}
 

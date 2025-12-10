@@ -8,9 +8,7 @@ async function TopBar({ title }: { title: string }) {
 
   return (
     <>
-      <div className="fixed top-0 max-md:-right-[300px] lg:right-0 bottom-0 w-full max-sm:max-w-[70%] md:max-w-[40%] lg:max-w-[20%] bg-white shadow-2xl z-50 overflow-hidden  block">
-        <SideBar />
-      </div>
+   
 
       <div className="font-danaMed  flex justify-between">
         <div className="flex items-center justify-center">
