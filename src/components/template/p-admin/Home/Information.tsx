@@ -1,4 +1,5 @@
 import { FaShoppingCart } from "react-icons/fa";
+import { FaBox, FaCheck, FaUser } from "react-icons/fa6";
 function Information({
   productsCount,
   usersCount,
@@ -21,7 +22,7 @@ function Information({
       </div>
       <div className="flex items-center gap-3 bg-red-500 text-white rounded-xl shadow-lg  py-3 px-2 text-sm">
         <div className="bg-red-700 p-2 rounded-lg">
-          <FaShoppingCart size={20} color="white" />
+          <FaUser size={20} color="white" />
         </div>
         <div>
           <div className="max-md:text-xs">تعداد کاربران</div>
@@ -30,7 +31,7 @@ function Information({
       </div>
       <div className="flex items-center gap-3 bg-green-500 text-white rounded-xl shadow-lg   py-3 px-2 text-sm">
         <div className="bg-green-700 p-2 rounded-lg">
-          <FaShoppingCart size={20} color="white" />
+          <FaBox size={20} color="white" />
         </div>
         <div>
           <div className="max-md:text-xs">تعداد سفارش ها</div>
@@ -39,7 +40,7 @@ function Information({
       </div>
       <div className="flex items-center gap-3 bg-yellow-500 text-white rounded-xl shadow-lg   py-3 px-2 text-sm">
         <div className="bg-yellow-700 p-2 rounded-lg">
-          <FaShoppingCart size={20} color="white" />
+          <FaCheck size={20} color="white" />
         </div>
         <div>
           <div className="max-md:text-xs">تحویل داده شده</div>
