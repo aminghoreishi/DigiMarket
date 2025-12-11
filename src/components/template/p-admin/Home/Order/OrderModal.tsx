@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { BeatLoader } from "react-spinners";
 
 function OrderModal({
   setIsModalOpen,
   order,
+  getOrders,
 }: {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   order: any;
@@ -14,7 +16,48 @@ function OrderModal({
   const [status, setStatus] = useState(order?.status || "pending");
   const [price, setPrice] = useState(order?.totalPrice || 0);
   const [namePro, setNamePro] = useState(order?.products || []);
+  const [address2, setAddress2] = useState(order?.address2 || "");
   const [email, setEmail] = useState(order?.user.email || "");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const editOrder = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`/api/order/${order._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          phone,
+          address1,
+          status,
+          address2,
+          totalPrice: price,
+          user: order.user._id,
+          products: namePro,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      if (response.ok) {
+        // Order updated successfully
+        console.log("Order updated successfully");
+        setIsModalOpen(false);
+        getOrders(1);
+      } else {
+        // Handle error response
+        console.error("Failed to update order");
+      }
+    } catch (error) {
+      console.error("An error occurred while updating the order:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div
       onClick={() => setIsModalOpen(false)}
@@ -56,7 +99,12 @@ function OrderModal({
                 <ul>
                   {namePro.map((np: any) => (
                     <li key={np.product._id} className="mb-1">
-                      {np.product.title} - تعداد: {np.count}
+                      {np.product.title} - تعداد:{" "}
+                      <input
+                        type="number"
+                        className="w-16 px-2 py-1 border rounded"
+                        defaultValue={np.count}
+                      />
                     </li>
                   ))}
                 </ul>
@@ -134,8 +182,8 @@ function OrderModal({
               </label>
               <textarea
                 rows={4}
-                // value={longDescription}
-                // onChange={(e) => setLongDescription(e.target.value)}
+                value={address2}
+                onChange={(e) => setAddress2(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand focus:border-brand transition resize-none"
                 placeholder="مشخصات فنی، ویژگی‌ها و..."
               />
@@ -151,11 +199,11 @@ function OrderModal({
             لغو
           </button>
           <button
-            // onClick={editProduct}
-            // disabled={isLoading}
+            onClick={editOrder}
+            disabled={isLoading}
             className="px-8 py-3 bg-brand text-black rounded-xl font-medium hover:bg-brand-strong transition shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
-           ویرایش
+            {isLoading ? <BeatLoader size={8} color="black" /> : "ویرایش سفارش"}
           </button>
         </div>
       </div>

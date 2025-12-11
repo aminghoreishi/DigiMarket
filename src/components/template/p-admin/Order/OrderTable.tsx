@@ -108,7 +108,7 @@ function OrderTable({
           />
         )}
 
-        {isModalOpen && <OrderModal setIsModalOpen={setIsModalOpen} order={order} />}
+        {isModalOpen && <OrderModal setIsModalOpen={setIsModalOpen} order={order} getOrders={getOrders} />}
       </div>
     </>
   );
