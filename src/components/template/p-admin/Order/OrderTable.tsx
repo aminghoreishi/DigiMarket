@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-
+import OrderModal from "../Home/Order/OrderModal";
 import { getDaysAgo } from "@/utils/cal";
 import Pagination from "@/components/module/Pagination/Pagination";
 
@@ -14,6 +14,8 @@ function OrderTable({
   const [orderState, setOrderState] = useState([...orders]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(totalPages);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [order, setOrder] = useState(null);
 
   useEffect(() => {
     if (currentPage === 1 && orders.length) {
@@ -83,7 +85,13 @@ function OrderTable({
                   {ord.totalPrice.toLocaleString("fa-IR")}
                 </td>
                 <td className="px-6 py-4">
-                  <button className="px-3 py-1 bg-blue-500 text-white rounded-md text-xs">
+                  <button
+                    onClick={() => {
+                      setOrder(ord);
+                      setIsModalOpen(true);
+                    }}
+                    className="px-3 py-1 bg-blue-500 text-white rounded-md text-xs"
+                  >
                     جزییات سفارش
                   </button>
                 </td>
@@ -99,6 +107,8 @@ function OrderTable({
             onPageChange={(page) => setCurrentPage(page)}
           />
         )}
+
+        {isModalOpen && <OrderModal setIsModalOpen={setIsModalOpen} order={order} />}
       </div>
     </>
   );

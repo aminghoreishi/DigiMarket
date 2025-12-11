@@ -88,7 +88,10 @@ export async function GET(request: NextRequest) {
     const orders = await orderModel
       .find()
       .sort({ createdAt: -1 })
-      .populate("user")
+      .populate([
+        { path: "user" },
+        { path: "products.product", select: "title price name" },
+      ])
       .skip(skip)
       .limit(limit)
       .lean();

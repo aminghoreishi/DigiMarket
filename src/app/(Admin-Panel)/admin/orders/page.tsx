@@ -9,13 +9,13 @@ async function page() {
   const orders = await orderModel
     .find()
     .sort({ createdAt: -1 })
-    .populate("user")
+    .populate([{ path: "user" }, { path: "products.product" , select: 'title price name'}])
     .skip(0)
     .limit(8)
     .lean();
 
-      const totalOrder= await orderModel.countDocuments({});
-      const totalPages = Math.ceil(totalOrder / 4);
+  const totalOrder = await orderModel.countDocuments({});
+  const totalPages = Math.ceil(totalOrder / 4);
 
   console.log(orders);
 
@@ -24,7 +24,10 @@ async function page() {
       <TopBar title="سفارشات" />
 
       <div className="mt-8">
-        <OrderTable orders={JSON.parse(JSON.stringify(orders))} totalPages={totalPages} />
+        <OrderTable
+          orders={JSON.parse(JSON.stringify(orders))}
+          totalPages={totalPages}
+        />
       </div>
     </div>
   );
