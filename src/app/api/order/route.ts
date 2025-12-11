@@ -2,7 +2,6 @@ import db from "@/config/db";
 import orderModel from "@/models/order";
 import productModel from "@/models/product";
 import { NextRequest, NextResponse } from "next/server";
-import mongoose from "mongoose";
 
 export async function POST(request: NextRequest) {
   try {
@@ -71,6 +70,44 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         message: error.message || "خطا در ثبت سفارش",
+      },
+      { status: 400 }
+    );
+  }
+}
+
+export async function GET(request: NextRequest) {
+  await db();
+
+  const { searchParams } = new URL(request.url);
+  const page = parseInt(searchParams.get("page") || "1");
+  const limit = 8;
+  const skip = (page - 1) * limit;
+
+  try {
+    const orders = await orderModel
+      .find()
+      .sort({ createdAt: -1 })
+      .populate("user")
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    const totalOrders = await orderModel.countDocuments({});
+    const totalPages = Math.ceil(totalOrders / limit);
+
+    return NextResponse.json(
+      {
+        data: orders,
+        totalPages,
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error("Error fetching orders:", error);
+    return NextResponse.json(
+      {
+        message: error.message || "خطا در دریافت سفارشات",
       },
       { status: 400 }
     );
