@@ -2,7 +2,7 @@
 
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
-import { Key, useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { MdOutlineFileUpload } from "react-icons/md";
@@ -16,7 +16,7 @@ export default function EditProductModal({
 }: {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   product: any;
-  getProducts: () => Promise<void>;
+  getProducts: (page: number) => void;
   currentPage: number;
 }) {
   const [title, setTitle] = useState(product?.title || "");
@@ -238,8 +238,9 @@ export default function EditProductModal({
                   </div>
                 )}
               </div>
-              {features.map((fea) => (
-                <div>
+              {features.map((fea : any  , index : number) => (
+                <div key={fea.name || index}>
+                  
                   <label className="block mb-2 text-sm font-medium text-heading">
                     {fea.name}
                   </label>
@@ -297,7 +298,6 @@ export default function EditProductModal({
               </label>
 
               <div className="grid grid-cols-4 sm:grid-cols-6 gap-4">
-              
                 {images.length < 8 && (
                   <label className="aspect-square cursor-pointer group">
                     <div className="w-full h-full border-2 border-dashed border-brand/50 bg-brand/5 rounded-xl flex flex-col items-center justify-center hover:bg-brand/10 transition-all">
