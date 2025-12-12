@@ -11,6 +11,7 @@ import { FaRegComments } from "react-icons/fa6";
 import { RiDiscountPercentLine } from "react-icons/ri";
 import { BiCategory } from "react-icons/bi";
 import { FaCheck } from "react-icons/fa";
+import { BsAmazon } from "react-icons/bs";
 function SideBar() {
   const route = usePathname();
   return (
@@ -87,6 +88,18 @@ function SideBar() {
           >
             <FaCheck size={20} />
             <span>سفارشات</span>
+          </li>
+        </Link>
+            <Link href="/admin/brand">
+          <li
+            className={`flex items-center text-sm gap-2 cursor-pointer transition-colors ${
+              route === "/admin/brand"
+                ? "text-blue-500"
+                : "text-gray-700 hover:text-blue-500"
+            }`}
+          >
+            <BsAmazon size={20} />
+            <span>برند ها</span>
           </li>
         </Link>
         <li
