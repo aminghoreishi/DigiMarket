@@ -17,7 +17,14 @@ async function page() {
     status: "delivered",
   });
 
-  const allOrders = await orderModel.find({}).limit(3).lean();
+  const allOrders = await orderModel
+    .find({})
+    .limit(3)
+    .populate([
+      { path: "user" },
+      { path: "products.product", select: "title price name" },
+    ])
+    .lean();
   const allProducts = await productModel
     .find({})
     .sort({ createdAt: -1 })

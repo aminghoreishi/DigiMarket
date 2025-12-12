@@ -1,8 +1,15 @@
+"use client";
 import { getDaysAgo } from "@/utils/cal";
-
+import { useState } from "react";
+import OrderModal from "./OrderModal";
 function OrderTable({ orders }: { orders: any[] }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [order, setOrder] = useState(null);
   return (
     <>
+      {isModalOpen && (
+        <OrderModal setIsModalOpen={setIsModalOpen} order={order} />
+      )}
       <h2 className="font-danaMed mb-5">اخرین سفارشات</h2>
 
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg  font-danaMed">
@@ -43,7 +50,13 @@ function OrderTable({ orders }: { orders: any[] }) {
                   {ord.totalPrice.toLocaleString("fa-IR")}
                 </td>
                 <td className="px-6 py-4">
-                  <button className="px-3 py-1 bg-blue-500 text-white rounded-md text-xs">
+                  <button
+                    onClick={() => {
+                      setOrder(ord);
+                      setIsModalOpen(true);
+                    }}
+                    className="px-3 py-1 bg-blue-500 text-white rounded-md text-xs"
+                  >
                     جزییات سفارش
                   </button>
                 </td>
