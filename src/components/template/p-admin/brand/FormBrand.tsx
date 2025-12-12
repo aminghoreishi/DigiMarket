@@ -2,9 +2,19 @@
 
 import { useEffect, useState } from "react";
 
-function FormBrand() {
+function FormBrand({ setBrandState }: { setBrandState?: any }) {
   const [title, setTitle] = useState("");
   const [img, setImg] = useState("");
+
+  const getBrands = async () => {
+    try {
+      const res = await fetch("/api/brand");
+      const data = await res.json();
+      setBrandState(data.brands);
+    } catch (error) {
+      console.error("Error fetching brands:", error);
+    }
+  };
 
   const addBrandHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +29,11 @@ function FormBrand() {
         body: formData,
       });
 
-      const data = await res.json();
+      if (res.ok) {
+        getBrands();
+      } else {
+        console.error("Failed to add brand");
+      }
     } catch (error) {
     } finally {
       setTitle("");

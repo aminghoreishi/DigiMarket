@@ -1,13 +1,16 @@
+"use client";
+import { useState } from "react";
 import FormBrand from "./FormBrand";
 import Table from "./Table";
-function ContainerBrand({brands}: {brands?: any}) {
+function ContainerBrand({ brands }: { brands?: any }) {
+  const [brandState, setBrandState] = useState([...brands]);
   return (
     <div>
       <div>
-        <FormBrand />
+        <FormBrand setBrandState={setBrandState} />
       </div>
       <div className="mt-8">
-      <Table brands={brands} />
+        <Table brands={brandState} setBrandState={setBrandState} />
       </div>
     </div>
   );
