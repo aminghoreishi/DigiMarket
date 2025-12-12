@@ -6,9 +6,25 @@ function FormBrand() {
   const [title, setTitle] = useState("");
   const [img, setImg] = useState("");
 
+  const addBrandHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("img", img as unknown as File);
+
+    const res = await fetch("/api/brand", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+    console.log(data);
+  };
+
   return (
     <div className="mt-4">
-      <form onSub>
+      <form onSubmit={addBrandHandler}>
         <div className="grid max-sm:grid-cols-1 grid-cols-2 gap-3">
           <div>
             <div className="font-danaMed flex flex-col lg:col-span-3">
@@ -30,7 +46,9 @@ function FormBrand() {
               </label>
               <input
                 type="file"
-                onChange={(e) => setImg(e.target.value)}
+                onChange={(e) =>
+                  setImg(e.target.files?.[0] as unknown as string)
+                }
                 className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
               />
             </div>
