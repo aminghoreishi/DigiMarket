@@ -22,10 +22,13 @@ export async function POST(req: NextRequest) {
 
     await brandModel.create({
       title,
-      img: `http://localhost:3000/uploads/brand/${fileName}`,
+      img: `/uploads/brand/${fileName}`,
     });
 
-    return NextResponse.json({ message: "Create Successfully" }, { status: 201 });
+    return NextResponse.json(
+      { message: "Create Successfully" },
+      { status: 201 }
+    );
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 500 });

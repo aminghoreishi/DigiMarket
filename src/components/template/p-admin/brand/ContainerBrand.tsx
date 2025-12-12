@@ -1,10 +1,13 @@
 import FormBrand from "./FormBrand";
-
-function ContainerBrand() {
+import Table from "./Table";
+function ContainerBrand({brands}: {brands?: any}) {
   return (
     <div>
       <div>
         <FormBrand />
+      </div>
+      <div className="mt-8">
+      <Table brands={brands} />
       </div>
     </div>
   );

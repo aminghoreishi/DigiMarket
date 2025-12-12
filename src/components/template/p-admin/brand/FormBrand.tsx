@@ -13,13 +13,18 @@ function FormBrand() {
     formData.append("title", title);
     formData.append("img", img as unknown as File);
 
-    const res = await fetch("/api/brand", {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const res = await fetch("/api/brand", {
+        method: "POST",
+        body: formData,
+      });
 
-    const data = await res.json();
-    console.log(data);
+      const data = await res.json();
+    } catch (error) {
+    } finally {
+      setTitle("");
+      setImg("");
+    }
   };
 
   return (
