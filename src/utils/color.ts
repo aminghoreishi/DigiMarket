@@ -58,3 +58,4 @@ export const toEnglish = (input: string): string => {
   // آخرین راه: اگر هیچی نبود، خود رشته رو برگردون (مثلاً برای hex)
   return lower;
 };
+

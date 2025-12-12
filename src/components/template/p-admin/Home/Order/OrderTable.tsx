@@ -5,10 +5,26 @@ import OrderModal from "./OrderModal";
 function OrderTable({ orders }: { orders: any[] }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [order, setOrder] = useState(null);
+  const [orderState, setOrderState] = useState([...orders]);
+  const getOrders = async (page: number) => {
+    try {
+      const res = await fetch(`/api/order?page=1`);
+      if (res.ok) {
+        const data = await res.json();
+        setOrderState(data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
   return (
     <>
       {isModalOpen && (
-        <OrderModal setIsModalOpen={setIsModalOpen} order={order} />
+        <OrderModal
+          setIsModalOpen={setIsModalOpen}
+          order={order}
+          getOrders={getOrders}
+        />
       )}
       <h2 className="font-danaMed mb-5">اخرین سفارشات</h2>
 
@@ -31,7 +47,7 @@ function OrderTable({ orders }: { orders: any[] }) {
             </tr>
           </thead>
           <tbody>
-            {orders.map((ord) => (
+            {orderState.map((ord) => (
               <tr
                 key={ord._id}
                 className="odd:bg-white font-danaMed even:bg-gray-50 border-b border-gray-200"

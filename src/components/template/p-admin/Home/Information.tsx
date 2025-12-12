@@ -4,10 +4,12 @@ function Information({
   productsCount,
   usersCount,
   ordersCount,
+  deliveredOrdersCount,
 }: {
   productsCount: number;
   usersCount: number;
   ordersCount: number;
+  deliveredOrdersCount: number;
 }) {
   return (
     <div className="grid  grid-cols-2 lg:grid-cols-4 gap-5 mt-10 font-danaMed">
@@ -44,7 +46,7 @@ function Information({
         </div>
         <div>
           <div className="max-md:text-xs">تحویل داده شده</div>
-          <p className="ss02">0</p>
+          <p className="ss02">{deliveredOrdersCount}</p>
         </div>
       </div>
     </div>

@@ -7,9 +7,11 @@ function OrderModal({
   setIsModalOpen,
   order,
   getOrders,
+  currentPage,
 }: {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   order: any;
+  getOrders: (page: number) => void;
 }) {
   const [phone, setPhone] = useState(order?.phone || "");
   const [address1, setAddress1] = useState(order?.address1 || "");
@@ -46,7 +48,7 @@ function OrderModal({
         // Order updated successfully
         console.log("Order updated successfully");
         setIsModalOpen(false);
-        getOrders(1);
+        getOrders(currentPage);
       } else {
         // Handle error response
         console.error("Failed to update order");

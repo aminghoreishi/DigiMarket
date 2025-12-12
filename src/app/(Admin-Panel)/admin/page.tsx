@@ -39,6 +39,7 @@ async function page() {
           productsCount={products}
           usersCount={users}
           ordersCount={orders}
+          deliveredOrdersCount={deliveredOrders}
         />
       </div>
       <div className="mt-10">

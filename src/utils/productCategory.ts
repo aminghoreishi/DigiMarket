@@ -11,9 +11,9 @@ const FEATURES = {
     "نوع آنتن": "kindAnten",
     "تعداد پورت RJ45": "rj45",
     "نوع شبکه": "networkType",
-    'فرکانس': "ferquency",
-    'کلیدها': "keys",
-    'وزن': "weight",
+    فرکانس: "ferquency",
+    کلیدها: "keys",
+    وزن: "weight",
   },
 };
 
