@@ -2,6 +2,7 @@ import Image from "next/image";
 import FeatureFooter from "./FeatureFooter";
 import { IoLogoInstagram } from "react-icons/io5";
 import { BsTelegram } from "react-icons/bs";
+import BtnTop from "./BtnTop";
 function Footer() {
   return (
     <div className="border-t-2 border-zinc-200">
@@ -27,9 +28,7 @@ function Footer() {
             </p>
           </div>
           <div className="text-zinc-400 max-sm:row-end-3 flex justify-center">
-            <button className="text-sm font-danaMed text-nowrap">
-              برو بالا
-            </button>
+            <BtnTop />
           </div>
         </div>
 
@@ -99,7 +98,9 @@ function Footer() {
         </div>
 
         <div className="border-t-2 border-zinc-200 font-danaMed pt-5 pb-5 max-sm:text-xs mt-5 text-sm">
-          <p>توسعه <span className="text-orange-500">محمدامین قریشی</span></p>
+          <p>
+            توسعه <span className="text-orange-500">محمدامین قریشی</span>
+          </p>
         </div>
       </div>
     </div>
