@@ -3,7 +3,17 @@ import FeatureFooter from "./FeatureFooter";
 import { IoLogoInstagram } from "react-icons/io5";
 import { BsTelegram } from "react-icons/bs";
 import BtnTop from "./BtnTop";
-function Footer() {
+import db from "@/config/db";
+import footerModel from "@/models/footer";
+async function Footer() {
+  await db();
+
+  const footer = await footerModel.find({}, "-__v").lean();
+
+  const parsFooter = JSON.parse(JSON.stringify(footer));
+
+  console.log(footer);
+
   return (
     <div className="border-t-2 border-zinc-200">
       <div className="container mx-auto mt-5">
@@ -18,13 +28,7 @@ function Footer() {
           </div>
           <div className="col-span-2">
             <p className="text-xs font-danaMed  text-zinc-400">
-              دیجی استار فروشگاه آنلاین معتبری است که انواع کالاهای دیجیتال
-              مانند گوشی، لپ‌تاپ، تبلت و لوازم جانبی را با ضمانت اصالت و ارسال
-              سریع ارائه می‌دهد. با تنوع گسترده محصولات، قیمت‌های رقابتی و
-              پشتیبانی حرفه‌ای، خریدی آسان و مطمئن را تجربه کنید. بررسی تخصصی،
-              مقایسه و انتخاب آگاهانه از مزایای خرید از دیجی استار است. برای
-              دسترسی به جدیدترین محصولات دیجیتال، همین حالا به دیجی استار سر
-              بزنید!
+              {parsFooter[0].aboutUs}
             </p>
           </div>
           <div className="text-zinc-400 max-sm:row-end-3 flex justify-center">
@@ -98,9 +102,16 @@ function Footer() {
         </div>
 
         <div className="border-t-2 border-zinc-200 font-danaMed pt-5 pb-5 max-sm:text-xs mt-5 text-sm">
-          <p>
-            توسعه <span className="text-orange-500">محمدامین قریشی</span>
-          </p>
+          <div className="flex justify-between">
+            <p>
+              توسعه <span className="text-orange-500">محمدامین قریشی</span>
+            </p>
+            <p>
+              <span className="text-orange-500">
+                {parsFooter[0].contactInfo.email}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
