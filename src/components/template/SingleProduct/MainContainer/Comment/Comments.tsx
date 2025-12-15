@@ -19,7 +19,6 @@ const Comments: React.FC<{ findProductID: string }> = memo(
       );
 
       const response = await res.json();
-      console.log(response.totalPages);
       setComments(response.data);
       setTotalPages(response.totalPages);
     };

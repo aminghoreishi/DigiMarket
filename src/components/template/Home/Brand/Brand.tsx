@@ -9,8 +9,6 @@ async function Brand() {
 
   const brands = (await brandModel.find({})) as unknown as BrandType[];
 
-  // console.log(brands);
-
   return (
     <div>
       <TopSubject title="برترین برند ها" />

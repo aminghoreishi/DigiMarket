@@ -53,7 +53,6 @@ function Page() {
       });
 
       const response = await res.json();
-      console.log("Login response:", response);
 
       if (res.status === 200) {
         route.push("/");
@@ -66,7 +65,6 @@ function Page() {
         });
       }
     } catch (error) {
-      console.error("Login error:", error);
       Swal.fire({
         title: "خطا در ارتباط با سرور",
         icon: "error",

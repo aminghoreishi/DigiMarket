@@ -90,6 +90,18 @@ function SideBar() {
             <span>سفارشات</span>
           </li>
         </Link>
+           <Link href="/admin/footer">
+          <li
+            className={`flex items-center text-sm gap-2 cursor-pointer transition-colors ${
+              route === "/admin/footer"
+                ? "text-blue-500"
+                : "text-gray-700 hover:text-blue-500"
+            }`}
+          >
+            <FaCheck size={20} />
+            <span>فوتر</span>
+          </li>
+        </Link>
             <Link href="/admin/brand">
           <li
             className={`flex items-center text-sm gap-2 cursor-pointer transition-colors ${

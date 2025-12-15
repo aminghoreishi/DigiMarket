@@ -45,13 +45,9 @@ function OrderModal({
       console.log(data);
 
       if (response.ok) {
-        // Order updated successfully
-        console.log("Order updated successfully");
         setIsModalOpen(false);
         getOrders(currentPage);
       } else {
-        // Handle error response
-        console.error("Failed to update order");
       }
     } catch (error) {
       console.error("An error occurred while updating the order:", error);

@@ -11,9 +11,7 @@ function CommentRate({ findProductID }: { findProductID: string }) {
 
   const getComments = async () => {
     const res = await fetch(`/api/comments/${findProductID}`);
-
     const data = await res.json();
-    console.log(data);
   };
 
   return (

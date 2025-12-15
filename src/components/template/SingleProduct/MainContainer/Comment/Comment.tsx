@@ -2,8 +2,6 @@ import { memo } from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 const Comment = memo(({ comment }: { comment: any }) => {
-  console.log(comment);
-
   return (
     <div className="font-danaMed pb-5">
       <h2 className="text-lg">{comment.user.fullName}</h2>

@@ -10,10 +10,8 @@ export async function POST(req: NextRequest) {
 
     const offsModels = await offsModel.findOne({ code, product: id });
 
-    console.log(offsModels);
-
     const isUserUsed = offsModels.user.find(
-      (user) => user.toString() === userID
+      (user : any) => user.toString() === userID
     );
 
     if (isUserUsed) {
@@ -35,7 +33,7 @@ export async function POST(req: NextRequest) {
     );
 
     if (!offsModels) {
-      return NextResponse.json({ message: "کد وجود ندارد" } , {status: 400});
+      return NextResponse.json({ message: "کد وجود ندارد" }, { status: 400 });
     } else if (offsModels.use > offsModels.max) {
       return NextResponse.json({ messgahe: "کد به حداکثر رسیده" });
     } else

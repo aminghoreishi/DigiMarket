@@ -2,13 +2,11 @@ import db from "@/config/db";
 import offsModel from "@/models/offs";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req : NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     await db();
 
     const { code, max, discount, product } = await req.json();
-    console.log(code , max , discount , product);
-    
 
     await offsModel.create({
       code,
@@ -25,7 +23,9 @@ export async function POST(req : NextRequest) {
     );
   } catch (error) {
     return NextResponse.json(
-      { message: error instanceof Error ? error.message : "خطا در ایجاد تخفیف" },
+      {
+        message: error instanceof Error ? error.message : "خطا در ایجاد تخفیف",
+      },
       {
         status: 500,
       }

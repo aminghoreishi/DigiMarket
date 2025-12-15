@@ -53,10 +53,6 @@ function Page() {
         body: JSON.stringify(obj),
       });
 
-      const response = await res.json();
-
-      console.log(response);
-
       if (res.status === 201) {
         Swal.fire({
           title: "با موفقیت ایجاد شد",

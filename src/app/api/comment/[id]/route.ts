@@ -73,8 +73,6 @@ export async function GET(
       .populate("user")
       .lean();
 
-    console.log(comments);
-
     const total = await commentModel.countDocuments({
       isApproved: true,
       product: { _id: id },

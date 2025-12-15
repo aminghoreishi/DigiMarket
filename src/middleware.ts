@@ -58,11 +58,9 @@ export async function middleware(request: NextRequest) {
         const role = (payload as any).role;
 
         if (role !== "ADMIN") {
-          console.log("دسترسی رد شد - نقش کاربر:", role || "ندارد");
           return NextResponse.redirect(new URL("/", request.url));
         }
 
-        console.log("ادمین تأیید شد:", payload.email);
         return NextResponse.next();
       } catch (error: any) {
         console.error("خطا در دیکد توکن NextAuth:", error.message);

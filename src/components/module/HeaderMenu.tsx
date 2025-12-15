@@ -16,8 +16,6 @@ async function HeaderMenu() {
     })
     .lean({ virtuals: true });
 
-  // console.log(category);
-
   return (
     <div className="bg-gray-50 px-3 py-5">
       <div className="container mx-auto">

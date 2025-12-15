@@ -15,7 +15,7 @@ function FormCat() {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
+  
 
     const res = await fetch("/api/category", {
       method: "POST",
@@ -25,7 +25,6 @@ function FormCat() {
       body: JSON.stringify(data),
     });
 
-    console.log(res);
 
     if (res.ok) {
       toast.success("دسته بندی با موفقیت ایجاد شد");
