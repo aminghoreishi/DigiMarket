@@ -1,5 +1,6 @@
 import { authUser } from "@/utils/auth";
-import { IoMenuOutline } from "react-icons/io5";
+
+import BtnTopBar from "./BtnTopBar";
 
 async function TopBar({ title }: { title: string }) {
   const user = await authUser();
@@ -11,11 +12,9 @@ async function TopBar({ title }: { title: string }) {
   return (
     <>
       <div className="font-danaMed  flex justify-between">
-        <div className="flex items-center justify-center">
-          <h2>{title}</h2>
-          <button>
-            <IoMenuOutline size={20} />
-          </button>
+        <div className="flex items-center gap-5 justify-center">
+          <BtnTopBar />
+          <h2 className="max-sm:text-sm">{title}</h2>
         </div>
         <div>
           <p className="text-xs text-zinc-500">

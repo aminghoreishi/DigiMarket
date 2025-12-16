@@ -16,7 +16,7 @@ import { IoMdDocument } from "react-icons/io";
 function SideBar() {
   const route = usePathname();
   return (
-    <div dir="rtl" className="h-full overflow-y-auto bg-white pt-5 px-4">
+    <div dir="rtl" className="h-full overflow-y-auto z-50 bg-white pt-5 px-4">
       <div className="flex justify-center w-full mb-8">
         <Image
           src="/image/logo (1).png"

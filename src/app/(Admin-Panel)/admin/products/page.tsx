@@ -1,40 +1,68 @@
 import TopBar from "@/components/module/p-admin/TopBar/TopBar";
-import Table from "@/components/template/p-admin/product/Table";
-import db from "@/config/db";
-import productModel from "@/models/product";
-import Link from "next/link";
+import OrderTable from "@/components/template/p-admin/Order/OrderTable";
 
-async function page() {
+import db from "@/config/db";
+import orderModel from "@/models/order";
+
+import { memo } from "react";
+
+/* =======================
+   Server Component
+======================= */
+async function Page() {
   await db();
-  const products = await productModel
+
+  const orders = await orderModel
     .find({})
-    .populate("category", "subCategory")
-    .limit(4)
+    .sort({ createdAt: -1 })
+    .populate([
+      { path: "user" },
+      { path: "products.product", select: "title price name" },
+    ])
     .skip(0)
+    .limit(8)
     .lean();
 
-  const totalProducts = await productModel.countDocuments({});
-  const totalPages = Math.ceil(totalProducts / 4);
+  const totalOrders = await orderModel.countDocuments({});
+  const totalPages = Math.ceil(totalOrders / 4);
 
   return (
     <div>
-      <TopBar title="محصولات" />
-
-      <div dir="rtl">
-        <div className="flex justify-end">
-          <Link href="/admin/products/createProduct">
-            <button className="px-4 py-2 bg-blue-500 transition-all cursor-pointer hover:bg-blue-600 text-white rounded-md mt-4 font-danaMed text-xs">
-              ایجاد محصول جدید
-            </button>
-          </Link>
-        </div>
-        <Table
-          products={JSON.parse(JSON.stringify(products))}
-          totalPages={totalPages}
-        />
-      </div>
+      <TopBarMemo />
+      <PageMemo
+        orders={orders}
+        totalPages={totalPages}
+      />
     </div>
   );
 }
 
-export default page;
+/* =======================
+   Page Content
+======================= */
+type PageMemoProps = {
+  orders: any[];
+  totalPages: number;
+};
+
+const PageMemo = memo(({ orders, totalPages }: PageMemoProps) => {
+  return (
+    <>
+      <div className="mt-8">
+        <OrderTable
+          orders={JSON.parse(JSON.stringify(orders))}
+          totalPages={totalPages}
+        />
+      </div>
+    </>
+  );
+});
+
+/* =======================
+   Top Bar
+======================= */
+const TopBarMemo = memo(() => {
+  return <TopBar title="سفارشات" />;
+});
+
+export default Page;
