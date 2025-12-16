@@ -25,6 +25,7 @@ async function page() {
 
       <div className="mt-8">
         <OrderTable
+        
           orders={JSON.parse(JSON.stringify(orders))}
           totalPages={totalPages}
         />

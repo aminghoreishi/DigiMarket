@@ -12,6 +12,7 @@ import { RiDiscountPercentLine } from "react-icons/ri";
 import { BiCategory } from "react-icons/bi";
 import { FaCheck } from "react-icons/fa";
 import { BsAmazon } from "react-icons/bs";
+import { IoMdDocument } from "react-icons/io";
 function SideBar() {
   const route = usePathname();
   return (
@@ -98,7 +99,7 @@ function SideBar() {
                 : "text-gray-700 hover:text-blue-500"
             }`}
           >
-            <FaCheck size={20} />
+            <IoMdDocument size={20} />
             <span>فوتر</span>
           </li>
         </Link>

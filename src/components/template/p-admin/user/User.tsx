@@ -40,9 +40,15 @@ function User({ users }) {
                   {user.fullName}
                 </th>
                 <td className="px-6 py-4">{user.email}</td>
-                <td className="px-6 py-4">{user.phone ? user.phone : "ندارد"}</td>
-                <td className="px-6 py-4">{user.role === 'ADMIN' ? 'ادمین' : 'کاربر'}</td>
-                <td className="px-6 py-4">{user.createdAt}</td>
+                <td className="px-6 py-4">
+                  {user.phone ? user.phone : "ندارد"}
+                </td>
+                <td className="px-6 py-4">
+                  {user.role === "ADMIN" ? "ادمین" : "کاربر"}
+                </td>
+                <td className="px-6 py-4 ss02">
+                  {new Date(user.createdAt).toLocaleDateString("fa-IR")}
+                </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <button className="border-2 transition-all rounded-xl hover:bg-red-500 hover:text-white border-red-500 text-red-500 px-3 py-2 cursor-pointer">
@@ -51,7 +57,6 @@ function User({ users }) {
                     <button className="border-2 transition-all rounded-xl hover:bg-blue-500 hover:text-white border-blue-500 text-blue-500 px-3 py-2 cursor-pointer">
                       ویرایش
                     </button>
-                  
                   </div>
                 </td>
               </tr>

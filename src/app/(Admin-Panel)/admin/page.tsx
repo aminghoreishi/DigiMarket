@@ -1,5 +1,4 @@
 import TopBar from "@/components/module/p-admin/TopBar/TopBar";
-import SwiperProductContainer from "@/components/module/SwiperProductContainer/SwiperProductContainer";
 import Information from "@/components/template/p-admin/Home/Information";
 import OrderTable from "@/components/template/p-admin/Home/Order/OrderTable";
 import ShowProduct from "@/components/template/p-admin/Home/ShowNewPro/ShowProduct";
@@ -43,7 +42,7 @@ async function page() {
         />
       </div>
       <div className="mt-10">
-        <OrderTable orders={JSON.parse(JSON.stringify(allOrders))} />
+        <OrderTable isReload={true} orders={JSON.parse(JSON.stringify(allOrders))} />
       </div>
       <div className="mt-10">
         <ShowProduct products={JSON.parse(JSON.stringify(allProducts))} />

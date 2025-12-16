@@ -2,7 +2,13 @@
 import { getDaysAgo } from "@/utils/cal";
 import { useState } from "react";
 import OrderModal from "./OrderModal";
-function OrderTable({ orders }: { orders: any[] }) {
+function OrderTable({
+  orders,
+  isReload,
+}: {
+  orders: any[];
+  isReload: boolean;
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [order, setOrder] = useState(null);
   const [orderState, setOrderState] = useState([...orders]);
@@ -12,6 +18,9 @@ function OrderTable({ orders }: { orders: any[] }) {
       if (res.ok) {
         const data = await res.json();
         setOrderState(data.data);
+        if (isReload) {
+          window.location.reload();
+        }
       }
     } catch (error) {
       console.error("Error fetching orders:", error);
