@@ -168,7 +168,7 @@ export default function OffForm({
           </select>
         </div>
         {loadingProducts && (
-          <p className="text-sm text-black mt-2">در حال بارگذاری محصولات...</p>
+          <p className="text-sm text-black font-danaMed mt-2">در حال بارگذاری محصولات...</p>
         )}
         {!loadingProducts && product.length > 0 && (
           <div className="font-danaMed flex flex-col">

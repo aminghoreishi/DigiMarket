@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import Pagination from "../../Pagination/Pagination";
+import Swal from "sweetalert2";
 
 type Off = {
   _id: string;
@@ -54,6 +55,37 @@ export default function OffTable({
     }
   };
 
+  const removeOffs = async (id: string) => {
+    Swal.fire({
+      title: "آیا از حذف این تخفیف مطمئن هستید؟",
+      text: "این عملیات قابل بازگشت نیست!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "بله، حذف کن!",
+      cancelButtonText: "لغو",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await deleteOff(id);
+        Swal.fire("تخفیف با موفقیت حذف شد!", "", "success");
+      }
+    });
+  };
+
+  const deleteOff = async (id: string): Promise<void> => {
+    try {
+      const res = await fetch(`/api/offs/${id}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        getOffs(currentPage);
+      }
+    } catch (error) {
+      console.error("Error deleting off:", error);
+    }
+  };
+
   return (
     <>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg font-danaMed">
@@ -81,8 +113,11 @@ export default function OffTable({
                 <td className="px-6 py-4 ss02">{off.use}</td>
                 <td className="px-6 py-4 ss02">{off.discount}٪</td>
                 <td className="px-6 py-4">
-                  <button className="px-3 py-1 bg-blue-500 text-white rounded-md text-xs">
-                    جزییات
+                  <button
+                    onClick={() => removeOffs(off._id)}
+                    className="px-3 py-1 bg-red-500 text-white rounded-md text-xs"
+                  >
+                    حذف
                   </button>
                 </td>
               </tr>

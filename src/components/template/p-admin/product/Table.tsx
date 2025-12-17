@@ -133,7 +133,7 @@ const Table = memo(
                 {proSatate.map((pro) => (
                   <tr
                     key={pro._id}
-                    className="odd:bg-white font-danaMed even:bg-gray-50 border-b border-gray-200"
+                    className="odd:bg-white font-danaMed max-sm:text-xs even:bg-gray-50 border-b border-gray-200"
                   >
                     <th
                       scope="row"
