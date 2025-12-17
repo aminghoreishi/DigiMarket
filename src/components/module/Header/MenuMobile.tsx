@@ -16,7 +16,7 @@ function MenuMobile({
   const pathname = usePathname();
   const router = useRouter();
 
-  console.log(isAdmin);
+  console.log(isLoggedIn);
 
   useEffect(() => {
     setIsOpen(false);
@@ -79,12 +79,14 @@ function MenuMobile({
             )}
           </ul>
 
-          <div
-            onClick={signOut}
-            className="mt-5 text-sm border-t-2 pt-3 border-zinc-200"
-          >
-            <button>خروج از حساب کاربری</button>
-          </div>
+          {isLoggedIn && (
+            <div
+              onClick={signOut}
+              className="mt-5 text-sm border-t-2 pt-3 border-zinc-200"
+            >
+              <button>خروج از حساب کاربری</button>
+            </div>
+          )}
         </div>
       </div>
     </div>
