@@ -13,7 +13,9 @@ async function TopBar({ title }: { title: string }) {
     <>
       <div className="font-danaMed  flex justify-between">
         <div className="flex items-center gap-5 justify-center">
-          <BtnTopBar />
+          <div className="lg:hidden">
+            <BtnTopBar />
+          </div>
           <h2 className="max-sm:text-sm">{title}</h2>
         </div>
         <div>

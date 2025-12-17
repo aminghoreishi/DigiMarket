@@ -7,13 +7,8 @@ import db from "@/config/db";
 import footerModel from "@/models/footer";
 async function Footer() {
   await db();
-
   const footer = await footerModel.find({}, "-__v").lean();
-
   const parsFooter = JSON.parse(JSON.stringify(footer));
-
-  console.log(footer);
-
   return (
     <div className="border-t-2 border-zinc-200">
       <div className="container mx-auto mt-5">
