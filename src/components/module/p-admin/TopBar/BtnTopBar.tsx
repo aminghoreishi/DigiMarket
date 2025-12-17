@@ -9,7 +9,7 @@ export default function BtnTopBar() {
   return (
     <>
       <div className="flex flex-col items-center">
-        <button onClick={() => setIsClick(prev => !prev)}>
+        <button onClick={() => setIsClick((prev) => !prev)}>
           <IoMenuOutline size={20} />
         </button>
       </div>
@@ -27,16 +27,27 @@ const SideBarMenu = ({
   isClick: boolean;
 }) => {
   return (
-    <div
-      className={`fixed top-0 bottom-0 transition-all ${
-        isClick ? "right-0" : "max-sm:-right-72 sm:-right-[300px]"
-      } w-full max-lg:max-w-[65%] bg-white shadow-2xl z-50 overflow-hidden`}
-    >
-      <SideBar />
+    <>
+      {/* Overlay */}
+      {isClick && (
+        <div
+          onClick={() => setIsClick(false)}
+          className="fixed inset-0 bg-black/60 z-40"
+        />
+      )}
+
+      {/* Sidebar */}
       <div
-        onClick={() => setIsClick(false)}
-        className={`bg-black/60 ${isClick ? "fixed inset-0 z-30" : ""}`}
-      ></div>
-    </div>
+        className={`
+          fixed top-0 bottom-0 right-0 z-50
+          w-full max-lg:max-w-[65%] max-w-[300px]
+          bg-white shadow-2xl
+          transition-transform duration-300
+          ${isClick ? "translate-x-0" : "translate-x-full"}
+        `}
+      >
+        <SideBar />
+      </div>
+    </>
   );
 };

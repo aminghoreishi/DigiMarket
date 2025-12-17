@@ -33,6 +33,7 @@ function FormFooter() {
     setFeaturedLinks((prev) => [...prev, item]);
     setName("");
     setSlug("");
+    setImg(null);
   };
 
   const handlerSubmit = async (e: React.FormEvent) => {
@@ -74,58 +75,70 @@ function FormFooter() {
   return (
     <div className="font-danaMed">
       <form onSubmit={handlerSubmit}>
-        <div className="grid grid-cols-3 gap-5">
-          <div>
-            <label className="text-sm" htmlFor="">
-              عنوان
-            </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="border-2 block outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm w-full"
-            />
-          </div>
-          <div>
-            <label className="text-sm" htmlFor="">
-              عکس
-            </label>
-            <input
-              type="file"
-              onChange={(e) => setImg(e.target.files?.[0])}
-              className="border-2 block outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm w-full"
-            />
-          </div>
-          <div>
-            <label className="text-sm" htmlFor="">
-              اسلاگ (slug)
-            </label>
-            <input
-              type="text"
-              value={slug}
-              onChange={(e) => setSlug(e.target.value)}
-              className="border-2 block outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm w-full"
-            />
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {/* بخش افزودن لینک ویژه - کل عرض صفحه */}
           <div className="col-span-3">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div>
+                <label className="text-sm" htmlFor="">
+                  عنوان
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="border-2 block outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm w-full"
+                />
+              </div>
+              <div>
+                <label className="text-sm" htmlFor="">
+                  اسلاگ (slug)
+                </label>
+                <input
+                  type="text"
+                  value={slug}
+                  onChange={(e) => setSlug(e.target.value)}
+                  className="border-2 block outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm w-full"
+                />
+              </div>
+              <div>
+                <label className="text-sm" htmlFor="">
+                  عکس
+                </label>
+                <input
+                  type="file"
+                  onChange={(e) => setImg(e.target.files?.[0])}
+                  className="border-2 block outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm w-full"
+                />
+              </div>
+            </div>
+
             {isType && (
               <button
                 onClick={addFeaturedLinks}
                 type="button"
-                className="bg-blue-500 text-sm max-sm:text-xs text-white px-3 py-2 rounded-xl cursor-pointer"
+                className="bg-blue-500 text-sm max-sm:text-xs text-white px-3 py-2 rounded-xl cursor-pointer mt-4"
               >
                 افزودن عنوان
               </button>
             )}
-            <div className="mt-3">
-              {featuredLinks.map((fe) => (
-                <div>{fe.name}</div>
-              ))}{" "}
-            </div>
+
+            {featuredLinks.length > 0 && (
+              <div className="mt-3">
+                <p className="text-sm mb-2">عنوان‌های اضافه شده:</p>
+                {featuredLinks.map((fe, index) => (
+                  <div key={index} className="text-sm">
+                    {fe.name} ({fe.slug})
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
+
+          {/* بخش فضای مجازی - کل عرض صفحه */}
           <div className="col-span-3 mt-5">
             <p className="mb-3">فضای مجازی</p>
-            <div className="grid grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
               <div>
                 <label className="text-sm" htmlFor="">
                   تلگرام
@@ -134,7 +147,7 @@ function FormFooter() {
                   type="text"
                   value={telegram}
                   onChange={(e) => setTelegram(e.target.value)}
-                  className="border-2 w-full  block outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
+                  className="border-2 w-full block outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
                 />
               </div>
               <div>
@@ -145,7 +158,7 @@ function FormFooter() {
                   value={instagram}
                   onChange={(e) => setInstagram(e.target.value)}
                   type="text"
-                  className="border-2 w-full  block outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
+                  className="border-2 w-full block outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
                 />
               </div>
               <div>
@@ -156,7 +169,7 @@ function FormFooter() {
                   type="text"
                   value={linkedin}
                   onChange={(e) => setLinkedin(e.target.value)}
-                  className="border-2  w-full block outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
+                  className="border-2 w-full block outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
                 />
               </div>
               <div>
@@ -172,9 +185,11 @@ function FormFooter() {
               </div>
             </div>
           </div>
+
+          {/* بخش اطلاعات - کل عرض صفحه */}
           <div className="col-span-3 mt-5">
             <p className="mb-3">اطلاعات</p>
-            <div className="grid grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
               <div>
                 <label className="text-sm" htmlFor="">
                   ادرس
@@ -210,6 +225,8 @@ function FormFooter() {
               </div>
             </div>
           </div>
+
+          {/* بخش توضیحات - کل عرض صفحه */}
           <div className="col-span-3">
             <label className="text-sm" htmlFor="">
               توضیحات
@@ -223,8 +240,13 @@ function FormFooter() {
           </div>
         </div>
 
-        <div>
-          <button>افزودن</button>
+        <div className="mt-6">
+          <button
+            type="submit"
+            className="bg-blue-500 text-sm max-sm:text-xs text-white px-3 py-2 rounded-xl cursor-pointer"
+          >
+            افزودن
+          </button>
         </div>
       </form>
     </div>

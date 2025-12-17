@@ -37,6 +37,7 @@
         "./validator/*"
       ]
     },
+    "incremental": true
     // "incremental": true
   },
   "include": [

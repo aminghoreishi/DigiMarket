@@ -54,11 +54,13 @@ export default function OffForm({
     if (!subCat) return;
 
     const getProducts = async (): Promise<void> => {
+      setLoadingProducts(true);
       const res = await fetch(`/api/product/admin/${subCat}`);
       if (!res.ok) return;
 
       const data: Product[] = await res.json();
       setProduct(Array.isArray(data) ? data : []);
+      setLoadingProducts(false);
     };
 
     getProducts();
@@ -83,7 +85,6 @@ export default function OffForm({
 
   const getOffs = async (): Promise<void> => {
     try {
-      setLoadingProducts(true);
       const res = await fetch(`/api/offs?page=${currentPage}`);
       if (!res.ok) return;
 
@@ -91,8 +92,6 @@ export default function OffForm({
       setOffs(data.offs);
     } catch (error) {
       console.error("Error fetching offs:", error);
-    } finally {
-      setLoadingProducts(false);
     }
   };
 
@@ -111,7 +110,7 @@ export default function OffForm({
                 message: "فقط حروف و عدد مجاز است",
               },
             })}
-            className="border-2 rounded-xl mt-2 px-3 py-2 text-sm"
+            className="border-2 border-gray-200  outline-blue-500 rounded-xl mt-2 px-3 py-2 text-sm"
           />
           {errors.off && (
             <p className="text-red-500 text-xs mt-2">{errors.off.message}</p>
@@ -127,7 +126,7 @@ export default function OffForm({
               max: { value: 1000, message: "حداکثر مقدار ۱۰۰۰" },
               valueAsNumber: true,
             })}
-            className="border-2 rounded-xl mt-2 px-3 py-2 text-sm"
+            className="border-2 border-gray-200  outline-blue-500 rounded-xl mt-2 px-3 py-2 text-sm"
           />
           {errors.max && (
             <p className="text-red-500 text-xs mt-2">{errors.max.message}</p>
@@ -143,7 +142,7 @@ export default function OffForm({
               max: { value: 100, message: "حداکثر ۱۰۰٪" },
               valueAsNumber: true,
             })}
-            className="border-2 rounded-xl mt-2 px-3 py-2 text-sm"
+            className="border-2 border-gray-200  outline-blue-500 rounded-xl mt-2 px-3 py-2 text-sm"
           />
           {errors.discount && (
             <p className="text-red-500 text-xs mt-2">
@@ -154,7 +153,7 @@ export default function OffForm({
         <div className="font-danaMed flex flex-col">
           <label className="text-sm">دسته بندی</label>
           <select
-            className="border-2 rounded-xl mt-2 px-3 py-2 text-sm"
+            className="border-2 border-gray-200  outline-blue-500 rounded-xl mt-2 px-3 py-2 text-sm"
             onChange={(e) => setSubCat(e.target.value)}
             defaultValue=""
           >
@@ -169,15 +168,13 @@ export default function OffForm({
           </select>
         </div>
         {loadingProducts && (
-          <p className="text-sm text-black mt-2">
-            در حال بارگذاری محصولات...
-          </p>
+          <p className="text-sm text-black mt-2">در حال بارگذاری محصولات...</p>
         )}
         {!loadingProducts && product.length > 0 && (
           <div className="font-danaMed flex flex-col">
             <label className="text-sm">محصول</label>
             <select
-              className="border-2 rounded-xl mt-2 px-3 py-2 text-sm"
+              className="border-2 border-gray-200  outline-blue-500 rounded-xl mt-2 px-3 py-2 text-sm"
               {...register("product", {
                 required: "انتخاب محصول الزامی است",
               })}
@@ -200,7 +197,6 @@ export default function OffForm({
             )}
           </div>
         )}
-        
       </div>
 
       <div className="mt-8">
