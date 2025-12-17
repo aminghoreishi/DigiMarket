@@ -1,9 +1,33 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import CartAddCount from "./CartAddCount";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import ModelOff from "./ModelOff";
+
+type CartItem = {
+  id: string;
+  name: string;
+  price: number;
+  count: number;
+  img: string;
+  color: string;
+  mainCount: number;
+};
+
+type CartContainerProps = {
+  count: number;
+  name: string;
+  id: string;
+  userID: string;
+  priceState: number;
+  setPriceState: React.Dispatch<React.SetStateAction<number>>;
+  img: string;
+  isLoggedIn: boolean;
+  color: string;
+  mainCount: number;
+};
 
 function CartContainer({
   count,
@@ -16,26 +40,20 @@ function CartContainer({
   isLoggedIn,
   color,
   mainCount,
-}: {
-  count: number;
-  name: string;
-  id: string;
-  price: number;
-  img: string;
-  color: string;
-  mainCount: number;
-}) {
-  const [cart, setCart] = useState<any[]>([]);
-  const [countCart, setCountCart] = useState(1);
-  const [isProductInCart, setIsProductInCart] = useState(false);
-  const [isOpenModalOff, setIsOpenModalOff] = useState(false);
+}: CartContainerProps) {
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [countCart, setCountCart] = useState<number>(1);
+  const [isProductInCart, setIsProductInCart] = useState<boolean>(false);
+  const [isOpenModalOff, setIsOpenModalOff] = useState<boolean>(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("product");
-    const savedCart = saved ? JSON.parse(saved) : [];
+    const savedCart: CartItem[] = saved ? JSON.parse(saved) : [];
+
     setCart(savedCart);
 
-    const item = savedCart.find((p: any) => p.id === id);
+    const item = savedCart.find((p) => p.id === id);
+
     if (item) {
       setCountCart(item.count);
       setIsProductInCart(true);
@@ -44,7 +62,7 @@ function CartContainer({
       setCountCart(1);
       setIsProductInCart(false);
     }
-  }, [id]);
+  }, [id, setPriceState]);
 
   const updateCartQuantity = (newCount?: number) => {
     const quantity = newCount ?? countCart;
@@ -55,7 +73,7 @@ function CartContainer({
       return;
     }
 
-    let newCart = [...cart];
+    const newCart = [...cart];
     const existingIndex = newCart.findIndex((item) => item.id === id);
 
     if (existingIndex > -1) {
@@ -122,10 +140,8 @@ function CartContainer({
               <CartAddCount
                 countServer={count}
                 countCart={countCart}
-                setCountCart={setCountCart}
                 updateCartQuantity={updateCartQuantity}
                 handleProductRemoved={handleProductRemoved}
-                id={id}
               />
               <div className="mt-4">
                 <Link href="/cart">
@@ -138,10 +154,7 @@ function CartContainer({
           ) : (
             <div className="mt-4">
               <button
-                onClick={() => {
-                  // updateCartQuantity(1);
-                  setIsOpenModalOff(true);
-                }}
+                onClick={() => setIsOpenModalOff(true)}
                 className="bg-orange-500 hover:bg-orange-600 transition text-white p-3 rounded-lg font-danaMed w-full text-sm"
               >
                 افزودن به سبد خرید

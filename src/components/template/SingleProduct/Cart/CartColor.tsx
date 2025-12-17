@@ -1,14 +1,16 @@
 import { toEnglish } from "@/utils/color";
 import React, { memo } from "react";
 
-const CartColor: React.FC = ({
-  colors,
-  setColor,
-  colorv,
-}: {
+type CartColorProps = {
   colors: string[];
   setColor: (color: string) => void;
   colorv: string;
+};
+
+const CartColor: React.FC<CartColorProps> = ({
+  colors,
+  setColor,
+  colorv,
 }) => {
   return (
     <div>
@@ -18,24 +20,26 @@ const CartColor: React.FC = ({
         {colors.map((color, index) => (
           <div
             key={index}
-            className={`border-2 ${color.trim() == colorv.trim() ? "outline-2  outline-sky-500" : "outline-0"} flex  items-center p-2 font-danaMed text-xs gap-x-1 cursor-pointer rounded-xl border-zinc-200 `}
-            onClick={() => {
-              setColor(color.trim());
-            }}
+            className={`border-2 ${
+              color.trim() === colorv.trim()
+                ? "outline-2 outline-sky-500"
+                : "outline-0"
+            } flex items-center p-2 font-danaMed text-xs gap-x-1 cursor-pointer rounded-xl border-zinc-200`}
+            onClick={() => setColor(color.trim())}
           >
             <div
               className={`
-    size-4 rounded-full
-    ${color.trim() === "مشکی" ? "bg-black" : ""}
-    ${color.trim() === "سفید" ? "bg-white border-2 border-zinc-300" : ""}
-    ${
-      !["مشکی", "سفید"].includes(color.trim())
-        ? `bg-${toEnglish(color)}-500`
-        : ""
-    }
-    shadow-sm
-  `}
-            ></div>
+                size-4 rounded-full
+                ${color.trim() === "مشکی" ? "bg-black" : ""}
+                ${color.trim() === "سفید" ? "bg-white border-2 border-zinc-300" : ""}
+                ${
+                  !["مشکی", "سفید"].includes(color.trim())
+                    ? `bg-${toEnglish(color)}-500`
+                    : ""
+                }
+                shadow-sm
+              `}
+            />
             <p>{color}</p>
           </div>
         ))}
@@ -45,5 +49,4 @@ const CartColor: React.FC = ({
 };
 
 CartColor.displayName = "CartColor";
-
 export default CartColor;

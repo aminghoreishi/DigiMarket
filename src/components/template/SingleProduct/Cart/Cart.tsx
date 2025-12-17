@@ -20,6 +20,8 @@ function Cart({
   id: string;
   img: string;
   colors: string[];
+  isLoggedIn: boolean;
+  userID?: string;
 }) {
   const defaultColor = useMemo(() => colors[0] ?? "", [colors]);
 
@@ -29,7 +31,8 @@ function Cart({
     if (!selectedColor && colors.length > 0) {
       setSelectedColor(colors[0].trim());
     }
-  }, [colors]);
+  }, [colors, selectedColor]);
+
   return (
     <>
       <div>
@@ -45,7 +48,7 @@ function Cart({
             isLoggedIn={isLoggedIn}
             delivery={delivery}
             name={name}
-            userID={userID}
+            userID={isLoggedIn.toString()}
             id={id}
             img={img}
             color={selectedColor}

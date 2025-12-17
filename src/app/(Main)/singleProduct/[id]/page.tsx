@@ -10,12 +10,32 @@ import { authUser } from "@/utils/auth";
 import { memo } from "react";
 import db from "@/config/db";
 
-async function page({ params }: { params: Promise<{ id: string }> }) {
+type Product = {
+  _id: string;
+  title: string;
+  name: string;
+  price: number;
+  images: string[];
+  colors: string[];
+  count: number;
+  delivery: boolean;
+  tags: string[];
+  features: any[];
+  longDescription: string;
+};
+
+async function page({ params }: { params: { id: string } }) {
   await db();
+
   const user = await authUser();
-  const isLoggedIn = !!user.user;
-  const { id } = await params;
-  const findProduct = await productModel.findOne({ _id: id }).lean();
+  const isLoggedIn = !!user?.user;
+  const { id } = params;
+
+  const findProduct = await productModel
+    .findOne({ _id: id })
+    .lean<Product>();
+
+  if (!findProduct) return null;
 
   return (
     <>
@@ -23,10 +43,8 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
         <div className="grid xl:grid-cols-12 gap-5 mt-5">
           <div className="xl:col-span-9">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              <SwiperMemo findProduct={findProduct} />
               <div>
-                <SwiperMemo findProduct={findProduct} />
-              </div>
-              <div className="">
                 <BredCrumbs />
                 <Info
                   features={findProduct.features}
@@ -37,16 +55,17 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
               </div>
             </div>
           </div>
+
           <CartContainer
             isLoggedIn={isLoggedIn}
             price={findProduct.price}
-            userID={user?.user?._id}
             colors={findProduct.colors}
             count={findProduct.count}
             delivery={findProduct.delivery}
             name={findProduct.name}
-            id={findProduct._id.toString()}
+            id={findProduct._id}
             img={findProduct.images[0] || findProduct.images[1]}
+            userID={user?.user?._id}
           />
         </div>
 
@@ -66,10 +85,22 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
   );
 }
 
-const CartContainer = memo(
+type CartContainerProps = {
+  isLoggedIn: boolean;
+  price: number;
+  colors: string[];
+  count: number;
+  delivery: boolean;
+  name: string;
+  id: string;
+  img: string;
+  userID?: string;
+};
+
+const CartContainer = memo<CartContainerProps>(
   ({ isLoggedIn, price, colors, count, delivery, name, id, img, userID }) => {
     return (
-      <div className=" xl:col-span-3">
+      <div className="xl:col-span-3">
         <Cart
           isLoggedIn={isLoggedIn}
           price={price}
@@ -78,7 +109,7 @@ const CartContainer = memo(
           delivery={delivery}
           name={name}
           userID={userID}
-          id={id}
+          id={id.toString()}
           img={img}
         />
       </div>
@@ -86,15 +117,21 @@ const CartContainer = memo(
   }
 );
 
-const SwiperMemo = memo(({ findProduct }) => {
+CartContainer.displayName = "CartContainer";
+
+type SwiperMemoProps = {
+  findProduct: Pick<Product, "_id" | "images">;
+};
+
+const SwiperMemo = memo<SwiperMemoProps>(({ findProduct }) => {
   return (
-    <div>
-      <SwiperImage
-        images={findProduct.images}
-        id={findProduct._id.toString()}
-      />
-    </div>
+    <SwiperImage
+      images={findProduct.images}
+      id={findProduct._id.toString()}
+    />
   );
 });
+
+SwiperMemo.displayName = "SwiperMemo";
 
 export default page;

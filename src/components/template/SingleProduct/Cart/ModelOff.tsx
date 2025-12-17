@@ -1,7 +1,24 @@
 "use client";
-import { memo, useState } from "react";
+
+import {
+  memo,
+  useState,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from "react";
+import { createPortal } from "react-dom";
 import toast from "react-hot-toast";
 import { BeatLoader } from "react-spinners";
+
+type ModelOffProps = {
+  updateCartQuantity: (newCount?: number) => void;
+  isLoggedIn: boolean;
+  userID: string;
+  id: string;
+  setPriceState: Dispatch<SetStateAction<number>>;
+  setIsOpenModalOff: (value: boolean) => void;
+};
 
 const ModelOff = memo(
   ({
@@ -11,94 +28,89 @@ const ModelOff = memo(
     id,
     setPriceState,
     setIsOpenModalOff,
-  }: {
-    updateCartQuantity: (newCount?: number) => void;
-    isLoggedIn: boolean;
-    userID: string;
-    setPriceState: Dispatch<SetStateAction<number>>;
-    setIsOpenModalOff: (value: boolean) => void;
-    id: string;
-  }) => {
+  }: ModelOffProps) => {
     const [code, setCode] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "auto";
+      };
+    }, []);
 
     const applyCode = async () => {
       if (!isLoggedIn) {
         toast.error("برای استفاده از کد تخفیف ابتدا وارد شوید");
         return;
       }
+
       if (!code.trim()) {
         toast.error("لطفا کد تخفیف را وارد کنید");
         return;
       }
+
       try {
         setIsLoading(true);
+
         const res = await fetch("/api/offs/use", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ code, id, userID }),
         });
 
-        const response = await res.json();
+        const data = await res.json();
 
-        if (res.status === 400) {
-          toast.error(response.message || "خطا در اعمال کد تخفیف");
+        if (!res.ok) {
+          toast.error(data.message || "خطا در اعمال کد تخفیف");
           return;
         }
 
-        if (res.ok) {
-          updateCartQuantity(1);
-          setIsOpenModalOff(false);
-          const discount = response.discount;
-          toast.success("کد تخفیف با موفقیت اعمال شد");
+        updateCartQuantity(1);
+        setIsOpenModalOff(false);
 
-          const saved = localStorage.getItem("product");
-          const savedCart = saved ? JSON.parse(saved) : [];
+        const discount = data.discount;
+        toast.success("کد تخفیف با موفقیت اعمال شد");
 
-          const findCart = savedCart.some(
-            (p: any) => String(p.id).trim() === String(id).trim()
-          );
+        const saved = localStorage.getItem("product");
+        const cart = saved ? JSON.parse(saved) : [];
 
-          if (findCart) {
-            const newCart = savedCart.map((p: any) =>
-              p.id === id
-                ? {
-                    ...p,
-                    price: p.price - (p.price * discount) / 100,
-                  }
-                : p
-            );
+        const newCart = cart.map((p: any) =>
+          String(p.id) === String(id)
+            ? { ...p, price: p.price - (p.price * discount) / 100 }
+            : p
+        );
 
-            localStorage.setItem("product", JSON.stringify(newCart));
-            setPriceState(newCart.find((p: any) => p.id === id).price);
-          }
-        } else {
-          toast.error(response.message || "خطا در اعمال کد تخفیف");
-        }
-      } catch (error) {
+        localStorage.setItem("product", JSON.stringify(newCart));
+
+        const current = newCart.find((p: any) => String(p.id) === String(id));
+        if (current) setPriceState(current.price);
       } finally {
         setIsLoading(false);
       }
     };
-    return (
-      <div className="min-h-screen fixed inset-0 flex items-center justify-center p-5 text-center">
+
+    return createPortal(
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center">
         <div
           onClick={() => setIsOpenModalOff(false)}
-          className="bg-black/60  min-h-screen w-full fixed inset-0 z-50"
-        ></div>
-        <div className="bg-white rounded-xl z-50  p-5 max-w-md w-full shadow-lg">
-          <h2 className="font-danaMed text-lg mb-4">ایا کد تخفیف دارید؟</h2>
-          <p className="font-danaMed text-sm mb-6">
-            <input
-              type="text"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              placeholder="کد تخفیف را وارد کنید"
-              className="outline-0 border border-gray-300 rounded-md p-2 w-full"
-            />
-          </p>
+          className="absolute inset-0 bg-black/60"
+        />
+
+        <div className="relative bg-white rounded-xl p-5 max-w-md w-full shadow-lg">
+          <h2 className="font-danaMed text-lg mb-4">
+            آیا کد تخفیف دارید؟
+          </h2>
+
+          <input
+            autoFocus
+            type="text"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            placeholder="کد تخفیف را وارد کنید"
+            className="outline-0 border border-gray-300 rounded-md p-2 w-full mb-6"
+          />
+
           <div className="flex justify-center gap-4">
             <button
               onClick={applyCode}
@@ -106,6 +118,7 @@ const ModelOff = memo(
             >
               {isLoading ? <BeatLoader size={6} color="white" /> : "دارم"}
             </button>
+
             <button
               onClick={() => {
                 updateCartQuantity(1);
@@ -113,13 +126,15 @@ const ModelOff = memo(
               }}
               className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded-lg font-danaMed text-sm"
             >
-              ندارم افزودن به سبد خرید
+              ندارم
             </button>
           </div>
         </div>
-      </div>
+      </div>,
+      document.body
     );
   }
 );
 
+ModelOff.displayName = "ModelOff";
 export default ModelOff;

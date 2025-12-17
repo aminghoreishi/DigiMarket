@@ -2,19 +2,22 @@
 
 import React, { useState, useEffect, memo } from "react";
 import Image from "next/image";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+type SwiperImageProps = {
+  images: string[];
+  id: string;
+};
 
-const SwiperImage = memo(({ images, id }: { images: string[]; id: string }) => {
+const SwiperImage = memo(({ images, id }: SwiperImageProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     try {
       const data = localStorage.getItem("which") || "[]";
-      const arr = JSON.parse(data);
+      const arr: string[] = JSON.parse(data);
       setIsLiked(arr.includes(id));
-    } catch (e) {
-      // silent
-    }
+    } catch {}
   }, [id]);
 
   const toggleLike = () => {
@@ -23,17 +26,16 @@ const SwiperImage = memo(({ images, id }: { images: string[]; id: string }) => {
       const arr: string[] = JSON.parse(data);
 
       if (arr.includes(id)) {
-        const filtered = arr.filter((x) => x !== id);
-        localStorage.setItem("which", JSON.stringify(filtered));
+        localStorage.setItem(
+          "which",
+          JSON.stringify(arr.filter((x) => x !== id))
+        );
         setIsLiked(false);
       } else {
-        arr.push(id);
-        localStorage.setItem("which", JSON.stringify(arr));
+        localStorage.setItem("which", JSON.stringify([...arr, id]));
         setIsLiked(true);
       }
-    } catch (e) {
-      console.error(e);
-    }
+    } catch {}
   };
 
   const goNext = () => setActiveIndex((i) => (i + 1) % images.length);
@@ -55,52 +57,29 @@ const SwiperImage = memo(({ images, id }: { images: string[]; id: string }) => {
 
           {images.length > 1 && (
             <>
-              <button
-                onClick={goPrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all backdrop-blur-sm"
-              >
-                <svg
-                  className="size-3"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={3}
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-              </button>
+             
 
               <button
                 onClick={goNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all backdrop-blur-sm"
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 text-white p-2 rounded-full"
               >
-                <svg
-                  className="size-3"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={3}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
+                <MdKeyboardArrowRight/>
+              </button>
+               <button
+                onClick={goPrev}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 text-white p-2 rounded-full"
+              >
+                <MdKeyboardArrowLeft/>
               </button>
             </>
           )}
 
           <button
             onClick={toggleLike}
-            className="absolute top-4 right-4 z-20 bg-black/50 backdrop-blur-sm p-3 rounded-full hover:scale-110 active:scale-95 transition-all"
+            className="absolute top-4 right-4 z-20 bg-black/50 p-3 rounded-full"
           >
             <svg
-              className={`w-7 h-7 transition-all duration-300 ${
+              className={`w-7 h-7 ${
                 isLiked ? "fill-red-500 text-red-500" : "text-white"
               }`}
               viewBox="0 0 24 24"
@@ -114,15 +93,13 @@ const SwiperImage = memo(({ images, id }: { images: string[]; id: string }) => {
         </div>
 
         {images.length > 1 && (
-          <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
+          <div className="flex gap-2 mt-4 overflow-x-auto">
             {images.map((src, i) => (
               <button
                 key={i}
                 onClick={() => setActiveIndex(i)}
-                className={`flex-shrink-0 w-20 h-20 rounded overflow-hidden border-2 transition-all ${
-                  activeIndex === i
-                    ? "border-white ring-4 ring-white/50 scale-105"
-                    : "border-zinc-200 hover:border-zinc-400"
+                className={`w-20 h-20 border-2 ${
+                  activeIndex === i ? "border-white" : "border-zinc-200"
                 }`}
               >
                 <Image
@@ -140,5 +117,7 @@ const SwiperImage = memo(({ images, id }: { images: string[]; id: string }) => {
     </div>
   );
 });
+
+SwiperImage.displayName = "SwiperImage";
 
 export default SwiperImage;
