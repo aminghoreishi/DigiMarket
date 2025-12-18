@@ -40,13 +40,25 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     await db();
 
-    const brands = await brandModel.find().sort({ createdAt: -1 });
+    const { searchParams } = new URL(req.url);
+    const page = parseInt(searchParams.get("page") || "1");
 
-    return NextResponse.json({ brands }, { status: 200 });
+    const skip = (page - 1) * 7;
+
+    const brands = await brandModel
+      .find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(7);
+
+    const totalBrands = await brandModel.countDocuments({});
+    const totalPages = Math.ceil(totalBrands / 7);
+
+    return NextResponse.json({ brands, totalPages }, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 500 });

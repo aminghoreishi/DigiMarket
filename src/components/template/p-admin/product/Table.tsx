@@ -13,6 +13,7 @@ import {
 import Swal from "sweetalert2";
 import SearchBar from "./SearchBar";
 import EditModal from "./EditModal";
+import Link from "next/link";
 
 const Table = memo(
   ({ products, totalPages }: { products: any[]; totalPages: number }) => {
@@ -54,7 +55,7 @@ const Table = memo(
         cancelButtonColor: "#3085d6",
         confirmButtonText: "بله، حذف کن!",
         cancelButtonText: "لغو",
-        customClass : "text-xs"
+        customClass: "text-xs",
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
@@ -91,6 +92,14 @@ const Table = memo(
             product={product}
           />
         )}
+
+        <div>
+          <Link href="/admin/products/createProduct">
+            <button className="bg-blue-500 text-white font-danaMed text-xs p-2 rounded-xl cursor-pointer">
+              افزودن محصول
+            </button>
+          </Link>
+        </div>
 
         <div className="mt-5">
           <div className="my-5">

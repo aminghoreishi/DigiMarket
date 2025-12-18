@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 function FormBrand({ setBrandState }: { setBrandState?: any }) {
   const [title, setTitle] = useState("");
@@ -30,6 +31,14 @@ function FormBrand({ setBrandState }: { setBrandState?: any }) {
       });
 
       if (res.ok) {
+        Swal.fire({
+          title: "با موفقعیت اضافه شد",
+          icon: "success",
+          cancelButtonText: "باشه",
+          customClass: {
+            popup: "!text-xs",
+          },
+        });
         getBrands();
       } else {
         console.error("Failed to add brand");

@@ -1,22 +1,35 @@
 "use client";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
-function FormFooter() {
+function FormFooter({ footer }) {
+  console.log(footer);
+
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
   const [img, setImg] = useState<File | null>(null);
-  const [aboutUs, setAboutUs] = useState("");
+  const [aboutUs, setAboutUs] = useState(footer[0]?.aboutUs || "");
 
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState(footer[0]?.contactInfo.email || "");
+  const [phone, setPhone] = useState(footer[0]?.contactInfo.phone || "");
+  const [address, setAddress] = useState(footer[0]?.contactInfo.address || "");
 
-  const [telegram, setTelegram] = useState("");
-  const [instagram, setInstagram] = useState("");
-  const [linkedin, setLinkedin] = useState("");
-  const [whatsapp, setWhatsapp] = useState("");
+  const [telegram, setTelegram] = useState(
+    footer[0]?.socialMediaLinks.telegram || ""
+  );
+  const [instagram, setInstagram] = useState(
+    footer[0]?.socialMediaLinks.instagram || ""
+  );
+  const [linkedin, setLinkedin] = useState(
+    footer[0]?.socialMediaLinks.linkedin || ""
+  );
+  const [whatsapp, setWhatsapp] = useState(
+    footer[0]?.socialMediaLinks.whatsapp || ""
+  );
 
-  const [featuredLinks, setFeaturedLinks] = useState<any[]>([]);
+  const [featuredLinks, setFeaturedLinks] = useState<any[]>(
+    footer[0]?.featuredLinks || []
+  );
   const [isType, setIsType] = useState(false);
 
   useEffect(() => {
@@ -69,14 +82,22 @@ function FormFooter() {
       body: formData,
     });
 
-    const result = await res.json();
+    if (res.ok) {
+      Swal.fire({
+        title: "با موفقعیت ثبت شد",
+        icon: "success",
+        confirmButtonText: "باشه",
+        customClass: {
+          popup: "!text-xs",
+        },
+      });
+    }
   };
 
   return (
     <div className="font-danaMed">
       <form onSubmit={handlerSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {/* بخش افزودن لینک ویژه - کل عرض صفحه */}
           <div className="col-span-3">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div>
@@ -135,7 +156,6 @@ function FormFooter() {
             )}
           </div>
 
-          {/* بخش فضای مجازی - کل عرض صفحه */}
           <div className="col-span-3 mt-5">
             <p className="mb-3">فضای مجازی</p>
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
@@ -186,7 +206,6 @@ function FormFooter() {
             </div>
           </div>
 
-          {/* بخش اطلاعات - کل عرض صفحه */}
           <div className="col-span-3 mt-5">
             <p className="mb-3">اطلاعات</p>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
@@ -226,7 +245,6 @@ function FormFooter() {
             </div>
           </div>
 
-          {/* بخش توضیحات - کل عرض صفحه */}
           <div className="col-span-3">
             <label className="text-sm" htmlFor="">
               توضیحات

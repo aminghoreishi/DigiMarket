@@ -35,6 +35,9 @@ async function page({ params }: { params: { id: string } }) {
     .findOne({ _id: id })
     .lean<Product>();
 
+    
+    
+
   if (!findProduct) return null;
 
   return (
@@ -45,7 +48,7 @@ async function page({ params }: { params: { id: string } }) {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
               <SwiperMemo findProduct={findProduct} />
               <div>
-                <BredCrumbs />
+                <BredCrumbs slugBrec={findProduct.slugBrec} />
                 <Info
                   features={findProduct.features}
                   findProductID={findProduct._id}

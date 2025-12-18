@@ -23,7 +23,7 @@ async function Footer() {
           </div>
           <div className="col-span-2">
             <p className="text-xs font-danaMed  text-zinc-400">
-              {parsFooter[0].aboutUs}
+              {parsFooter[0]?.aboutUs}
             </p>
           </div>
           <div className="text-zinc-400 max-sm:row-end-3 flex justify-center">
@@ -103,7 +103,7 @@ async function Footer() {
             </p>
             <p>
               <span className="text-orange-500">
-                {parsFooter[0].contactInfo.email}
+                {parsFooter[0]?.contactInfo.email}
               </span>
             </p>
           </div>

@@ -1,4 +1,5 @@
 "use client";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Image from "next/image";
@@ -12,48 +13,54 @@ const BrandSwiperContainer: React.FC<BrandSwiperContainerProps> = ({
   brands,
 }) => {
   return (
-    <div className="container mx-auto mt-5">
+    <div className="container mx-auto mt-6">
       <Swiper
-        slidesPerView={8.5}
-        spaceBetween={20}
+        spaceBetween={16}
         breakpoints={{
           320: {
-            slidesPerView: 1.5,
-            spaceBetween: 14,
+            slidesPerView: 2.2,
           },
           640: {
-            slidesPerView: 2,
-            spaceBetween: 16,
+            slidesPerView: 3.2,
           },
           768: {
-            slidesPerView: 3,
-            spaceBetween: 18,
+            slidesPerView: 4.5,
           },
           1024: {
-            slidesPerView: 4,
-            spaceBetween: 20,
+            slidesPerView: 6.5,
           },
           1280: {
-            slidesPerView: 5.5,
-            spaceBetween: 20,
+            slidesPerView: 8.5,
           },
         }}
-        // pagination={{ clickable: true }}
-        // modules={[Pagination]}
-        className="mySwiper !h-[200px]"
+        className="!py-4"
       >
         {brands.map((brand) => (
           <SwiperSlide key={brand._id}>
-            <div className="w-full h-full flex items-center justify-center p-4">
-              <div className="relative w-full h-full max-w-[180px] max-h-[120px]">
-                <Image
-                  src={brand.img}
-                  fill
-                  sizes="(max-width: 768px) 100px, 180px"
-                  alt={brand.title}
-                  className="object-contain"
-                  priority={false}
-                />
+            <div className="h-full px-1">
+              <div
+                className="
+                flex flex-col items-center justify-center
+                bg-white rounded-xl
+                border border-gray-100
+                shadow-sm
+                hover:shadow-md transition
+                h-[120px]
+                p-4
+              "
+              >
+                <div className="relative w-14 h-14 mb-2">
+                  <Image
+                    src={brand.img}
+                    alt={brand.title}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+
+                <span className="text-xs font-danaMed text-gray-700 text-center line-clamp-1">
+                  {brand.title}
+                </span>
               </div>
             </div>
           </SwiperSlide>

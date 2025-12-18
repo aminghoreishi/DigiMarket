@@ -34,6 +34,7 @@ function FormContainer({
     setValue,
     control,
     formState: { errors },
+    reset,
   } = useForm({ mode: "all" });
 
   const watchedCategory = useWatch({
@@ -61,6 +62,7 @@ function FormContainer({
     formData.append("price", rawPrice.toString());
     formData.append("count", data.count || "");
     formData.append("delivery", data.delivery || "");
+    formData.append("slugBrec", data.slugBrec || "");
     formData.append("category", data.category || "");
     formData.append("subCategory", data.subCategory || "");
     formData.append("longDescription", data.longDescription || "");
@@ -90,7 +92,7 @@ function FormContainer({
         });
       }
 
-      const response = await res.json();
+      reset();
     } catch (error) {
       console.error("خطا در ارسال فرم:", error);
     } finally {
@@ -121,6 +123,28 @@ function FormContainer({
             {errors.title && (
               <p className="text-red-500 text-xs mt-2">
                 {errors.title.message as string}
+              </p>
+            )}
+          </div>
+          <div className="font-danaMed flex flex-col lg:col-span-3">
+            <label className="text-sm" htmlFor="">
+              اسلاگ
+            </label>
+            <input
+              type="text"
+              {...register("slugBrec", {
+                required: "نام محصول الزامی است",
+                pattern: {
+                  value: /^[\u0600-\u06FFA-Za-z0-9\s.,()\-_/:%+٪،‌–—]+$/,
+                  message:
+                    "عنوان باید بین ۳ تا ۲۰۰ کاراکتر و شامل حروف فارسی، انگلیسی یا عدد باشد",
+                },
+              })}
+              className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
+            />
+            {errors.slugBrec && (
+              <p className="text-red-500 text-xs mt-2">
+                {errors.slugBrec.message as string}
               </p>
             )}
           </div>

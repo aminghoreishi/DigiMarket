@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
     const subCategory = formData.get("subCategory")?.toString() || "";
     const colorsRaw = formData.get("colors")?.toString() || "[]";
     const featuresRaw = formData.get("features")?.toString() || "[]";
+    const slugBrec = formData.get("slugBrec")?.toString() || "";
 
     let colors: string[] = [];
     let features: Array<{ name: string; value: string }> = [];
@@ -69,6 +70,7 @@ export async function POST(req: NextRequest) {
       colors,
       features,
       images: imagePaths,
+      slugBrec,
     });
 
     return NextResponse.json(
