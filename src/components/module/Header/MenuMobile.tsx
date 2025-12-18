@@ -16,8 +16,6 @@ function MenuMobile({
   const pathname = usePathname();
   const router = useRouter();
 
-
-
   useEffect(() => {
     setIsOpen(false);
   }, [pathname, router]);
@@ -85,6 +83,13 @@ function MenuMobile({
               className="mt-5 text-sm border-t-2 pt-3 border-zinc-200"
             >
               <button>خروج از حساب کاربری</button>
+            </div>
+          )}
+          {!isLoggedIn && (
+            <div className="mt-5 text-sm border-t-2 pt-3 border-zinc-200">
+              <Link href="/login">
+                <button>ورود به حساب کاربری</button>
+              </Link>
             </div>
           )}
         </div>

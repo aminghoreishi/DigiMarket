@@ -18,6 +18,8 @@ function ModemFields({ register, errors }) {
             <option value="4">4</option>
             <option value="5">5</option>
             <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
           </select>
           {errors.anten && (
             <p className="text-red-500 text-xs mt-2">{errors.anten.message}</p>
@@ -79,10 +81,7 @@ function ModemFields({ register, errors }) {
           <input
             {...register("networkType", {
               required: "نوع شبکه الزامی است",
-              pattern: {
-                value: /^[A-Za-z0-9\s\+\-]+$/,
-                message: "نوع شبکه باید فقط شامل حروف، اعداد و + یا - باشد",
-              },
+            
             })}
             type="text"
             placeholder="2.4GHz & 5GHz"
@@ -143,16 +142,7 @@ function ModemFields({ register, errors }) {
           <input
             {...register("weight", {
               required: "وزن الزامی است",
-              pattern: {
-                value: /^\d{1,3}(\.\d{1,2})?$/,
-                message: "وزن باید عددی معتبر باشد (مثلاً 45 یا 32.5)",
-              },
-              validate: (value) => {
-                const num = parseFloat(value);
-                if (num < 5) return "وزن نمی‌تواند کمتر از ۵ گرم باشد";
-                if (num > 500) return "وزن نمی‌تواند بیشتر از ۵۰۰ گرم باشد";
-                return true;
-              },
+        
             })}
             type="text"
             placeholder="45"

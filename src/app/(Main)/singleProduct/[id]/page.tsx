@@ -23,6 +23,40 @@ type Product = {
   features: any[];
   longDescription: string;
 };
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  await db();
+
+  const product = await productModel
+    .findOne({ _id: params.id })
+    .select("title name longDescription images tags")
+    .lean<{
+      title: string;
+      name: string;
+      longDescription: string;
+      images: string[];
+      tags: string[];
+    }>();
+
+  if (!product) {
+    return {
+      title: "محصول پیدا نشد",
+      description: "محصول مورد نظر وجود ندارد",
+    };
+  }
+
+  const description =
+    product.longDescription?.slice(0, 160) ||
+    `خرید ${product.title} با بهترین قیمت`;
+
+  return {
+    title: `${product.title} | خرید ${product.title}`,
+    description,
+  };
+}
 
 async function page({ params }: { params: { id: string } }) {
   await db();
@@ -31,12 +65,7 @@ async function page({ params }: { params: { id: string } }) {
   const isLoggedIn = !!user?.user;
   const { id } = params;
 
-  const findProduct = await productModel
-    .findOne({ _id: id })
-    .lean<Product>();
-
-    
-    
+  const findProduct = await productModel.findOne({ _id: id }).lean<Product>();
 
   if (!findProduct) return null;
 
@@ -128,10 +157,7 @@ type SwiperMemoProps = {
 
 const SwiperMemo = memo<SwiperMemoProps>(({ findProduct }) => {
   return (
-    <SwiperImage
-      images={findProduct.images}
-      id={findProduct._id.toString()}
-    />
+    <SwiperImage images={findProduct.images} id={findProduct._id.toString()} />
   );
 });
 

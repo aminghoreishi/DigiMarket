@@ -11,15 +11,25 @@ function PopProductCom({
 }) {
   return (
     <div className="flex items-center gap-5">
-      <div>
-        <Image  src={image} width={200} height={200} alt={title} />
+      
+    
+      <div className="relative w-[80px] h-[80px] flex-shrink-0">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          className="object-contain"
+        />
       </div>
-      <div>
-        <p className="text-2xl font-danaMed text-orange-500 ss02">{index + 1}</p>
-      </div>
-      <div>
-        <p className="font-danaMed text-xs md:text-sm line-clamp-2">{title}</p>
-      </div>
+
+      <p className="text-2xl font-danaMed text-orange-500 ss02 w-4 text-center">
+        {index + 1}
+      </p>
+
+
+      <p className="font-danaMed text-xs md:text-sm line-clamp-2">
+        {title}
+      </p>
     </div>
   );
 }

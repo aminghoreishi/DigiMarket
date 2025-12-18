@@ -4,8 +4,17 @@ import ClientProviders from "./providers";
 import { Toaster } from "react-hot-toast";
 
 export const metadata = {
-  title: "DigiMarket",
-  description: "فروشگاه دیجیتال",
+  icons: {
+    icon: "/image/logo (1).png",
+  },
+  title: "فروشگاه دیجی استار",
+  description: "فروشگاهی برای لوازم دیجیتال",
+  authors: [
+    {
+      name: "Amin",
+      url: "https://your-site.com",
+    },
+  ],
 };
 
 export default function RootLayout({

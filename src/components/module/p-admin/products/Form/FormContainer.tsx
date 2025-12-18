@@ -89,6 +89,9 @@ function FormContainer({
           title: "محصول با موفقیت ثبت شد",
           icon: "success",
           confirmButtonText: "باشه",
+          customClass: {
+            popup: " !text-sm !font-danaMed",
+          },
         });
       }
 
