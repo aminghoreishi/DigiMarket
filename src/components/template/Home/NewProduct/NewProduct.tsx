@@ -12,7 +12,7 @@ async function NewProduct() {
     .select("title images price colors name")
     .limit(6);
   return (
-    <div className="mt-12">
+    <div className="mt-12 container mx-auto">
       <TopSubject title="جدید ترین محصولات" />
       <SwiperPop products={JSON.parse(JSON.stringify(products))} />
     </div>

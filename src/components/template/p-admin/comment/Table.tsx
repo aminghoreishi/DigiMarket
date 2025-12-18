@@ -47,7 +47,6 @@ const Table = ({
       if (res.ok) {
         const data = await res.json();
         setCommentState(data.data);
-
       }
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -73,6 +72,9 @@ const Table = ({
       cancelButtonColor: "#3085d6",
       confirmButtonText: "بله، حذف کن!",
       cancelButtonText: "لغو",
+      customClass: {
+        popup: " !text-sm !font-danaMed",
+      },
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -100,6 +102,9 @@ const Table = ({
         title: "با موفقعیت وضیعت عوض شد",
         icon: "success",
         confirmButtonText: "باشه",
+        customClass: {
+          popup: " !text-xs !font-danaMed",
+        },
       }).then((res) => {
         if (res.isConfirmed) {
           onClose();

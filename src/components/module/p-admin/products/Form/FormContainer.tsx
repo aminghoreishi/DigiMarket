@@ -2,6 +2,7 @@
 import { useForm, useWatch } from "react-hook-form";
 import ColorSelector from "./ColorSelector";
 import LaptopFields from "./LaptopFields";
+import PhoneFields from "./MobileFields";
 import {
   JSXElementConstructor,
   Key,
@@ -304,6 +305,9 @@ function FormContainer({
           )}
           {watchedSubCategory === "693929d9ce7a3b533d3f7f18" && (
             <ModemFields register={register} errors={errors} />
+          )}
+          {watchedSubCategory === "69442c768e151fb00b922b4e" && (
+            <PhoneFields register={register} errors={errors} />
           )}
 
           <div className="font-danaMed flex flex-col">

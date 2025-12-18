@@ -14,7 +14,7 @@ function SwiperProductContainer({ products }: { products: any[] }) {
   }
 
   return (
-    <div className="w-full container mx-auto overflow-hidden mt-5 mb-5">
+    <div className="w-full  overflow-hidden mt-5 mb-5">
       <Swiper
         slidesPerView={5.5}
         spaceBetween={20}
@@ -26,7 +26,7 @@ function SwiperProductContainer({ products }: { products: any[] }) {
           1024: { slidesPerView: 4, spaceBetween: 20 },
           1280: { slidesPerView: 5.5, spaceBetween: 20 },
         }}
-        className="mySwiper !h-[400px]"
+        className="mySwiper !h-[410px]"
       >
         {products.map((pro) => (
           <SwiperSlide key={pro._id || pro.id || pro.title}>

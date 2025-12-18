@@ -13,7 +13,7 @@ async function PopProduct() {
     .limit(8)
     .exec();
   return (
-    <div className="mt-12">
+    <div className="mt-12 container mx-auto">
       <TopSubject title="محصولات پرفروش" />
       <SwiperPop products={JSON.parse(JSON.stringify(products))} />
     </div>

@@ -30,7 +30,7 @@ function SwiperProduct({
         />
       </div>
       <div>
-        <p className="text-zinc-400 text-xs line-clamp-1">{name}</p>
+        <p className="text-zinc-400 text-xs mt-3 line-clamp-1">{name}</p>
         <div className="cursor-pointer">
           <Link href={`/singleProduct/${_id}`}>
             <span className="text-zinc-800 font-danaMed text-xs md:text-sm h-8 lg:h-10 line-clamp-2 mt-2">
