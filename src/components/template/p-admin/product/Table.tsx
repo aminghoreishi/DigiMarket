@@ -54,6 +54,7 @@ const Table = memo(
         cancelButtonColor: "#3085d6",
         confirmButtonText: "بله، حذف کن!",
         cancelButtonText: "لغو",
+        customClass : "text-xs"
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {

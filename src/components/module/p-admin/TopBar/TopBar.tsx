@@ -1,13 +1,23 @@
 import { authUser } from "@/utils/auth";
 
 import BtnTopBar from "./BtnTopBar";
+import userModel from "@/models/user";
+import { auth } from "@/auth";
 
 async function TopBar({ title }: { title: string }) {
   const user = await authUser();
-  console.log(user);
+
+  const session = await auth();
+  const userFind = await userModel
+    .findOne({ email: session?.user.email })
+    .select("fullName role");
+
+  console.log(userFind);
 
   const displayName =
-    user.user?.fullName || user.user?.email?.split("@")[0] || "کاربر";
+    user.user?.fullName ||
+    user.user?.email?.split("@")[0] ||
+    userFind?.fullName;
 
   return (
     <>

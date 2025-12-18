@@ -16,7 +16,7 @@ function MenuMobile({
   const pathname = usePathname();
   const router = useRouter();
 
-  console.log(isLoggedIn);
+
 
   useEffect(() => {
     setIsOpen(false);

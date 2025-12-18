@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtDecrypt, jwtVerify } from "jose";
+import { auth } from "./auth";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -44,29 +45,7 @@ export async function middleware(request: NextRequest) {
     // }
 
     if (nextAuth) {
-      try {
-        const { payload } = await jwtDecrypt(
-          nextAuth,
-          new TextEncoder().encode(
-            process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET!
-          ),
-          {
-            clockTolerance: 15,
-          }
-        );
-
-        const role = (payload as any).role;
-
-        if (role !== "ADMIN") {
-          return NextResponse.redirect(new URL("/", request.url));
-        }
-
-        return NextResponse.next();
-      } catch (error: any) {
-        console.error("خطا در دیکد توکن NextAuth:", error.message);
-
-        return NextResponse.redirect(new URL("/", request.url));
-      }
+      return NextResponse.next();
     }
   }
 
@@ -92,11 +71,14 @@ export async function middleware(request: NextRequest) {
             clockTolerance: 15,
           }
         );
+
+        // ✅ session سالمه → برگرد خونه
         return NextResponse.redirect(new URL("/", request.url));
-      } catch (error) {}
+      } catch (error) {
+        // ❌ session نامعتبر → کاری نکن
+      }
     }
   }
-
   return NextResponse.next();
 }
 export const config = {

@@ -11,19 +11,13 @@ function CommentContainer({
   findProductID: string;
   userID: string;
 }) {
-  console.log("findProduct", findProductID);
-
   return (
     <div className="border-t-2 font-danaMed border-zinc-200 pt-5">
       <h2>دیدگاه ها</h2>
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 mt-5">
         <div className="xl:col-span-3">
-          <CommentForm
-            userID={userID}
-            isLoggedIn={isLoggedIn}
-            findProductID={findProductID}
-          />
+          <CommentForm userID={userID} findProductID={findProductID} />
         </div>
         <CommentCon findProductID={findProductID} />
       </div>

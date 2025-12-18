@@ -35,7 +35,7 @@ function Page() {
   } = useForm<FormValues>({ mode: "onChange" });
 
   const onSubmit = async (data: FormValues) => {
-    console.log(data);
+
 
     const obj = {
       fullName: data.fullName,

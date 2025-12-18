@@ -47,7 +47,7 @@ const Table = ({
       if (res.ok) {
         const data = await res.json();
         setCommentState(data.data);
-        console.log(data.data);
+
       }
     } catch (error) {
       console.error("Error fetching comments:", error);

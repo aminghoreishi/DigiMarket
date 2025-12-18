@@ -17,8 +17,6 @@ async function page() {
   const totalOrder = await orderModel.countDocuments({});
   const totalPages = Math.ceil(totalOrder / 4);
 
-  console.log(orders);
-
   return (
     <div>
       <TopBar title="سفارشات" />

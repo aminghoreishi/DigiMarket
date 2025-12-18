@@ -30,7 +30,6 @@ export default function FormCheck({
 }) {
   const router = useRouter();
 
-  console.log(userId);
   
 
   const {
@@ -53,7 +52,7 @@ export default function FormCheck({
         quantity: item.count || 1,
       }));
 
-      console.log(itemsForOrder.productId);
+
 
       setCarts(itemsForOrder);
     } catch (err) {
@@ -63,7 +62,7 @@ export default function FormCheck({
   }, []);
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
+
 
     if (!userId || userId.trim() === "") {
       alert("کاربر شناسایی نشد. لطفاً دوباره وارد شوید.");
@@ -91,7 +90,7 @@ export default function FormCheck({
     });
 
     const responseData = await res.json();
-    console.log(responseData);
+
 
     if (res.ok) {
       localStorage.removeItem("product");

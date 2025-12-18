@@ -8,7 +8,6 @@ export default function LoaderProvider({ children } : { children: React.ReactNod
         color="#2299DD"
         height={3}
         showSpinner={false}
-        
       />
     </>
   );

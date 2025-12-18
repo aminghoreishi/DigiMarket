@@ -65,10 +65,21 @@ export default function OffTable({
       cancelButtonColor: "#3085d6",
       confirmButtonText: "بله، حذف کن!",
       cancelButtonText: "لغو",
+      customClass: {
+        popup: "!text-xs",
+      },
     }).then(async (result) => {
       if (result.isConfirmed) {
         await deleteOff(id);
-        Swal.fire("تخفیف با موفقیت حذف شد!", "", "success");
+        Swal.fire({
+          title: "با موفقعیت حذف شد",
+          icon: "success",
+          confirmButtonColor: "#d33",
+          confirmButtonText: "باشه",
+          customClass: {
+            popup: "!text-xs",
+          },
+        });
       }
     });
   };

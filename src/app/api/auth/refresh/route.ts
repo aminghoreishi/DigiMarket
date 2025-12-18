@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { verify, sign } from "jsonwebtoken";
 import db from "@/config/db";
 import userModel from "@/models/user";
+import { auth } from "@/auth";
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,9 +10,10 @@ export async function POST(req: NextRequest) {
     const refreshToken = req.cookies.get("refresh-token")?.value;
     const nextAuth = req.cookies.get("authjs.session-token")?.value;
 
-    // if (nextAuth) {
-    //   return NextResponse.json({ success: true });
-    // }
+    if (nextAuth) {
+      return NextResponse.json({ ok: true, source: "nextauth" });
+    }
+
     if (!refreshToken)
       return NextResponse.json({ error: "No token" }, { status: 401 });
 

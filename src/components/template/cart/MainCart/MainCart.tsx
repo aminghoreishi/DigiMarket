@@ -19,7 +19,6 @@ export default function MainCart({
     if (data) {
       setCarts(JSON.parse(data));
     }
-    console.log(data);
   }, []);
 
   useEffect(() => {
