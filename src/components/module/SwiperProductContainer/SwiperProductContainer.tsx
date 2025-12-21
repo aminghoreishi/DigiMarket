@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import SwiperProduct from "@/components/module/SwiperProduct/SwiperProduct";
 
-function SwiperProductContainer({ products }: { products: any[] }) {
+function SwiperProductContainer({ products, rate }: { products: any[]; rate: any }) {
   if (!Array.isArray(products) || products.length === 0) {
     return (
       <div className="text-center text-zinc-400 py-10">
@@ -37,6 +37,7 @@ function SwiperProductContainer({ products }: { products: any[] }) {
               _id={pro._id}
               colors={pro.colors}
               name={pro.name}
+              rate={rate}
             />
           </SwiperSlide>
         ))}

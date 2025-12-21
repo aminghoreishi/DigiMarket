@@ -9,12 +9,12 @@ async function page() {
   const subCategories = await subCategoryModel
     .find({})
     .skip(0)
-    .limit(3)
+    .limit(6)
     .populate("category")
     .lean();
 
   const total = await subCategoryModel.countDocuments({});
-  const totalPages = Math.ceil(total / 3);
+  const totalPages = Math.ceil(total / 6);
   return (
     <div>
       <TopBar title="زیر دسته بندی ها" />

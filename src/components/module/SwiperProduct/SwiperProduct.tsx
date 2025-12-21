@@ -3,13 +3,15 @@ import { toEnglish } from "@/utils/color";
 import Image from "next/image";
 import Link from "next/link";
 
+import { FaStar } from "react-icons/fa";
 function SwiperProduct({
   title,
   images,
   price,
   _id,
   colors,
-  name
+  name,
+  rate,
 }: {
   title: string;
   images: string[];
@@ -17,6 +19,7 @@ function SwiperProduct({
   _id: string;
   colors: string[];
   name: string;
+  rate: any;
 }) {
   return (
     <div className="border-2 px-4 py-3 border-gray-200 rounded-xl">
@@ -49,21 +52,19 @@ function SwiperProduct({
               />
             ))}
           </div>
-          <div className="flex items-start gap-x-1 text-xs text-zinc-500">
+          <div className="flex items-center gap-x-1 text-xs text-zinc-500">
             <span className="font-danaMed ss02">
-              <span>(12)</span>
-              <span>3.9</span>
+            (
+              {
+                rate?.find((r: any) => r.productId === _id.toString())
+                  ?.ratingCount
+              }
+            )
             </span>
-            <svg
-              className="fill-primary-500"
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              fill="#f9bc00"
-              viewBox="0 0 256 256"
-            >
-              <path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
-            </svg>
+            <span className="font-danaMed ss02">
+              {rate?.find((r: any) => r.productId === _id.toString())?.rating}
+            </span>
+            <FaStar color="gold"/>
           </div>
         </div>
         <div className="flex justify-end mt-4">

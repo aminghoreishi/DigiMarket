@@ -68,14 +68,14 @@ export async function GET(req: NextRequest) {
     const subCategories = await subCategoryModel
       .find({})
       .skip(skip)
-      .limit(3)
+      .limit(6)
       .populate("category")
       .lean()
       .exec();
 
     const total = await subCategoryModel.countDocuments({});
 
-    const totalPages = Math.ceil(total / 3);
+    const totalPages = Math.ceil(total / 6);
 
     return NextResponse.json({ subCategories, totalPages }, { status: 200 });
   } catch (error) {

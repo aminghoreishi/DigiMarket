@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-const comment = new mongoose.Schema(
+const comment = new Schema(
   {
     body: {
       type: String,
@@ -10,17 +10,16 @@ const comment = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    user : {
-      type : mongoose.Types.ObjectId,
-      ref:'user',
-      required:true
+    user: {
+      type: Schema.Types.ObjectId, 
+      required: true,
     },
     isApproved: {
       type: Boolean,
       default: false,
     },
     product: {
-      type: mongoose.Types.ObjectId,
+      type: Schema.Types.ObjectId, 
       ref: "product",
       required: true,
     },
@@ -33,9 +32,7 @@ const comment = new mongoose.Schema(
       default: 0,
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 const commentModel =
