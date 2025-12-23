@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { BeatLoader } from "react-spinners";
 
 import Swal from "sweetalert2";
@@ -35,8 +34,6 @@ function Page() {
   } = useForm<FormValues>({ mode: "onChange" });
 
   const onSubmit = async (data: FormValues) => {
-
-
     const obj = {
       fullName: data.fullName,
       email: data.email,
@@ -58,6 +55,9 @@ function Page() {
           title: "با موفقیت ایجاد شد",
           icon: "success",
           confirmButtonText: "باشه",
+          customClass: {
+            popup: "!text-xs font-danaMed",
+          },
         }).then((res) => {
           route.push("/");
         });
@@ -66,12 +66,18 @@ function Page() {
           title: "ایمیل وارد شده قبلا ایجاد شده است",
           icon: "error",
           confirmButtonText: "باشه",
+          customClass: {
+            popup: "!text-xs font-danaMed",
+          },
         });
       } else if (res.status === 500) {
         Swal.fire({
           title: "خطا در سمت سرور",
           icon: "error",
           confirmButtonText: "باشه",
+          customClass: {
+            popup: "!text-xs font-danaMed",
+          },
         });
       }
     } catch (error) {
@@ -89,7 +95,6 @@ function Page() {
       <div className="shadow-2xl rounded-xl bg-white font-danaMed max-sm:w-[350px] w-[400px]">
         <form className="p-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-5">
-            {/* Full Name */}
             <div className="flex flex-col gap-2">
               <label className="text-xs">نام و نام خانوادگی</label>
               <input
@@ -111,7 +116,6 @@ function Page() {
               )}
             </div>
 
-            {/* Email */}
             <div className="flex flex-col gap-2">
               <label className="text-xs">ایمیل</label>
               <input
@@ -133,7 +137,6 @@ function Page() {
               )}
             </div>
 
-            {/* Password */}
             <div className="flex flex-col gap-2">
               <label className="text-xs">رمز عبور</label>
               <div className="relative">
@@ -172,7 +175,6 @@ function Page() {
               )}
             </div>
 
-            {/* Confirm Password */}
             <div className="flex flex-col gap-2">
               <label className="text-xs">تکرار رمز عبور</label>
               <div className="relative">
@@ -200,7 +202,6 @@ function Page() {
               )}
             </div>
 
-            {/* Checkbox */}
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"
@@ -217,7 +218,6 @@ function Page() {
             )}
           </div>
 
-          {/* Submit Button */}
           <div className="mt-5">
             <button
               type="submit"
@@ -226,18 +226,6 @@ function Page() {
               {isLoading ? <BeatLoader size={9} color="white" /> : "ثبت نام"}
             </button>
           </div>
-
-          {/* Google Sign-up */}
-          {/* <div className="mt-5">
-            <button
-              type="button"
-              onClick={() => signIn("google", { callbackUrl: "/" })}
-              className="text-black flex items-center border-2 border-zinc-200 justify-center gap-2 w-full rounded-xl py-2 cursor-pointer text-xs"
-            >
-              <p>ثبت نام با گوگل</p>
-              <FcGoogle size={15} />
-            </button>
-          </div> */}
         </form>
 
         <hr className="text-zinc-400" />

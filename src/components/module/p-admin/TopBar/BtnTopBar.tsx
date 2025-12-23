@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { IoMenuOutline } from "react-icons/io5";
 import SideBar from "../SideBar/SideBar";
+import SideBarUserPanel from "../../user-panel/SideBarUserPanel";
 
-export default function BtnTopBar() {
+export default function BtnTopBar({ isPanelUser }) {
   const [isClick, setIsClick] = useState(false);
 
   return (
@@ -14,7 +15,7 @@ export default function BtnTopBar() {
         </button>
       </div>
 
-      <SideBarMenu setIsClick={setIsClick} isClick={isClick} />
+      <SideBarMenu isPanelUser={isPanelUser} setIsClick={setIsClick} isClick={isClick} />
     </>
   );
 }
@@ -22,13 +23,14 @@ export default function BtnTopBar() {
 const SideBarMenu = ({
   setIsClick,
   isClick,
+  isPanelUser
 }: {
   setIsClick: React.Dispatch<React.SetStateAction<boolean>>;
   isClick: boolean;
+  isPanelUser:boolean
 }) => {
   return (
     <>
-      {/* Overlay */}
       {isClick && (
         <div
           onClick={() => setIsClick(false)}
@@ -36,7 +38,6 @@ const SideBarMenu = ({
         />
       )}
 
-      {/* Sidebar */}
       <div
         className={`
           fixed top-0 bottom-0 right-0 z-50
@@ -46,6 +47,7 @@ const SideBarMenu = ({
           ${isClick ? "translate-x-0" : "translate-x-full"}
         `}
       >
+        {!isPanelUser ? <SideBar /> : <SideBarUserPanel />}
         <SideBar />
       </div>
     </>

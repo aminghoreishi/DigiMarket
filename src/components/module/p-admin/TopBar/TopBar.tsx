@@ -4,7 +4,13 @@ import BtnTopBar from "./BtnTopBar";
 import userModel from "@/models/user";
 import { auth } from "@/auth";
 
-async function TopBar({ title }: { title: string }) {
+async function TopBar({
+  title,
+  isPanelUser,
+}: {
+  title: string;
+  isPanelUser: boolean;
+}) {
   const user = await authUser();
 
   const session = await auth();
@@ -24,7 +30,7 @@ async function TopBar({ title }: { title: string }) {
       <div className="font-danaMed  flex justify-between">
         <div className="flex items-center gap-5 justify-center">
           <div className="lg:hidden">
-            <BtnTopBar />
+            <BtnTopBar isPanelUser={isPanelUser} />
           </div>
           <h2 className="max-sm:text-sm">{title}</h2>
         </div>

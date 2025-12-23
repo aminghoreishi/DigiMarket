@@ -27,15 +27,7 @@ async function Buttons() {
     user.user?.fullName || user.user?.email?.split("@")[0] || "کاربر";
 
   const session = await auth();
-
-  // console.log(session?.user);
-
   const userFind = await userModel.findOne({ email: session?.user.email });
-
-  // console.log("User in Buttons:", user);
-  // console.log("isAdmin in Buttons:", isAdmin);
-  // console.log("isLoggedIn in Buttons:", isLoggedIn);
-  // console.log("displayName in Buttons:", displayName);
 
   return (
     <div className="flex items-center font-danaMed gap-3">
@@ -55,11 +47,15 @@ async function Buttons() {
                   <BsBasket />
                   <p>سفارش ها</p>
                 </li>
+                {userFind?.role !== "ADMIN" && (
+                  <Link href="/my-panel">
+                    <li className="flex items-center gap-2">
+                      <BsBasket />
+                      <p>پنل کاربری</p>
+                    </li>
+                  </Link>
+                )}
 
-                <li className="flex items-center gap-2">
-                  <BsBasket />
-                  <p>پنل کاربری</p>
-                </li>
                 {userFind?.role === "ADMIN" || isAdmin ? (
                   <Link href="/admin">
                     <li className="flex items-center gap-2">
