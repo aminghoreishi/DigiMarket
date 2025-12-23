@@ -5,6 +5,11 @@ import { BsTelegram } from "react-icons/bs";
 import BtnTop from "./BtnTop";
 import db from "@/config/db";
 import footerModel from "@/models/footer";
+import { RiTruckLine } from "react-icons/ri";
+import { RiCustomerService2Line } from "react-icons/ri";
+import { RiTicket2Fill } from "react-icons/ri";
+import { FaFingerprint } from "react-icons/fa";
+import { IoPricetag } from "react-icons/io5";
 async function Footer() {
   await db();
   const footer = await footerModel.find({}, "-__v").lean();
@@ -32,11 +37,32 @@ async function Footer() {
         </div>
 
         <div className="grid grid-cols-1 max-md:my-5 lg:grid-cols-5 gap-3  items-center mt-5">
-          <FeatureFooter />
-          <FeatureFooter />
-          <FeatureFooter />
-          <FeatureFooter />
-          <FeatureFooter />
+          <FeatureFooter
+            icon={RiTruckLine}
+            title="ارسال سریع"
+            description="ارسال در سریع‌ترین زمان"
+          />
+
+          <FeatureFooter
+            icon={RiCustomerService2Line}
+            title="پشتیبانی"
+            description="پشتیبانی ۲۴ ساعته"
+          />
+          <FeatureFooter
+            icon={IoPricetag}
+            title="قیمت های مناسب"
+            description="قیمت های رقابتی در بازار"
+          />
+          <FeatureFooter
+            icon={FaFingerprint}
+            title="خرید سریع و آسان"
+            description="خرید سریع و راحت محصولات"
+          />
+          <FeatureFooter
+            icon={RiTicket2Fill}
+            title="ضمانت کیفیت"
+            description="تضمین کیفیت اجناس"
+          />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 mt-5">
