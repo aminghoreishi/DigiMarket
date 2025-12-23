@@ -8,10 +8,11 @@ async function PopProduct() {
   await db();
 
   const products = await productModel
-    .find()
-    .sort({ sales: -1 })
-    .select("title images price colors name")
+    .find({ salesCount: { $gt: 0 } })
+    .sort({ salesCount: -1 })
+    .select("title images price colors name sales")
     .limit(8)
+    .lean()
     .exec();
 
   const rate = await rateFunc(products);

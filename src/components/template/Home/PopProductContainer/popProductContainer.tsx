@@ -6,8 +6,8 @@ async function PopProductContainer() {
   await db();
 
   const products = await productModel
-    .find()
-    .sort({ sales: -1 })
+    .find({ salesCount: { $gt: 0 } })
+    .sort({ salesCount: -1 })
     .select("title images")
     .limit(8)
     .exec();
