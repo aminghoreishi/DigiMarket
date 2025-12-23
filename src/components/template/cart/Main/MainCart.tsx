@@ -6,7 +6,8 @@ import Checkout from "../../checkout/checkout";
 
 function MainCartContainer({
   isUserLoggedIn,
-  id
+  id,
+  authUserEmail
 }: {
   isUserLoggedIn: null | { id: string; fullName: string; email: string };
 }) {
@@ -19,12 +20,12 @@ function MainCartContainer({
       <div>
         {step === "cart" && (
           <div>
-            <MainCart setAllPrice={setAllPrice} isUserLoggedIn={isUserLoggedIn} setStep={setStep} />
+            <MainCart authUserEmail={authUserEmail} setAllPrice={setAllPrice} isUserLoggedIn={isUserLoggedIn} setStep={setStep} />
           </div>
         )}
         {step === "checkout" && (
           <div>
-            <Checkout id={id}  allPrice={allPrice} isUserLoggedIn={isUserLoggedIn} />
+            <Checkout authUserEmail={authUserEmail} id={id}  allPrice={allPrice} isUserLoggedIn={isUserLoggedIn} />
           </div>
         )}
       </div>

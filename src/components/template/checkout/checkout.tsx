@@ -8,9 +8,11 @@ function Checkout({
   isUserLoggedIn,
   id,
   allPrice,
+  authUserEmail
 }: {
   isUserLoggedIn: null | { id: string; fullName: string; email: string };
   allPrice: number;
+
 }) {
   const [deliveryMethod, setDeliveryMethod] = useState<"express" | "courier">(
     "express"
@@ -25,6 +27,7 @@ function Checkout({
           fullName={isUserLoggedIn?.fullName || ""}
           deliveryMethod={deliveryMethod}
           setDeliveryMethod={setDeliveryMethod}
+          authUserEmail={authUserEmail}
         />
       </div>
       <div className="col-span-12 md:col-span-4">

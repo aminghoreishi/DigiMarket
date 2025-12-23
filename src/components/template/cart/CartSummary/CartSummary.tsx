@@ -6,13 +6,14 @@ function CartSummary({
   total,
   isUserLoggedIn,
   setStep,
+  authUserEmail
 }: {
   total: number;
   isUserLoggedIn: any;
   setStep: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const buyFunc = () => {
-    if (!isUserLoggedIn) {
+    if (!isUserLoggedIn && !authUserEmail) {
       toast.error("لطفا ابتدا وارد حساب کاربری خود شوید");
       return;
     }

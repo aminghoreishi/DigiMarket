@@ -2,17 +2,21 @@
 import { useEffect, useState } from "react";
 import CartContainer from "../cartContainer/CartContainer";
 import CartSummary from "../CartSummary/CartSummary";
+import { auth } from "@/auth";
 
 export default function MainCart({
   isUserLoggedIn,
   setStep,
   setAllPrice,
+  authUserEmail
 }: {
   isUserLoggedIn: any;
   setStep: React.Dispatch<React.SetStateAction<string>>;
   setAllPrice: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const [carts, setCarts] = useState<any[]>([]);
+
+ 
 
   useEffect(() => {
     const data = localStorage.getItem("product");
@@ -60,6 +64,7 @@ export default function MainCart({
               <CartSummary
                 total={total}
                 isUserLoggedIn={isUserLoggedIn}
+                authUserEmail={authUserEmail}
                 setStep={setStep}
               />
             </div>

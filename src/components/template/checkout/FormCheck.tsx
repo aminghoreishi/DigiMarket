@@ -18,6 +18,7 @@ export default function FormCheck({
   deliveryMethod,
   setDeliveryMethod,
   allPrice,
+  authUserEmail,
   userId,
 }: {
   fullName: string;
@@ -29,8 +30,6 @@ export default function FormCheck({
   userId: string;
 }) {
   const router = useRouter();
-
-  
 
   const {
     register,
@@ -52,8 +51,6 @@ export default function FormCheck({
         quantity: item.count || 1,
       }));
 
-
-
       setCarts(itemsForOrder);
     } catch (err) {
       console.error("خطا در خواندن سبد خرید", err);
@@ -62,8 +59,6 @@ export default function FormCheck({
   }, []);
 
   const onSubmit = async (data: FormData) => {
-
-
     if (!userId || userId.trim() === "") {
       alert("کاربر شناسایی نشد. لطفاً دوباره وارد شوید.");
       router.push("/login");
@@ -72,7 +67,7 @@ export default function FormCheck({
 
     const savedData = {
       ...data,
-      user: userId,
+      user: userId || authUserEmail,
       deliveryMethod,
       products: carts.map((item) => ({
         product: item.productId,
@@ -90,7 +85,6 @@ export default function FormCheck({
     });
 
     const responseData = await res.json();
-
 
     if (res.ok) {
       localStorage.removeItem("product");
