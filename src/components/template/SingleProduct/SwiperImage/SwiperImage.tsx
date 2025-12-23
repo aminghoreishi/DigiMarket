@@ -79,7 +79,7 @@ const SwiperImage = memo(({ images, id }: SwiperImageProps) => {
             className="absolute top-4 right-4 z-20 bg-black/50 p-3 rounded-full"
           >
             <svg
-              className={`w-7 h-7 ${
+              className={`w-4 h-4 ${
                 isLiked ? "fill-red-500 text-red-500" : "text-white"
               }`}
               viewBox="0 0 24 24"
