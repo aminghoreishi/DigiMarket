@@ -2,11 +2,11 @@
 const faToEn: Record<string, string> = {
   خاکستری: "gray",
   "نقره ای": "gray",
-  "نقره‌ای": "gray",     // با و بدون فاصله
+  "نقره‌ای": "gray",     
   مشکی: "black",
   سفید: "white",
   آبی: "blue",
-  ابی: "blue",            // غلط املایی رایج
+  ابی: "blue",          
   قرمز: "red",
   سبز: "green",
   زرد: "yellow",
@@ -16,6 +16,7 @@ const faToEn: Record<string, string> = {
   طلایی: "yellow",
   "قهوه ای": "brown",
   "قهوه‌ای": "brown",
+  "سرمه ای": "blue",
 };
 
 const enToFa: Record<string, string> = {

@@ -8,7 +8,7 @@ async function Category() {
   await db();
 
   const category = (await subCategoryModel
-    .find({})
+    .find({ img: { $exists: true, $ne: "" } })
     .limit(4)
     .lean()) as unknown as Category[];
 

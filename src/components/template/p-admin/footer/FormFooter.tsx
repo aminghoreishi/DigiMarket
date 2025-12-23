@@ -91,6 +91,16 @@ function FormFooter({ footer }) {
           popup: "!text-xs",
         },
       });
+
+      setName("");
+      setAboutUs("");
+      setEmail("");
+      setFeaturedLinks([]);
+      setImg(null);
+      setInstagram("");
+      setLinkedin("");
+      setWhatsapp("")
+      setPhone("")
     }
   };
 

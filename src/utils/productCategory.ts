@@ -7,6 +7,7 @@ const FEATURES = {
     گرافیک: "gpu",
     وزن: "weight",
   },
+
   "693929d9ce7a3b533d3f7f18": {
     "نوع آنتن": "kindAnten",
     "تعداد پورت RJ45": "rj45",
@@ -15,18 +16,33 @@ const FEATURES = {
     کلیدها: "keys",
     وزن: "weight",
   },
+
+  "69442c768e151fb00b922b4e": {
+    برند: "brand",
+    مدل: "model",
+    "حافظه داخلی": "storage",
+    رم: "ram",
+    "سایز صفحه نمایش": "screenSize",
+    "نرخ بروزرسانی": "refreshRate",
+    "تعداد سیم‌کارت": "simCount",
+    "ظرفیت باتری": "battery",
+    "دوربین اصلی": "camera",
+    سیستم‌عامل: "os",
+    "نوع شبکه": "network",
+  },
 };
 
 export const getFeatures = (data: any, category: string) => {
-  const map = FEATURES[category];
-  if (!map) return [];
+  if (!(category in FEATURES)) return [];
+
+  const map = FEATURES[category as keyof typeof FEATURES];
 
   const result: { name: string; value: string }[] = [];
 
   for (const [name, key] of Object.entries(map)) {
     const value = data[key];
-    if (value && value !== "") {
-      result.push({ name, value: value.toString() });
+    if (value != null && value !== "") {
+      result.push({ name, value: String(value) });
     }
   }
 

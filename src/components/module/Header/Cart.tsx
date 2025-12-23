@@ -59,9 +59,17 @@ function Cart() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2 border border-zinc-200 rounded-lg p-1 text-xs">
-                  <AiOutlineMinus className="cursor-pointer text-red-500 text-sm" />
+                  <AiOutlineMinus
+                    onClick={() => updat(cart.id, "minus")}
+                    className="cursor-pointer text-red-500 text-sm"
+                  />
+
                   <span className="ss02 w-6 text-center">{cart.count}</span>
-                  <FaPlus className="cursor-pointer text-green-500 text-sm" />
+
+                  <FaPlus
+                    onClick={() => updateCount(cart.id, "plus")}
+                    className="cursor-pointer text-green-500 text-sm"
+                  />
                 </div>
               </div>
             ))

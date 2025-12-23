@@ -2,17 +2,13 @@ import TopBar from "@/components/module/p-admin/TopBar/TopBar";
 import Information from "@/components/template/p-admin/Home/Information";
 import OrderTable from "@/components/template/p-admin/Home/Order/OrderTable";
 import ShowProduct from "@/components/template/p-admin/Home/ShowNewPro/ShowProduct";
-
 import db from "@/config/db";
 import orderModel from "@/models/order";
 import productModel from "@/models/product";
 import userModel from "@/models/user";
-
+import { rateFunc } from "@/utils/rate";
 import { memo } from "react";
 
-/* =======================
-   Server Component
-======================= */
 async function Page() {
   await db();
 
@@ -34,9 +30,12 @@ async function Page() {
 
   const allProducts = await productModel
     .find({})
+    .select("title images price colors name")
     .sort({ createdAt: -1 })
     .limit(6)
     .lean();
+
+  const rate =await rateFunc(allProducts);
 
   return (
     <div>
@@ -48,6 +47,7 @@ async function Page() {
         deliveredOrdersCount={deliveredOrdersCount}
         allOrders={allOrders}
         allProducts={allProducts}
+        rate={rate}
       />
     </div>
   );
@@ -70,6 +70,7 @@ const PageMemo = memo(
     deliveredOrdersCount,
     allOrders,
     allProducts,
+    rate
   }: PageMemoProps) => {
     return (
       <>
@@ -90,7 +91,10 @@ const PageMemo = memo(
         </div>
 
         <div className="mt-10">
-          <ShowProduct products={JSON.parse(JSON.stringify(allProducts))} />
+          <ShowProduct
+            products={JSON.parse(JSON.stringify(allProducts))}
+            rate={rate}
+          />
         </div>
       </>
     );

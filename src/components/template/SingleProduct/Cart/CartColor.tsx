@@ -7,11 +7,7 @@ type CartColorProps = {
   colorv: string;
 };
 
-const CartColor: React.FC<CartColorProps> = ({
-  colors,
-  setColor,
-  colorv,
-}) => {
+const CartColor: React.FC<CartColorProps> = ({ colors, setColor, colorv }) => {
   return (
     <div>
       <h2 className="font-danaMed">رنگ:</h2>
@@ -28,15 +24,9 @@ const CartColor: React.FC<CartColorProps> = ({
             onClick={() => setColor(color.trim())}
           >
             <div
+              style={{ backgroundColor: toEnglish(color) }}
               className={`
                 size-4 rounded-full
-                ${color.trim() === "مشکی" ? "bg-black" : ""}
-                ${color.trim() === "سفید" ? "bg-white border-2 border-zinc-300" : ""}
-                ${
-                  !["مشکی", "سفید"].includes(color.trim())
-                    ? `bg-${toEnglish(color)}-500`
-                    : ""
-                }
                 shadow-sm
               `}
             />

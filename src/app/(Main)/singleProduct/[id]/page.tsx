@@ -9,6 +9,7 @@ import SwiperImage from "@/components/template/SingleProduct/SwiperImage/SwiperI
 import { authUser } from "@/utils/auth";
 import { memo } from "react";
 import db from "@/config/db";
+import commentModel from "@/models/comment";
 
 type Product = {
   _id: string;
@@ -67,6 +68,16 @@ async function page({ params }: { params: { id: string } }) {
 
   const findProduct = await productModel.findOne({ _id: id }).lean<Product>();
 
+  const findsComment = await commentModel
+    .find({ product: findProduct?._id })
+    .lean();
+
+  const positiveCount = findsComment.filter((c) => c.isOk).length;
+
+  const rateCalculate = Number(
+    ((positiveCount / findsComment.length) * 5).toFixed(1)
+  );
+
   if (!findProduct) return null;
 
   return (
@@ -79,10 +90,12 @@ async function page({ params }: { params: { id: string } }) {
               <div>
                 <BredCrumbs slugBrec={findProduct.slugBrec} />
                 <Info
-                  features={findProduct.features}
+                  features={findProduct.features.slice(0, 6)}
                   findProductID={findProduct._id}
                   title={findProduct.title}
                   name={findProduct.name}
+                  rateCount={positiveCount.toString()}
+                  rateCalculate={rateCalculate}
                 />
               </div>
             </div>

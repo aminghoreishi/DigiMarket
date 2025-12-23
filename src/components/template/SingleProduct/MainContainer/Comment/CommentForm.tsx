@@ -1,14 +1,23 @@
 "use client";
 import { memo, useState } from "react";
-import toast from "react-hot-toast"; // ← only toast
+import toast from "react-hot-toast";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 import { BeatLoader } from "react-spinners";
 
 const CommentForm = memo(
-  ({ findProductID, userID }: { findProductID: string; userID: string }) => {
+  ({
+    findProductID,
+    userID,
+    session,
+  }: {
+    findProductID: string;
+    userID: string;
+  }) => {
     const [body, setBody] = useState<string>("");
     const [isOk, setIsOk] = useState<boolean | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+
+    console.log(session);
 
     const createComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
@@ -22,7 +31,7 @@ const CommentForm = memo(
             body,
             isOk,
             product: findProductID,
-            user: userID,
+            user: userID || session,
           }),
         });
 

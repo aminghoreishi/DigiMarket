@@ -9,7 +9,7 @@ function PhoneFields({ register, errors }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
-        {/* Brand */}
+      
         <div className="flex flex-col">
           <label className="text-sm mb-1">برند</label>
           <input
@@ -23,7 +23,6 @@ function PhoneFields({ register, errors }) {
           )}
         </div>
 
-        {/* Model */}
         <div className="flex flex-col">
           <label className="text-sm mb-1">مدل</label>
           <input
@@ -37,7 +36,7 @@ function PhoneFields({ register, errors }) {
           )}
         </div>
 
-        {/* Storage */}
+      
         <div className="flex flex-col">
           <label className="text-sm mb-1">حافظه داخلی (GB)</label>
           <select
@@ -56,7 +55,7 @@ function PhoneFields({ register, errors }) {
           )}
         </div>
 
-        {/* RAM */}
+      
         <div className="flex flex-col">
           <label className="text-sm mb-1">رم (GB)</label>
           <select
@@ -75,7 +74,7 @@ function PhoneFields({ register, errors }) {
           )}
         </div>
 
-        {/* Screen Size */}
+        
         <div className="flex flex-col">
           <label className="text-sm mb-1">سایز صفحه‌نمایش (اینچ)</label>
           <input
@@ -93,7 +92,7 @@ function PhoneFields({ register, errors }) {
           )}
         </div>
 
-        {/* ⚡ NEW - Refresh Rate */}
+
         <div className="flex flex-col">
           <label className="text-sm mb-1">نرخ بروزرسانی صفحه (Hz)</label>
           <select
@@ -116,7 +115,7 @@ function PhoneFields({ register, errors }) {
           )}
         </div>
 
-        {/* ⚡ NEW - SIM Card Count */}
+   
         <div className="flex flex-col">
           <label className="text-sm mb-1">تعداد سیم‌کارت</label>
           <select
@@ -136,7 +135,7 @@ function PhoneFields({ register, errors }) {
           )}
         </div>
 
-        {/* Battery */}
+    
         <div className="flex flex-col">
           <label className="text-sm mb-1">ظرفیت باتری (mAh)</label>
           <input
@@ -154,7 +153,7 @@ function PhoneFields({ register, errors }) {
           )}
         </div>
 
-        {/* Camera */}
+
         <div className="flex flex-col">
           <label className="text-sm mb-1">دوربین اصلی (MP)</label>
           <input
@@ -172,7 +171,7 @@ function PhoneFields({ register, errors }) {
           )}
         </div>
 
-        {/* OS */}
+      
         <div className="flex flex-col">
           <label className="text-sm mb-1">سیستم‌عامل</label>
           <input
@@ -188,7 +187,7 @@ function PhoneFields({ register, errors }) {
           )}
         </div>
 
-        {/* Network */}
+
         <div className="flex flex-col">
           <label className="text-sm mb-1">نوع شبکه</label>
           <input

@@ -5,4 +5,5 @@ export type Category = {
   href: string;
   category: string | Types.ObjectId;
   img: string;
+  _id: string;
 };

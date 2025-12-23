@@ -5,12 +5,16 @@ function Info({
   features,
   findProductID,
   title,
-  name
+  name,
+  rateCount,
+  rateCalculate,
 }: {
   features: any[];
   findProductID: string;
   title: string;
   name: string;
+  rateCount: string;
+  rateCalculate: number;
 }) {
   return (
     <div className="mt-5">
@@ -18,12 +22,14 @@ function Info({
         <h2 className="font-danaMed text-lg line-clamp-3 ss02">{title}</h2>
       </div>
       <div className="mt-3">
-        <p className="text-xs text-zinc-400">
-          {name}
-        </p>
+        <p className="text-xs text-zinc-400">{name}</p>
       </div>
       <div>
-        <CommentRate findProductID={findProductID.toString()} />
+        <CommentRate
+          rateCalculate={rateCalculate}
+          rateCount={rateCount}
+          findProductID={findProductID.toString()}
+        />
       </div>
 
       <div className="mt-3 border-b-2 border-zinc-200 pb-5">

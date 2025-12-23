@@ -1,4 +1,3 @@
-// src/utils/auth.ts
 import { hash, compare } from "bcryptjs";
 import { sign, verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
@@ -30,7 +29,9 @@ const verifyAccessToken = (token: string) => {
 };
 
 const refreshToken = async () => {
-  const refreshTokenValue = cookies().get("refresh-token")?.value;
+  const cookieStore = await cookies();
+  const refreshTokenValue = cookieStore.get("refresh-token")?.value;
+
   if (!refreshTokenValue) throw new Error("No refresh token");
 
   const payload = verify(

@@ -54,17 +54,17 @@ function SwiperProduct({
           </div>
           <div className="flex items-center gap-x-1 text-xs text-zinc-500">
             <span className="font-danaMed ss02">
-            (
+              (
               {
                 rate?.find((r: any) => r.productId === _id.toString())
                   ?.ratingCount
               }
-            )
+              )
             </span>
             <span className="font-danaMed ss02">
               {rate?.find((r: any) => r.productId === _id.toString())?.rating}
             </span>
-            <FaStar color="gold"/>
+            <FaStar color="gold" />
           </div>
         </div>
         <div className="flex justify-end mt-4">

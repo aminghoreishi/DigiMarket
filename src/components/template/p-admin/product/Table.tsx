@@ -55,7 +55,9 @@ const Table = memo(
         cancelButtonColor: "#3085d6",
         confirmButtonText: "بله، حذف کن!",
         cancelButtonText: "لغو",
-        customClass: "text-xs",
+        customClass: {
+          popup: "!text-xs font-danaMed",
+        },
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
@@ -73,7 +75,13 @@ const Table = memo(
                 console.error("Error fetching products:", error);
               }
 
-              Swal.fire("محصول با موفقیت حذف شد!", "", "success");
+              Swal.fire({
+                title: "با موفقعیت حذف شد",
+                icon: "success",
+                customClass: {
+                  popup: "!text-xs font-danaMed",
+                },
+              });
             }
           } catch (error) {
             console.error("Error deleting product:", error);

@@ -1,26 +1,36 @@
-import db from "@/config/db";
 import commentModel from "@/models/comment";
 
-export async function getProductRating(productId: string) {
-  await db();
+export const rateFunc = async (products: any[]) => {
+  const rate = await Promise.all(
+    products.map(async (p: any) => {
+      const comments = await commentModel
+        .find({
+          product: p._id,
+          isApproved: true,
+        })
+        .lean();
 
-  const comments = await commentModel
-    .find({
-      product: productId,
-      isApproved: true,
+      const totalCount = comments.length;
+
+      if (totalCount === 0) {
+        return {
+          productId: p._id.toString(),
+          rating: 0,
+          ratingCount: 0,
+        };
+      }
+
+      const positiveCount = comments.filter((c) => c.isOk).length;
+
+      return {
+        productId: p._id.toString(),
+        rating: Number(((positiveCount / totalCount) * 5).toFixed(1)),
+        ratingCount: totalCount,
+      };
     })
-    .lean();
+  );
 
-  const count = comments.length;
+  return rate;
+};
 
-  if (count === 0) {
-    return { rating: 0, ratingCount: 0 };
-  }
 
-  const positive = comments.filter((c) => c.isOk).length;
-
-  return {
-    rating: Number(((positive / count) * 5).toFixed(1)),
-    ratingCount: count,
-  };
-}
