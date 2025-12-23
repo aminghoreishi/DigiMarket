@@ -12,6 +12,7 @@ const CommentForm = memo(
   }: {
     findProductID: string;
     userID: string;
+    session: string;
   }) => {
     const [body, setBody] = useState<string>("");
     const [isOk, setIsOk] = useState<boolean | null>(null);
