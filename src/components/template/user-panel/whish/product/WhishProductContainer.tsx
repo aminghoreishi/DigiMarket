@@ -2,51 +2,57 @@
 import React, { useEffect, useState } from "react";
 
 import SwiperProduct from "@/components/module/SwiperProduct/SwiperProduct";
-import { title } from "process";
+import Pagination from "@/components/module/Pagination/Pagination";
+
 function WhishProductContainer() {
-  const [productsLocalStorage, setProductsLocalStorage] = useState([]);
+  const [productIds, setProductIds] = useState<string[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
 
   useEffect(() => {
-    const getWhishLocalS = JSON.parse(localStorage.getItem("which"));
-    setProductsLocalStorage(getWhishLocalS);
+    const whish = JSON.parse(localStorage.getItem("which") || "[]");
+
+    setProductIds(whish);
+    setTotalPages(Math.ceil(whish.length / 3));
   }, []);
 
+
   useEffect(() => {
-    console.log(productsLocalStorage);
+    if (!productIds.length) return;
 
     const getWhish = async () => {
-      const res = await fetch("/api/whish", {
+      const res = await fetch(`/api/whish?page=${currentPage}`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(productsLocalStorage),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(productIds),
       });
 
-      const response = await res.json();
-
-      setProductsLocalStorage(response);
-
-      console.log(response);
+      const data = await res.json();
+      setProducts(data.findProduct);
     };
 
     getWhish();
-  }, [productsLocalStorage]);
+  }, [currentPage, productIds]);
 
   return (
-    <div>
-      {productsLocalStorage?.findProduct?.map((item) => (
-        <SwiperProduct
-          title={item.title}
-          images={item.images}
-          price={item.price}
-          _id={item._id}
-          colors={item.colors}
-          name={item.name}
-          rate={[]}
+    <>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+        {products.map((item) => (
+          <SwiperProduct key={item._id} {...item} rate={[]} />
+        ))}
+      </div>
+
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
         />
-      ))}
-    </div>
+      )}
+    </>
   );
 }
 
