@@ -1,6 +1,12 @@
 import React from "react";
 
-function SmartwatchFields({ register, errors }) {
+function SmartwatchFields({
+  register,
+  errors,
+}: {
+  register: any;
+  errors: any;
+}) {
   return (
     <div className="p-6 bg-blue-50 lg:col-span-3 font-danaMed rounded-xl border border-blue-200">
       <h3 className="text-lg font-danaBold mb-4 text-blue-800">
@@ -58,7 +64,7 @@ function SmartwatchFields({ register, errors }) {
                 message:
                   "سایز صفحه باید عددی بین 1 تا 9 و حداکثر با دو رقم اعشار باشد",
               },
-              validate: (value) => {
+              validate: (value: any) => {
                 const num = parseFloat(value);
                 if (num < 1 || num > 9)
                   return "سایز صفحه باید بین 1 تا 9 اینچ باشد";
@@ -128,7 +134,7 @@ function SmartwatchFields({ register, errors }) {
                 value: /^\d{1,3}(\.\d{1,2})?$/,
                 message: "وزن باید عددی معتبر باشد (مثلاً 45 یا 32.5)",
               },
-              validate: (value ) => {
+              validate: (value: any) => {
                 const num = parseFloat(value);
                 if (num < 5) return "وزن نمی‌تواند کمتر از ۵ گرم باشد";
                 if (num > 500) return "وزن نمی‌تواند بیشتر از ۵۰۰ گرم باشد";

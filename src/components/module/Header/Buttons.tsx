@@ -10,25 +10,25 @@ import { RiAdminLine } from "react-icons/ri";
 import SignOut from "./SignOut";
 import Cart from "./Cart";
 
-type IUser = {
-  _id: unknown;
-  email?: string;
-  role?: string;
-  fullName?: string;
-  __v?: number;
-};
-
 async function Buttons() {
   await db();
+
   const user = await authUser();
   const isLoggedIn = !!user.user;
   const isAdmin = user.user?.role === "ADMIN";
-  const displayName =
-    user.user?.fullName || user.user?.email?.split("@")[0] || "کاربر";
 
   const session = await auth();
-  const userFind = await userModel.findOne({ email: session?.user.email });
+  const sessionUser = session?.user;
 
+  const userFind = sessionUser?.email
+    ? await userModel.findOne({ email: sessionUser.email }, "role fullName")
+    : null;
+
+  const displayName =
+    user.user?.fullName ||
+    user.user?.email?.split("@")[0] ||
+    userFind?.fullName ||
+    "کاربر";
   return (
     <div className="flex items-center font-danaMed gap-3">
       {isLoggedIn || session?.user ? (

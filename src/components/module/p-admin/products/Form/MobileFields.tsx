@@ -1,6 +1,6 @@
 import React from "react";
 
-function PhoneFields({ register, errors }) {
+function PhoneFields({ register, errors } : { register: any, errors: any }) {
   return (
     <div className="p-6 bg-green-50 lg:col-span-3 font-danaMed rounded-xl border border-green-200">
       <h3 className="text-lg font-danaBold mb-4 text-green-800">

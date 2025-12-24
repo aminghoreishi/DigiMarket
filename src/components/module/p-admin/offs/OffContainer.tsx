@@ -3,16 +3,7 @@
 import { useState } from "react";
 import OffForm from "./OffForm";
 import OffTable from "./OffTable";
-
-type Off = {
-  _id: string;
-  code: string;
-  max: number;
-  discount: number;
-  use: number;
-  user: string[];
-  createdAt: string;
-};
+import type { Off } from "@/types/off";
 
 type SubCategory = {
   _id: string;
@@ -34,14 +25,11 @@ function OffContainer({ offs, subCat, totalPages }: OffContainerProps) {
 
   return (
     <>
-      <div>
-        <OffForm
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          setOffs={setOffs}
-          subCategories={subCat}
-        />
-      </div>
+      <OffForm
+        currentPage={currentPage}
+        setOffs={setOffs}
+        subCategories={subCat}
+      />
 
       <div className="mt-8">
         <OffTable

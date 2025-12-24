@@ -1,4 +1,4 @@
-function LaptopFields({ register, errors }) {
+function LaptopFields({ register, errors } : { register: any, errors: any }) {
   return (
     <div className="p-6 bg-blue-50 lg:col-span-3 font-danaMed rounded-xl border border-blue-200">
       <h3 className="text-lg font-danaBold mb-4 text-blue-800">
@@ -62,7 +62,7 @@ function LaptopFields({ register, errors }) {
                 message:
                   "سایز صفحه باید عددی بین 10 تا 99 و حداکثر با دو رقم اعشار باشد",
               },
-              validate: (value) => {
+              validate: (value:any) => {
                 const num = parseFloat(value);
                 if (num < 10 || num > 99)
                   return "سایز صفحه باید بین 10 تا 99 اینچ باشد";
@@ -128,7 +128,7 @@ function LaptopFields({ register, errors }) {
                 value: /^\d{1}(\.\d{1,2})?$/,
                 message: "وزن باید عددی معتبر باشد (مثلاً 1.8 یا 2)",
               },
-              validate: (value) => {
+              validate: (value:any) => {
                 const num = parseFloat(value);
                 if (num < 0.5) return "وزن نمی‌تواند کمتر از ۰.۵ کیلوگرم باشد";
                 if (num > 5) return "وزن نمی‌تواند بیشتر از ۵ کیلوگرم باشد";

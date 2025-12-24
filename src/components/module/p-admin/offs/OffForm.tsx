@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import type { Off, OffFormValues } from "@/types/off";
 
 type SubCategory = {
   _id: string;
@@ -13,24 +14,10 @@ type Product = {
   name: string;
 };
 
-type Off = {
-  _id: string;
-  code: string;
-  max: number;
-  discount: number;
-};
-
 type OffFormProps = {
   subCategories: SubCategory[];
   setOffs: React.Dispatch<React.SetStateAction<Off[]>>;
   currentPage: number;
-};
-
-type OffFormValues = {
-  off: string;
-  max: number;
-  discount: number;
-  product: string;
 };
 
 export default function OffForm({
@@ -50,10 +37,11 @@ export default function OffForm({
     mode: "all",
   });
 
+  /* گرفتن محصولات */
   useEffect(() => {
     if (!subCat) return;
 
-    const getProducts = async (): Promise<void> => {
+    const getProducts = async () => {
       setLoadingProducts(true);
       const res = await fetch(`/api/product/admin/${subCat}`);
       if (!res.ok) return;
@@ -66,6 +54,7 @@ export default function OffForm({
     getProducts();
   }, [subCat]);
 
+  /* ثبت کد تخفیف */
   const addCode: SubmitHandler<OffFormValues> = async (data) => {
     const response = await fetch("/api/offs", {
       method: "POST",
@@ -83,83 +72,54 @@ export default function OffForm({
     await getOffs();
   };
 
-  const getOffs = async (): Promise<void> => {
-    try {
-      const res = await fetch(`/api/offs?page=${currentPage}`);
-      if (!res.ok) return;
+  /* گرفتن لیست آف‌ها */
+  const getOffs = async () => {
+    const res = await fetch(`/api/offs?page=${currentPage}`);
+    if (!res.ok) return;
 
-      const data: { offs: Off[] } = await res.json();
-      setOffs(data.offs);
-    } catch (error) {
-      console.error("Error fetching offs:", error);
-    }
+    const data: { offs: Off[] } = await res.json();
+    setOffs(data.offs);
   };
 
   return (
     <form onSubmit={handleSubmit(addCode)}>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="font-danaMed flex flex-col">
+
+        <div className="flex flex-col">
           <label className="text-sm">کد تخفیف</label>
           <input
-            type="text"
-            {...register("off", {
-              required: "کد تخفیف الزامی است",
-              minLength: { value: 3, message: "حداقل ۳ کاراکتر" },
-              pattern: {
-                value: /^[A-Z0-9]+$/i,
-                message: "فقط حروف و عدد مجاز است",
-              },
-            })}
-            className="border-2 border-gray-200  outline-blue-500 rounded-xl mt-2 px-3 py-2 text-sm"
+            {...register("off", { required: "کد تخفیف الزامی است" })}
+            className="border-2 rounded-xl px-3 py-2"
           />
-          {errors.off && (
-            <p className="text-red-500 text-xs mt-2">{errors.off.message}</p>
-          )}
+          {errors.off && <p className="text-red-500 text-xs">{errors.off.message}</p>}
         </div>
-        <div className="font-danaMed flex flex-col">
+
+        <div className="flex flex-col">
           <label className="text-sm">حداکثر استفاده</label>
           <input
             type="number"
-            {...register("max", {
-              required: "تعداد استفاده الزامی است",
-              min: { value: 1, message: "حداقل مقدار ۱" },
-              max: { value: 1000, message: "حداکثر مقدار ۱۰۰۰" },
-              valueAsNumber: true,
-            })}
-            className="border-2 border-gray-200  outline-blue-500 rounded-xl mt-2 px-3 py-2 text-sm"
+            {...register("max", { valueAsNumber: true })}
+            className="border-2 rounded-xl px-3 py-2"
           />
-          {errors.max && (
-            <p className="text-red-500 text-xs mt-2">{errors.max.message}</p>
-          )}
         </div>
-        <div className="font-danaMed flex flex-col">
+
+        <div className="flex flex-col">
           <label className="text-sm">درصد تخفیف</label>
           <input
             type="number"
-            {...register("discount", {
-              required: "درصد تخفیف الزامی است",
-              min: { value: 1, message: "حداقل ۱٪" },
-              max: { value: 100, message: "حداکثر ۱۰۰٪" },
-              valueAsNumber: true,
-            })}
-            className="border-2 border-gray-200  outline-blue-500 rounded-xl mt-2 px-3 py-2 text-sm"
+            {...register("discount", { valueAsNumber: true })}
+            className="border-2 rounded-xl px-3 py-2"
           />
-          {errors.discount && (
-            <p className="text-red-500 text-xs mt-2">
-              {errors.discount.message}
-            </p>
-          )}
         </div>
-        <div className="font-danaMed flex flex-col">
-          <label className="text-sm">دسته بندی</label>
+
+        <div className="flex flex-col">
+          <label className="text-sm">دسته‌بندی</label>
           <select
-            className="border-2 border-gray-200  outline-blue-500 rounded-xl mt-2 px-3 py-2 text-sm"
             onChange={(e) => setSubCat(e.target.value)}
             defaultValue=""
+            className="border-2 rounded-xl px-3 py-2"
           >
-            <option value="" disabled>
-              انتخاب دسته بندی
-            </option>
+            <option value="" disabled>انتخاب دسته‌بندی</option>
             {subCategories.map((item) => (
               <option key={item._id} value={item._id}>
                 {item.title}
@@ -167,43 +127,28 @@ export default function OffForm({
             ))}
           </select>
         </div>
-        {loadingProducts && (
-          <p className="text-sm text-black font-danaMed mt-2">در حال بارگذاری محصولات...</p>
-        )}
-        {!loadingProducts && product.length > 0 && (
-          <div className="font-danaMed flex flex-col">
+
+        {product.length > 0 && (
+          <div className="flex flex-col">
             <label className="text-sm">محصول</label>
             <select
-              className="border-2 border-gray-200  outline-blue-500 rounded-xl mt-2 px-3 py-2 text-sm"
-              {...register("product", {
-                required: "انتخاب محصول الزامی است",
-              })}
-              defaultValue=""
+              {...register("product", { required: true })}
+              className="border-2 rounded-xl px-3 py-2"
             >
-              <option value="" disabled>
-                انتخاب محصول
-              </option>
+              <option value="">انتخاب محصول</option>
               {product.map((item) => (
                 <option key={item._id} value={item._id}>
                   {item.name}
                 </option>
               ))}
             </select>
-
-            {errors.product && (
-              <p className="text-red-500 text-xs mt-2">
-                {errors.product.message}
-              </p>
-            )}
           </div>
         )}
       </div>
 
-      <div className="mt-8">
-        <button className="bg-blue-500 text-white px-8 py-2 rounded-xl">
-          ثبت
-        </button>
-      </div>
+      <button className="mt-6 bg-blue-500 text-white px-6 py-2 rounded-xl">
+        ثبت
+      </button>
     </form>
   );
 }

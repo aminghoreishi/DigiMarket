@@ -1,6 +1,6 @@
 import React from "react";
 
-function ModemFields({ register, errors }) {
+function ModemFields({ register, errors }: { register: any; errors: any }) {
   return (
     <div className="p-6 bg-blue-50 lg:col-span-3 font-danaMed rounded-xl border border-blue-200">
       <h3 className="text-lg font-danaBold mb-4 text-blue-800">مشخصات مودم</h3>
@@ -26,7 +26,6 @@ function ModemFields({ register, errors }) {
           )}
         </div>
 
-        {/* Storage */}
         <div className="flex flex-col">
           <label className="text-sm font-danaMed mb-1">
             تعداد پورت اترنت RJ-45
@@ -47,23 +46,11 @@ function ModemFields({ register, errors }) {
           )}
         </div>
 
-        {/* Screen Size */}
         <div className="flex flex-col">
           <label className="text-sm font-danaMed mb-1">نوع آنتن</label>
           <input
             {...register("kindAnten", {
               required: "نوع آنتن الزامی است",
-              pattern: {
-                // value: /^(?:\d{1}(?:\.\d{1,2})?)$/,
-                // message:
-                //   "نوع آنتن باید عددی بین 1 تا 9 و حداکثر با دو رقم اعشار باشد",
-              },
-              validate: (value) => {
-                // const num = parseFloat(value);
-                // if (num < 1 || num > 9)
-                //   return "نوع آنتن باید بین 1 تا 9 باشد";
-                // return true;
-              },
             })}
             type="text"
             className="border-2 rounded-xl px-3 py-2 text-sm border-zinc-200 outline-0 transition-all focus:ring-2 focus:ring-blue-500 mt-2"
@@ -81,7 +68,6 @@ function ModemFields({ register, errors }) {
           <input
             {...register("networkType", {
               required: "نوع شبکه الزامی است",
-            
             })}
             type="text"
             placeholder="2.4GHz & 5GHz"
@@ -94,7 +80,6 @@ function ModemFields({ register, errors }) {
           )}
         </div>
 
-        {/* Operating System */}
         <div className="flex flex-col">
           <label className="text-sm font-danaMed mb-1">
             فرکانس قابل پشتیبانی
@@ -102,12 +87,6 @@ function ModemFields({ register, errors }) {
           <input
             {...register("fer", {
               required: "فرکانس قابل پشتیبانی الزامی است",
-              //   pattern: {
-              //     value:
-              //       /^(Wear OS|watchOS|HarmonyOS|MIUI Watch OS|RTOS|Android)$/i,
-              //     message:
-              //       "سیستم‌عامل معتبر نیست (مثلاً Wear OS، watchOS یا HarmonyOS)",
-              //   },
             })}
             type="text"
             placeholder="2.4GHz & 5GHz"
@@ -122,12 +101,6 @@ function ModemFields({ register, errors }) {
           <input
             {...register("keys", {
               required: "کلیدها الزامی است",
-              //   pattern: {
-              //     value:
-              //       /^(Wear OS|watchOS|HarmonyOS|MIUI Watch OS|RTOS|Android)$/i,
-              //     message:
-              //       "سیستم‌عامل معتبر نیست (مثلاً Wear OS، watchOS یا HarmonyOS)",
-              //   },
             })}
             type="text"
             placeholder="WPS, Reset"
@@ -142,7 +115,6 @@ function ModemFields({ register, errors }) {
           <input
             {...register("weight", {
               required: "وزن الزامی است",
-        
             })}
             type="text"
             placeholder="45"

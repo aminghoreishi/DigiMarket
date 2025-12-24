@@ -14,11 +14,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET!,
   session: { strategy: "jwt" },
 
+  pages: {
+    signIn: "/login",
+    newUser: "/",
+  },
+
   callbacks: {
     async signIn({ user }) {
       await db();
       const dbUser = await userModel.findOne({ email: user.email });
-      return !!dbUser || "/reg";
+
+      if (!dbUser) return "/reg";
+
+      return true;
+    },
+
+    async redirect({ baseUrl }) {
+      return baseUrl + "/"; 
     },
 
     async jwt({ token, user }) {
