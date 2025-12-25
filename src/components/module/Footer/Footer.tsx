@@ -89,7 +89,7 @@ async function Footer() {
               <h2>ارتباط مستقیم</h2>
             </div>
           </div>
-          <div className="flex items-center ">
+          <div className="flex items-center mt-5 ">
             <div className="flex gap-8 items-center">
               <div className="">
                 <Image
@@ -109,7 +109,7 @@ async function Footer() {
               </div>
             </div>
           </div>
-          <div>
+          <div className="mt-5">
             <h2 className="font-danaMed text-sm">شبکه های اجتماعی</h2>
             <div className="flex items-center gap-3">
               <div>
