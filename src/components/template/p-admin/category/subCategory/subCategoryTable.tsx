@@ -67,6 +67,9 @@ function SubCategoryTable({
       cancelButtonColor: "#3085d6",
       confirmButtonText: "بله، حذف شود!",
       cancelButtonText: "خیر",
+      customClass: {
+        popup: "!text-xs font-danaMed",
+      },
     });
 
     if (result.isConfirmed) {

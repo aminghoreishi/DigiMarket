@@ -47,7 +47,7 @@ async function Buttons() {
                   <BsBasket />
                   <p>سفارش ها</p>
                 </li>
-                {userFind?.role !== "ADMIN" && (
+                {userFind?.role !== "ADMIN" && user.user.role === "USER" && (
                   <Link href="/my-panel">
                     <li className="flex items-center gap-2">
                       <BsBasket />

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.8.0",
     "fastest-validator": "^1.19.1",
     "flowbite-react": "^0.12.10",
     "jalaali-js": "^1.2.8",

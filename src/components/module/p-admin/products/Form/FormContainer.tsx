@@ -300,7 +300,7 @@ function FormContainer({
               )}
             </div>
           )}
-          {watchedSubCategory === "693928aace7a3b533d3f7eb7" && (
+          {watchedSubCategory === "694d32c3a4e0ddde0a050b90" && (
             <LaptopFields register={register} errors={errors} />
           )}
           {watchedSubCategory === "693929d9ce7a3b533d3f7f18" && (

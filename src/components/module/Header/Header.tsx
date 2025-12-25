@@ -20,7 +20,7 @@ async function Header() {
           <MenuMobile
             isLoggedIn={isLoggedIn}
             isAdmin={isAdmin}
-            session={session.role}
+            session={session?.role}
           />
         </div>
 

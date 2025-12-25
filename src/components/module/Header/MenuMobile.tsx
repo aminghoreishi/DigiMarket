@@ -102,12 +102,11 @@ function MenuMobile({
             <Link href="/cart">
               <li>سبد خرید</li>
             </Link>
-            {isLoggedIn ||
-              (session.role === "USER" || (
-                <Link href="/my-panel">
-                  <li>پنل کاربری</li>
-                </Link>
-              ))}
+            {isLoggedIn || session?.role === "USER" || (
+              <Link href="/my-panel">
+                <li>پنل کاربری</li>
+              </Link>
+            )}
             {isAdmin && isLoggedIn && (
               <Link href="/admin">
                 <li>پنل ادمین</li>

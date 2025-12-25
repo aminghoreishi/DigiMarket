@@ -1,5 +1,4 @@
 import TopBar from "@/components/module/p-admin/TopBar/TopBar";
-import OrderTable from "@/components/template/p-admin/Order/OrderTable";
 import Table from "@/components/template/p-admin/product/Table";
 
 import db from "@/config/db";
@@ -19,7 +18,7 @@ async function Page() {
     .lean();
 
   const totalProduct = await orderModel.countDocuments({});
-  const totalPages = Math.ceil(totalProduct / 4);
+  const totalPages = Math.ceil(totalProduct / 8);
 
   return (
     <div>

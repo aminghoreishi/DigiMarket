@@ -1,51 +1,64 @@
 import db from "@/config/db";
 import subCategoryModel from "@/models/subCategory";
-import { writeFile } from "fs/promises";
+import cloudinary from "@/config/cloudinary";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 
 export async function POST(req: NextRequest) {
   try {
     await db();
     const formData = await req.formData();
 
-    const title = formData.get("title");
-    const href = formData.get("href");
-    const category = formData.get("category");
+    const title = formData.get("title") as string;
+    const href = formData.get("href") as string;
+    const category = formData.get("category") as string;
     const img = formData.get("img") as File;
-    const buffer = Buffer.from(await img.arrayBuffer());
-    const fileName = Date.now() + img.name;
 
-    const subs = await subCategoryModel.findOne({ title });
-
-    if (subs) {
+    if (!title || !img) {
       return NextResponse.json(
-        { message: "این زیر دسته بندی قبلاً ثبت شده است" },
+        { message: "Title و Image الزامی است" },
         { status: 400 }
       );
     }
 
-    await writeFile(
-      path.join(process.cwd(), "public/uploads/category/" + fileName),
-      buffer
-    );
+    const existSub = await subCategoryModel.findOne({ title });
+    if (existSub) {
+      return NextResponse.json(
+        { message: "این زیر دسته‌بندی قبلاً ثبت شده است" },
+        { status: 400 }
+      );
+    }
+
+    const bytes = await img.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const uploadRes = await new Promise<any>((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(
+          {
+            folder: "digimarket/category",
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        )
+        .end(buffer);
+    });
 
     await subCategoryModel.create({
       title,
       href,
       category,
-      img: `http://localhost:3000/uploads/category/${fileName}`,
+      img: uploadRes.secure_url,
     });
 
-    return NextResponse.json({ message: "Created sussfualy" }, { status: 201 });
-  } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 500 });
-    }
     return NextResponse.json(
-      { message: "An unknown error occurred" },
-      { status: 500 }
+      { message: "Created successfully" },
+      { status: 201 }
     );
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ message: "Server Error" }, { status: 500 });
   }
 }
 

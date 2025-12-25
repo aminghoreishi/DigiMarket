@@ -26,6 +26,7 @@ async function Category() {
                     height={100}
                     className="object-cover max-sm:size-20"
                     alt="cat"
+                    priority={true}
                   />
                 </div>
                 <div className="flex justify-center mt-2 font-danaMed max-sm:text-xs text-sm">

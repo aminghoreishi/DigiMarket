@@ -54,10 +54,19 @@ function Table({
       cancelButtonColor: "#d33",
       confirmButtonText: "بله، حذف شود!",
       cancelButtonText: "لغو",
+      customClass: {
+        popup: "!text-xs font-danaMed",
+      },
     }).then(async (result) => {
       if (result.isConfirmed) {
         await deleteBrand(id);
-        Swal.fire("حذف شد!", "برند مورد نظر حذف شد.", "success");
+        Swal.fire({
+          title: "با موفقعیت اضافه شد",
+          icon: "success",
+          customClass: {
+            popup: "!text-xs font-danaMed",
+          },
+        });
       }
     });
   };

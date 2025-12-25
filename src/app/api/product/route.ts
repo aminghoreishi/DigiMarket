@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { writeFile } from "fs/promises";
 import path from "path";
 import productModel from "@/models/product";
+import cloudinary from "@/config/cloudinary";
+
 export async function POST(req: NextRequest) {
   try {
     await db();
@@ -37,7 +39,7 @@ export async function POST(req: NextRequest) {
     }
 
     const images = formData.getAll("images") as File[];
-    const imagePaths: string[] = [];
+    const imageUrls: string[] = [];
 
     for (const image of images) {
       if (image.size === 0) continue;
@@ -45,15 +47,21 @@ export async function POST(req: NextRequest) {
       const bytes = await image.arrayBuffer();
       const buffer = Buffer.from(bytes);
 
-      const filename = `${Date.now()}-${image.name}`;
-      const filepath = path.join(
-        process.cwd(),
-        "public/uploads/product",
-        filename
-      );
-      await writeFile(filepath, buffer);
+      const uploadRes = await new Promise<any>((resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream(
+            {
+              folder: "digimarket/products",
+            },
+            (error, result) => {
+              if (error) reject(error);
+              else resolve(result);
+            }
+          )
+          .end(buffer);
+      });
 
-      imagePaths.push(`/uploads/product/${filename}`);
+      imageUrls.push(uploadRes.secure_url);
     }
 
     await productModel.create({
@@ -69,7 +77,7 @@ export async function POST(req: NextRequest) {
       tags: JSON.parse(formData.get("tags")?.toString() || "[]"),
       colors,
       features,
-      images: imagePaths,
+      images: imageUrls,
       slugBrec,
     });
 
@@ -86,7 +94,7 @@ export async function POST(req: NextRequest) {
           shortDescription,
           colors,
           features,
-          images: imagePaths,
+          images: imageUrls,
         },
       },
       { status: 201 }

@@ -1,8 +1,7 @@
 import db from "@/config/db";
 import brandModel from "@/models/brand";
-import { writeFile } from "fs/promises";
+import cloudinary from "@/config/cloudinary";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,17 +11,33 @@ export async function POST(req: NextRequest) {
     const title = formData.get("title") as string;
     const img = formData.get("img") as File;
 
-    const buffer = Buffer.from(await img.arrayBuffer());
-    const fileName = Date.now() + img.name;
+    if (!img) {
+      return NextResponse.json(
+        { message: "Image is required" },
+        { status: 400 }
+      );
+    }
 
-    await writeFile(
-      path.join(process.cwd(), "public/uploads/brand/" + fileName),
-      buffer
-    );
+    const bytes = await img.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const uploadRes = await new Promise<any>((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(
+          {
+            folder: "digimarket/brand",
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        )
+        .end(buffer);
+    });
 
     await brandModel.create({
       title,
-      img: `/uploads/brand/${fileName}`,
+      img: uploadRes.secure_url, // ✅ Cloudinary URL
     });
 
     return NextResponse.json(
@@ -30,13 +45,8 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 500 });
-    }
-    return NextResponse.json(
-      { message: "An unknown error occurred" },
-      { status: 500 }
-    );
+    console.error(error);
+    return NextResponse.json({ message: "Server Error" }, { status: 500 });
   }
 }
 

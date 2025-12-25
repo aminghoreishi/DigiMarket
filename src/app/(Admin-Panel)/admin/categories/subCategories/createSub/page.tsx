@@ -57,6 +57,9 @@ function Page() {
         title: "لطفاً عکس را انتخاب کنید",
         icon: "warning",
         timer: 2000,
+        customClass: {
+          popup: "!text-xs font-danaMed ",
+        },
       });
       return;
     }
@@ -79,6 +82,9 @@ function Page() {
           title: "زیر دسته بندی با موفقیت ایجاد شد",
           icon: "success",
           timer: 2000,
+          customClass: {
+            popup: "!text-xs font-danaMed ",
+          },
         });
 
         reset();
@@ -92,6 +98,9 @@ function Page() {
           title: "خطا",
           text: error.message || "خطا در ایجاد زیر دسته بندی",
           icon: "error",
+          customClass: {
+            popup: "!text-xs font-danaMed ",
+          },
         });
       }
     } catch (error) {
