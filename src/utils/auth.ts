@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import db from "@/config/db";
 import userModel from "@/models/user";
+import { auth } from "@/auth";
 
 export const hashPassword = async (password: string) =>
   await hash(password, 12);
@@ -103,6 +104,18 @@ export const authUser = async () => {
     console.error("Auth error:", error);
     return { user: null, response: null };
   }
+};
+
+export const authSessionUser = async () => {
+  await db();
+
+  const session = await auth();
+
+  const userFind = await userModel
+    .findOne({ email: session?.user?.email })
+    .select("role fullName email");
+
+  return userFind ? JSON.parse(JSON.stringify(userFind)) : null;
 };
 
 export const authAdmin = async () => {

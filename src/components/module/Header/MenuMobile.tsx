@@ -1,24 +1,28 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { useEffect, useState } from "react";
 import { IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 
 function MenuMobile({
   isLoggedIn,
   isAdmin,
+  session,
 }: {
   isLoggedIn: boolean;
   isAdmin: boolean;
+  session: any;
 }) {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [value, setValue] = useState("");
 
   useEffect(() => {
     setIsOpen(false);
-  }, [pathname, router]);
+  }, [pathname]);
 
   const signOut = async () => {
     const res = await fetch("/api/auth/signout", {
@@ -28,6 +32,13 @@ function MenuMobile({
     if (res.ok) {
       router.push("/login");
       router.refresh();
+    }
+  };
+
+  const searchFunc = () => {
+    if (value.trim()) {
+      router.push(`/search?query=${encodeURIComponent(value.trim())}`);
+      setIsOpen(false);
     }
   };
 
@@ -53,14 +64,35 @@ function MenuMobile({
           isOpen ? "translate-x-5" : "translate-x-[120%]"
         }`}
       >
-        <div className="px-9 pt-5">
-          <div className="flex justify-center">
-            <Image
-              width={80}
-              height={80}
-              alt="digi"
-              src="/image/logo (1).png"
+        <div className="pr-7 pl-3 pt-5">
+          <div className="relative">
+            <input
+              className="w-full border border-gray-300 rounded-md text-xs px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="text"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder="جستجو..."
             />
+
+            <button
+              onClick={searchFunc}
+              className="absolute top-1/2 -translate-y-1/2 left-2 text-gray-500 hover:text-gray-700"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </button>
           </div>
 
           <ul className="mt-5 text-sm flex flex-col gap-5">
@@ -70,6 +102,12 @@ function MenuMobile({
             <Link href="/cart">
               <li>سبد خرید</li>
             </Link>
+            {isLoggedIn ||
+              (session.role === "USER" || (
+                <Link href="/my-panel">
+                  <li>پنل کاربری</li>
+                </Link>
+              ))}
             {isAdmin && isLoggedIn && (
               <Link href="/admin">
                 <li>پنل ادمین</li>

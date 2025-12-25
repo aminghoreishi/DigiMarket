@@ -2,17 +2,26 @@ import SearchBar from "./SearchBar";
 import Buttons from "./Buttons";
 import MenuMobile from "./MenuMobile";
 import Logo from "./Logo";
-import { authUser } from "@/utils/auth";
+import { authSessionUser, authUser } from "@/utils/auth";
 
 async function Header() {
-   const user = await authUser();
-    const isLoggedIn = !!user.user;
-    const isAdmin = user.user?.role === "ADMIN";
+  const user = await authUser();
+  const isLoggedIn = !!user.user;
+  const isAdmin = user.user?.role === "ADMIN";
+  const session = await authSessionUser();
+
+  console.log(session);
+  
+
   return (
     <header className="sticky top-0 z-40 bg-white shadow-lg">
       <div className="container mx-auto flex items-center justify-between py-3">
         <div className="lg:hidden">
-          <MenuMobile isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
+          <MenuMobile
+            isLoggedIn={isLoggedIn}
+            isAdmin={isAdmin}
+            session={session.role}
+          />
         </div>
 
         <div className="shrink-0">
