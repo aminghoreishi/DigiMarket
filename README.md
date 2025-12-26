@@ -182,10 +182,8 @@ Only users with the ADMIN role can access /admin routes and dashboards.
 
 📸 Screenshots / Demo
 
-_Add some screenshots or a short GIF demo here for maximum wow effect!_
 
- _Add screenshots or a demo link here for visual clarity._
-
+![App Screenshot](https://github.com/aminghoreishi/Calculate-Tip/blob/master/Screenshot%202025-08-09%20192209.png)
 
 
 🤝 Contributing
@@ -204,4 +202,5 @@ MIT License. Free for personal & commercial projects.
 
 Developed with ❤️ by @aminghoreishi
 Built proudly with Next.js & TypeScript
+
 
