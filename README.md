@@ -125,11 +125,11 @@ npm install
 
 3️⃣ Create a .env.local at project root:
 
-NEXTAUTH_SECRET=your_secret_key
+AUTH_SECRET=ldom9Kh9AU5eKwPyuwPJxaPLH5geSl0YF
+
 NEXTAUTH_URL=http://localhost:3000
-MONGODB_URI=your_mongodb_connection
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+GOOGLE_CLIENT_ID=959973183728-bjhnanr0ijrherlea7eas78hj9ogho1m.apps.googleusercontent.com
 
 
 4️⃣ Launch the server
@@ -196,6 +196,7 @@ MIT License. Free for personal & commercial projects.
 
 Developed with ❤️ by @aminghoreishi
 Built proudly with Next.js & TypeScript
+
 
 
 
