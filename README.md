@@ -1,4 +1,4 @@
-DigiMarket
+# DigiMarket
 
 Modern, full-featured e-commerce app built with Next.js 14, Tailwind CSS, Node.js & MongoDB
 Shop smart, manage strong, build fast!
@@ -204,3 +204,4 @@ MIT License. Free for personal & commercial projects.
 
 Developed with ❤️ by @aminghoreishi
 Built proudly with Next.js & TypeScript
+
