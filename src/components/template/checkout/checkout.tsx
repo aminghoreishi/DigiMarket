@@ -1,22 +1,25 @@
 "use client";
 import { useState } from "react";
-
 import FormCheck from "./FormCheck";
 import Summary from "./Summary";
+import { AuthUser } from "@/types/user";
+
+interface CheckoutProps {
+  isUserLoggedIn: AuthUser | null;
+  id: string;
+  allPrice: number;
+  authUserId: string;
+}
 
 function Checkout({
   isUserLoggedIn,
   id,
   allPrice,
-  authUserEmail
-}: {
-  isUserLoggedIn: null | { id: string; fullName: string; email: string };
-  allPrice: number;
-
-}) {
-  const [deliveryMethod, setDeliveryMethod] = useState<"express" | "courier">(
-    "express"
-  );
+  authUserId,
+}: CheckoutProps) {
+  const [deliveryMethod, setDeliveryMethod] = useState<
+    "express" | "courier"
+  >("express");
 
   return (
     <div className="grid grid-cols-12 gap-5 mt-8">
@@ -24,12 +27,13 @@ function Checkout({
         <FormCheck
           allPrice={allPrice}
           userId={id}
-          fullName={isUserLoggedIn?.fullName || ""}
+          fullName={isUserLoggedIn?.fullName ?? ""}
           deliveryMethod={deliveryMethod}
           setDeliveryMethod={setDeliveryMethod}
-          authUserEmail={authUserEmail}
+          authUserId={authUserId}
         />
       </div>
+
       <div className="col-span-12 md:col-span-4">
         <Summary deliveryMethod={deliveryMethod} />
       </div>

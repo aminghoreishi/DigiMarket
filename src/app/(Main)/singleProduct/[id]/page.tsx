@@ -23,6 +23,7 @@ type Product = {
   tags: string[];
   features: any[];
   longDescription: string;
+  slugBrec: string;
 };
 export async function generateMetadata({
   params,

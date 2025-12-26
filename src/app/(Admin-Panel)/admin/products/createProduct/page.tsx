@@ -22,7 +22,7 @@ async function page() {
 }
 
 const TopBarMemo = memo(() => {
-  return <TopBar title="ایجاد محصول" />;
+  return <TopBar title="ایجاد محصول"  isPanelUser={false} />;
 });
 
 export default page;

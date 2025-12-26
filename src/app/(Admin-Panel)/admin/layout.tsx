@@ -17,14 +17,14 @@ export default async function AdminLayout({
   const token = cookieStore.get("token")?.value;
   const refreshToken = cookieStore.get("refresh-token")?.value;
 
-  const session = await auth();
+const session = await auth();
 
-  console.log(session);
-  
+const isAdmin = session?.user?.role === "ADMIN";
 
-  if (!token && !refreshToken && session?.user.role !== "ADMIN") {
-    redirect("/");
-  }
+if (!isAdmin && !token && !refreshToken) {
+  redirect("/");
+}
+
 
   return (
     <>

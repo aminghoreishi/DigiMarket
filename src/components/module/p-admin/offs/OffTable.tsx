@@ -112,27 +112,38 @@ export default function OffTable({
           </thead>
 
           <tbody>
-            {offs.map((off) => (
-              <tr
-                key={off._id}
-                className="odd:bg-white even:bg-gray-50 border-b border-gray-200"
-              >
-                <td className="px-6 py-4 font-medium text-gray-900">
-                  {off.code}
-                </td>
-                <td className="px-6 py-4 ss02">{off.max}</td>
-                <td className="px-6 py-4 ss02">{off.use}</td>
-                <td className="px-6 py-4 ss02">{off.discount}٪</td>
-                <td className="px-6 py-4">
-                  <button
-                    onClick={() => removeOffs(off._id)}
-                    className="px-3 py-1 bg-red-500 text-white rounded-md text-xs"
-                  >
-                    حذف
-                  </button>
+            {offs.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={5}
+                  className="px-6 py-8 text-center text-gray-400 text-sm"
+                >
+                  چیزی وجود ندارد
                 </td>
               </tr>
-            ))}
+            ) : (
+              offs.map((off) => (
+                <tr
+                  key={off._id}
+                  className="odd:bg-white even:bg-gray-50 border-b border-gray-200"
+                >
+                  <td className="px-6 py-4 font-medium text-gray-900">
+                    {off.code}
+                  </td>
+                  <td className="px-6 py-4 ss02">{off.max}</td>
+                  <td className="px-6 py-4 ss02">{off.use}</td>
+                  <td className="px-6 py-4 ss02">{off.discount}٪</td>
+                  <td className="px-6 py-4">
+                    <button
+                      onClick={() => removeOffs(off._id)}
+                      className="px-3 py-1 bg-red-500 text-white rounded-md text-xs"
+                    >
+                      حذف
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

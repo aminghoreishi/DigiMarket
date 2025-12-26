@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error creating comment:", error);
+   
     return new Response(JSON.stringify({ message: "خطا در ثبت دیدگاه" }), {
       status: 500,
     });

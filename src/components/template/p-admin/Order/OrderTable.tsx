@@ -34,7 +34,7 @@ function OrderTable({
         setTotalPage(data.totalPages);
       }
     } catch (error) {
-      console.error("Error fetching orders:", error);
+ 
     }
   };
 

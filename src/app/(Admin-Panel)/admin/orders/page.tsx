@@ -9,7 +9,10 @@ async function page() {
   const orders = await orderModel
     .find()
     .sort({ createdAt: -1 })
-    .populate([{ path: "user" }, { path: "products.product" , select: 'title price name'}])
+    .populate([
+      { path: "user" },
+      { path: "products.product", select: "title price name" },
+    ])
     .skip(0)
     .limit(8)
     .lean();
@@ -19,11 +22,10 @@ async function page() {
 
   return (
     <div>
-      <TopBar title="سفارشات" />
+      <TopBar title="سفارشات" isPanelUser={false} />
 
       <div className="mt-8">
         <OrderTable
-        
           orders={JSON.parse(JSON.stringify(orders))}
           totalPages={totalPages}
         />

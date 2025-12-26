@@ -41,7 +41,7 @@ const Table = memo(
           setTotalPagesState(data.totalPages);
         }
       } catch (error) {
-        console.error("Error fetching products:", error);
+     
       }
     };
 
@@ -84,7 +84,7 @@ const Table = memo(
               });
             }
           } catch (error) {
-            console.error("Error deleting product:", error);
+          
           }
         }
       });

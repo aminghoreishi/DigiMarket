@@ -37,7 +37,7 @@ export default function OffForm({
     mode: "all",
   });
 
-  /* گرفتن محصولات */
+
   useEffect(() => {
     if (!subCat) return;
 
@@ -54,7 +54,6 @@ export default function OffForm({
     getProducts();
   }, [subCat]);
 
-  /* ثبت کد تخفیف */
   const addCode: SubmitHandler<OffFormValues> = async (data) => {
     const response = await fetch("/api/offs", {
       method: "POST",
@@ -72,7 +71,7 @@ export default function OffForm({
     await getOffs();
   };
 
-  /* گرفتن لیست آف‌ها */
+  
   const getOffs = async () => {
     const res = await fetch(`/api/offs?page=${currentPage}`);
     if (!res.ok) return;
@@ -83,13 +82,13 @@ export default function OffForm({
 
   return (
     <form onSubmit={handleSubmit(addCode)}>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-6">
 
         <div className="flex flex-col">
           <label className="text-sm">کد تخفیف</label>
           <input
             {...register("off", { required: "کد تخفیف الزامی است" })}
-            className="border-2 rounded-xl px-3 py-2"
+            className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
           />
           {errors.off && <p className="text-red-500 text-xs">{errors.off.message}</p>}
         </div>
@@ -99,7 +98,7 @@ export default function OffForm({
           <input
             type="number"
             {...register("max", { valueAsNumber: true })}
-            className="border-2 rounded-xl px-3 py-2"
+            className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
           />
         </div>
 
@@ -108,7 +107,7 @@ export default function OffForm({
           <input
             type="number"
             {...register("discount", { valueAsNumber: true })}
-            className="border-2 rounded-xl px-3 py-2"
+            className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
           />
         </div>
 
@@ -117,7 +116,7 @@ export default function OffForm({
           <select
             onChange={(e) => setSubCat(e.target.value)}
             defaultValue=""
-            className="border-2 rounded-xl px-3 py-2"
+            className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
           >
             <option value="" disabled>انتخاب دسته‌بندی</option>
             {subCategories.map((item) => (
@@ -133,7 +132,7 @@ export default function OffForm({
             <label className="text-sm">محصول</label>
             <select
               {...register("product", { required: true })}
-              className="border-2 rounded-xl px-3 py-2"
+              className="border-2 outline-0 transition-all focus:ring-2 focus:ring-blue-500 rounded-xl mt-2 border-zinc-200 px-3 py-2 text-sm"
             >
               <option value="">انتخاب محصول</option>
               {product.map((item) => (
@@ -146,7 +145,7 @@ export default function OffForm({
         )}
       </div>
 
-      <button className="mt-6 bg-blue-500 text-white px-6 py-2 rounded-xl">
+      <button className="mt-6 bg-blue-500 text-sm text-white px-6 py-2 rounded-xl">
         ثبت
       </button>
     </form>

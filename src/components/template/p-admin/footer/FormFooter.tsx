@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 function FormFooter({ footer }) {
-  console.log(footer);
+  
 
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");

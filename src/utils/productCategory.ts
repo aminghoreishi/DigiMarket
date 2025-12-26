@@ -17,7 +17,7 @@ const FEATURES = {
     وزن: "weight",
   },
 
-  "69442c768e151fb00b922b4e": {
+  "694e472d10b3b73214247fc7": {
     برند: "brand",
     مدل: "model",
     "حافظه داخلی": "storage",
@@ -29,6 +29,18 @@ const FEATURES = {
     "دوربین اصلی": "camera",
     سیستم‌عامل: "os",
     "نوع شبکه": "network",
+  },
+
+  "694d319aa4e0ddde0a050b37": {
+    برند: "brand",
+    مدل: "model",
+    "حافظه داخلی": "storage",
+    پردازنده: "cpu",
+    گرافیک: "gpu",
+    رزولوشن: "resolution",
+    "حداکثر فریم‌ریت": "fps",
+    "نوع دیسک": "discType",
+    "اقلام داخل جعبه": "inBox",
   },
 };
 

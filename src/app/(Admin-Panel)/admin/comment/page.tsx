@@ -16,7 +16,7 @@ async function page() {
 
   return (
     <div>
-      <TopBar title="کامنت ها" />
+      <TopBar title="کامنت ها" isPanelUser={false} />
 
       <div>
         <Table

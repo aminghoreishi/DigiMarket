@@ -34,7 +34,7 @@ function CartDetail({ delivery, price, count }: { delivery: boolean | number; pr
         }
         { count !== 0 && count < 5 && (
           <div>
-            <p className="text-xs font-danaMed text-orange-500">
+            <p className="text-xs font-danaMed ss02 text-orange-500">
               تنها <span>{count}</span> عدد در انبار باقی مانده
             </p>
           </div>

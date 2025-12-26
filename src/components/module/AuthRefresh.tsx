@@ -31,7 +31,7 @@ export default function AuthRefresh() {
           router.refresh();
         }
       } catch (error) {
-        console.error("Token refresh failed:", error);
+      
         router.push("/login");
       }
     };

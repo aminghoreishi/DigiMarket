@@ -33,9 +33,7 @@ function Page() {
           const data = await response.json();
           setCategory(data);
         }
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
+      } catch (error) {}
     };
     fetchCategories();
   }, []);
@@ -52,26 +50,19 @@ function Page() {
   };
 
   const onSubmit = async (data: FormData) => {
-    if (!selectedFile) {
-      Swal.fire({
-        title: "لطفاً عکس را انتخاب کنید",
-        icon: "warning",
-        timer: 2000,
-        customClass: {
-          popup: "!text-xs font-danaMed ",
-        },
-      });
-      return;
-    }
-
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("href", data.href);
     formData.append("category", data.category);
-    formData.append("img", selectedFile, selectedFile.name);
+
+    // ✅ img کاملاً اختیاری
+    if (selectedFile) {
+      formData.append("img", selectedFile);
+    }
 
     try {
       setLoading(true);
+
       const response = await fetch("/api/subCategory", {
         method: "POST",
         body: formData,
@@ -98,17 +89,8 @@ function Page() {
           title: "خطا",
           text: error.message || "خطا در ایجاد زیر دسته بندی",
           icon: "error",
-          customClass: {
-            popup: "!text-xs font-danaMed ",
-          },
         });
       }
-    } catch (error) {
-      console.error("Error:", error);
-      Swal.fire({
-        title: "خطا در ارتباط با سرور",
-        icon: "error",
-      });
     } finally {
       setLoading(false);
     }

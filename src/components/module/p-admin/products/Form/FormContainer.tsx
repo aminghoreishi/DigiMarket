@@ -17,6 +17,7 @@ import Swal from "sweetalert2";
 import { getFeatures } from "@/utils/productCategory";
 import ModemFields from "./ModemFields";
 import Tag from "./Tag";
+import ConsoleFields from "./ConsoleFields";
 
 function FormContainer({
   categories,
@@ -98,7 +99,7 @@ function FormContainer({
 
       reset();
     } catch (error) {
-      console.error("خطا در ارسال فرم:", error);
+     
     } finally {
       setIsLoading(false);
     }
@@ -306,8 +307,11 @@ function FormContainer({
           {watchedSubCategory === "693929d9ce7a3b533d3f7f18" && (
             <ModemFields register={register} errors={errors} />
           )}
-          {watchedSubCategory === "69442c768e151fb00b922b4e" && (
+          {watchedSubCategory === "694e472d10b3b73214247fc7" && (
             <PhoneFields register={register} errors={errors} />
+          )}
+          {watchedSubCategory === "694d319aa4e0ddde0a050b37" && (
+            <ConsoleFields register={register} errors={errors} />
           )}
 
           <div className="font-danaMed flex flex-col">

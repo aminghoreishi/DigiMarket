@@ -47,7 +47,7 @@ const PageMemo = memo(({ product, totalPages }: PageMemoProps) => {
 });
 
 const TopBarMemo = memo(() => {
-  return <TopBar title="سفارشات" />;
+  return <TopBar title="سفارشات"  isPanelUser={false} />;
 });
 
 export default Page;

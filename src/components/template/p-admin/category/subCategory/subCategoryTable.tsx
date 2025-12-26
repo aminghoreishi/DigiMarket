@@ -53,7 +53,7 @@ function SubCategoryTable({
       const { subCategories } = await response.json();
       setSubCategories(subCategories);
     } catch (error) {
-      console.error("Error fetching subCategories:", error);
+
     }
   };
 

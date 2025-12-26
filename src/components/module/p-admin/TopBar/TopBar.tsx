@@ -18,8 +18,6 @@ async function TopBar({
     .findOne({ email: session?.user.email })
     .select("fullName role");
 
-  console.log(userFind);
-
   const displayName =
     user.user?.fullName ||
     user.user?.email?.split("@")[0] ||

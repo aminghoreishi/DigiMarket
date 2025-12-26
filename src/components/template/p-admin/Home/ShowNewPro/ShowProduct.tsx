@@ -1,5 +1,5 @@
 import SwiperProductContainer from "@/components/module/SwiperProductContainer/SwiperProductContainer";
-function ShowProduct({ products, rate }: { products: any[] }) {
+function ShowProduct({ products, rate }: { products: any[]  , rate: any}) {
   console.log(rate);
 
   return (

@@ -35,7 +35,7 @@ async function Page() {
     .limit(6)
     .lean();
 
-  const rate =await rateFunc(allProducts);
+  const rate = await rateFunc(allProducts);
 
   return (
     <div>
@@ -60,6 +60,7 @@ type PageMemoProps = {
   deliveredOrdersCount: number;
   allOrders: any[];
   allProducts: any[];
+  rate: any;
 };
 
 const PageMemo = memo(
@@ -70,7 +71,7 @@ const PageMemo = memo(
     deliveredOrdersCount,
     allOrders,
     allProducts,
-    rate
+    rate,
   }: PageMemoProps) => {
     return (
       <>
@@ -102,7 +103,7 @@ const PageMemo = memo(
 );
 
 const TopBarMemo = memo(() => {
-  return <TopBar title="صفحه اصلی" />;
+  return <TopBar title="صفحه اصلی" isPanelUser={false} />;
 });
 
 export default Page;

@@ -104,7 +104,7 @@ export default function EditProductModal({
       }
     } catch (error) {
       toast.error("خطا در ارتباط با سرور");
-      console.error("Error editing product:", error);
+    
     } finally {
       setIsLoading(false);
     }

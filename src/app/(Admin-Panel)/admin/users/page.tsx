@@ -17,7 +17,7 @@ async function page() {
   const totalPages = Math.ceil(totalProducts / 10);
   return (
     <div>
-      <TopBar title="کاربران" />
+      <TopBar title="کاربران"  isPanelUser={false} />
 
       <div dir="rtl" className="mt-4">
         <User users={JSON.parse(JSON.stringify(users))} totalPages={totalPages} />

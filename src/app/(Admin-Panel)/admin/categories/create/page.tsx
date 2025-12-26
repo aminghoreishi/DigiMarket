@@ -4,7 +4,7 @@ import FormCat from "@/components/template/p-admin/category/createCategory/FormC
 function page() {
   return (
     <>
-      <TopBar title="ایجاد دسته بندی" />
+      <TopBar title="ایجاد دسته بندی" isPanelUser={false} />
       <div className="mt-8">
         <FormCat />
       </div>

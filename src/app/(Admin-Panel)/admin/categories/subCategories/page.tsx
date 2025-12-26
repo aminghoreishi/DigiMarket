@@ -17,7 +17,7 @@ async function page() {
   const totalPages = Math.ceil(total / 6);
   return (
     <div>
-      <TopBar title="زیر دسته بندی ها" />
+      <TopBar title="زیر دسته بندی ها" isPanelUser={false} />
 
       <div className="mt-4 flex justify-end">
         <Link href="/admin/categories/subCategories/createSub">

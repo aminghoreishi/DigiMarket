@@ -2,72 +2,72 @@
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "nextjs-toploader/app";
+import { useRouter } from "next/navigation";
 
-type FormData = {
+type RHFFormData = {
   fullName: string;
-  user: string;
   phone: string;
   address1: string;
   address2?: string;
-  userId: string;
 };
+
+type CartItemForApi = {
+  productId: number;
+  quantity: number;
+};
+
+interface FormCheckProps {
+  fullName: string;
+  deliveryMethod: "express" | "courier";
+  setDeliveryMethod: React.Dispatch<React.SetStateAction<"express" | "courier">>;
+  allPrice: number;
+  authUserId: string;
+}
 
 export default function FormCheck({
   fullName,
   deliveryMethod,
   setDeliveryMethod,
   allPrice,
-  authUserEmail,
-  userId,
-}: {
-  fullName: string;
-  deliveryMethod: "express" | "courier";
-  setDeliveryMethod: React.Dispatch<
-    React.SetStateAction<"express" | "courier">
-  >;
-  allPrice: number;
-  userId: string;
-}) {
+  authUserId,
+}: FormCheckProps) {
   const router = useRouter();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
     setValue,
-  } = useForm<FormData>({ mode: "all" });
+  } = useForm<RHFFormData>({ mode: "all" });
+  const [carts, setCarts] = useState<CartItemForApi[]>([]);
 
-  const [carts, setCarts] = useState<any[]>([]);
+  useEffect(() => {
+    setValue("fullName", fullName);
+  }, [fullName, setValue]);
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem("product");
-      const data = raw ? JSON.parse(raw) : [];
-
-      const itemsForOrder = data.map((item: any) => ({
-        productId: item.id,
+      const data: any[] = raw ? JSON.parse(raw) : [];
+      const itemsForOrder: CartItemForApi[] = data.map((item) => ({
+        productId: item.id as number,
         quantity: item.count || 1,
       }));
-
       setCarts(itemsForOrder);
     } catch (err) {
-      console.error("خطا در خواندن سبد خرید", err);
       setCarts([]);
     }
   }, []);
 
-  const onSubmit = async (data: FormData) => {
-    if (!userId || userId.trim() === "") {
+  const onSubmit = async (data: RHFFormData) => {
+    if (!authUserId || authUserId.trim() === "") {
       alert("کاربر شناسایی نشد. لطفاً دوباره وارد شوید.");
       router.push("/login");
       return;
     }
-
     const savedData = {
       ...data,
-      user: userId || authUserEmail,
+      user: authUserId,
       deliveryMethod,
       products: carts.map((item) => ({
         product: item.productId,
@@ -75,31 +75,20 @@ export default function FormCheck({
       })),
       totalPrice: allPrice,
     };
-
     const res = await fetch("/api/order", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(savedData),
     });
-
-    const responseData = await res.json();
-
     if (res.ok) {
       localStorage.removeItem("product");
       router.push("/");
-    } else {
-      console.error("Error submitting order");
     }
   };
 
   return (
     <div className="border-2 border-zinc-200 rounded-xl p-5 md:p-8">
-      <form
-        className="grid grid-cols-12 gap-6 font-danaMed"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form className="grid grid-cols-12 gap-6 font-danaMed" onSubmit={handleSubmit(onSubmit)}>
         <div className="col-span-12 md:col-span-6">
           <label htmlFor="fullName" className="block text-sm mb-1">
             نام و نام خانوادگی
@@ -107,14 +96,12 @@ export default function FormCheck({
           <input
             type="text"
             id="fullName"
-            defaultValue={fullName || ""}
             {...register("fullName", { required: true })}
             required
             className="w-full px-4 py-2.5 text-sm border-2 border-zinc-200 rounded-xl outline-none focus:border-orange-500 transition-colors"
             placeholder="مثال: علی رضایی"
           />
         </div>
-
         <div className="col-span-12 md:col-span-6">
           <label htmlFor="phone" className="block text-sm mb-1">
             شماره تماس <span className="text-red-500">*</span>
@@ -128,7 +115,6 @@ export default function FormCheck({
             placeholder="09123456789"
           />
         </div>
-
         <div className="col-span-12">
           <label htmlFor="address1" className="block text-sm mb-1">
             آدرس اول <span className="text-red-500">*</span>
@@ -142,7 +128,6 @@ export default function FormCheck({
             placeholder="خیابان، کوچه، پلاک، واحد، طبقه و ..."
           />
         </div>
-
         <div className="col-span-12">
           <label htmlFor="address2" className="block text-sm mb-1">
             آدرس دوم (اختیاری)
@@ -155,7 +140,6 @@ export default function FormCheck({
             placeholder="در صورت نیاز به آدرس دوم..."
           />
         </div>
-
         <fieldset className="col-span-12">
           <legend className="text-sm mb-3">روش ارسال</legend>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -177,7 +161,6 @@ export default function FormCheck({
               <span className="font-danaDemi text-base">پست پیشتاز</span>
               <span className="text-xs text-zinc-500">۳-۵ روز کاری</span>
             </label>
-
             <label
               className={`flex items-center justify-center gap-3 px-6 py-4 border-2 rounded-xl cursor-pointer transition-all ${
                 deliveryMethod === "courier"
@@ -198,7 +181,6 @@ export default function FormCheck({
             </label>
           </div>
         </fieldset>
-
         <div className="col-span-12">
           <button
             type="submit"

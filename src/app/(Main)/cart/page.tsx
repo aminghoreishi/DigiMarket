@@ -6,20 +6,30 @@ import { authUser } from "@/utils/auth";
 
 async function page() {
   await db();
-  const isUserLoggedIn = await authUser();
-  const isLoggin = isUserLoggedIn.user ? true : false;
-  const authUserSession = await auth();
 
-  const userFind = await userModel.findOne(
-    { email: authUserSession?.user?.email },
-    "_id"
-  );
+  const authResult = await authUser();
+  const session = await auth();
+
+  const user = session?.user?.email
+    ? await userModel.findOne(
+        { email: session.user.email },
+        "_id fullName email"
+      )
+    : null;
 
   return (
     <MainCartContainer
-      isUserLoggedIn={isLoggin}
-      authUserEmail={userFind.toString()}
-      id={isUserLoggedIn?.user?._id}
+      isUserLoggedIn={
+        user
+          ? {
+              id: user._id.toString(),
+              fullName: user.fullName,
+              email: user.email,
+            }
+          : null
+      }
+      authUserId={user?._id.toString() ?? ""}
+      id={user?._id.toString() ?? ""}
     />
   );
 }

@@ -1,5 +1,5 @@
 import { MdKeyboardArrowLeft } from "react-icons/md";
-function BredCrumbs({ slugBrec }) {
+function BredCrumbs({ slugBrec } : {slugBrec : string}) {
   return (
     <div className="flex items-center gap-x-3 font-danaMed text-xs">
       <div className="flex items-center gap-3">

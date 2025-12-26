@@ -14,7 +14,7 @@ async function page() {
   const totalPages = Math.ceil(totalOffs / 7);
   return (
     <div>
-      <TopBar title="تخفیفات" />
+      <TopBar title="تخفیفات"  isPanelUser={false} />
 
       <div className="mt-5">
         <OffContainer

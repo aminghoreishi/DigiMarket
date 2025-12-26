@@ -49,7 +49,7 @@ const Table = ({
         setCommentState(data.data);
       }
     } catch (error) {
-      console.error("Error fetching comments:", error);
+
     }
   };
 

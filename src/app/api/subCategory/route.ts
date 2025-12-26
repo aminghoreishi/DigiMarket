@@ -11,11 +11,11 @@ export async function POST(req: NextRequest) {
     const title = formData.get("title") as string;
     const href = formData.get("href") as string;
     const category = formData.get("category") as string;
-    const img = formData.get("img") as File;
+    const img = formData.get("img");
 
-    if (!title || !img) {
+    if (!title) {
       return NextResponse.json(
-        { message: "Title و Image الزامی است" },
+        { message: "Title الزامی است" },
         { status: 400 }
       );
     }
@@ -28,28 +28,29 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const bytes = await img.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    let imageUrl: string | undefined;
 
-    const uploadRes = await new Promise<any>((resolve, reject) => {
-      cloudinary.uploader
-        .upload_stream(
-          {
-            folder: "digimarket/category",
-          },
-          (error, result) => {
+    if (img instanceof File && img.size > 0) {
+      const bytes = await img.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+
+      const uploadRes = await new Promise<any>((resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream({ folder: "digimarket/category" }, (error, result) => {
             if (error) reject(error);
             else resolve(result);
-          }
-        )
-        .end(buffer);
-    });
+          })
+          .end(buffer);
+      });
+
+      imageUrl = uploadRes.secure_url;
+    }
 
     await subCategoryModel.create({
       title,
       href,
       category,
-      img: uploadRes.secure_url,
+      ...(imageUrl && { img: imageUrl }),
     });
 
     return NextResponse.json(
@@ -67,7 +68,7 @@ export async function GET(req: NextRequest) {
     await db();
 
     const { searchParams } = new URL(req.url);
-    const page = JSON.parse(searchParams.get("page")) || 1;
+    const page = parseInt(searchParams.get("page") || "1");
 
     if (+page < 1) {
       return NextResponse.json(

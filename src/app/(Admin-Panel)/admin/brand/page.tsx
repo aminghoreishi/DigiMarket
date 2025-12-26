@@ -16,7 +16,7 @@ async function Page() {
   const totalPages = Math.ceil(totalBrands / 7);
   return (
     <div>
-      <TopBar title="مدیریت برند ها" />
+      <TopBar title="مدیریت برند ها" isPanelUser={false} />
 
       <ContainerBrand
         brands={JSON.parse(JSON.stringify(brands))}

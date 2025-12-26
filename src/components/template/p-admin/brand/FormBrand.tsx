@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { BeatLoader } from "react-spinners";
 import Swal from "sweetalert2";
 
 function FormBrand({ setBrandState }: { setBrandState?: any }) {
   const [title, setTitle] = useState("");
   const [img, setImg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const getBrands = async () => {
     try {
@@ -18,6 +20,7 @@ function FormBrand({ setBrandState }: { setBrandState?: any }) {
   };
 
   const addBrandHandler = async (e: React.FormEvent) => {
+    setIsLoading(true);
     e.preventDefault();
 
     const formData = new FormData();
@@ -41,12 +44,13 @@ function FormBrand({ setBrandState }: { setBrandState?: any }) {
         });
         getBrands();
       } else {
-        console.error("Failed to add brand");
+      
       }
     } catch (error) {
     } finally {
       setTitle("");
       setImg("");
+      setIsLoading(false);
     }
   };
 
@@ -84,7 +88,7 @@ function FormBrand({ setBrandState }: { setBrandState?: any }) {
         </div>
         <div>
           <button className="mt-6 px-5 py-2 bg-blue-500 text-white rounded-lg text-sm">
-            ثبت برند
+            {isLoading ? <BeatLoader color="white" size={8} /> : "ثبت برند"}
           </button>
         </div>
       </form>

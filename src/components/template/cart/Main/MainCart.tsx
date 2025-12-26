@@ -1,34 +1,45 @@
 "use client";
 import TopSec from "../TopSec/TopSec";
 import MainCart from "../MainCart/MainCart";
-import { useState } from "react";
 import Checkout from "../../checkout/checkout";
+import { useState } from "react";
+import { AuthUser } from "@/types/user";
+
+interface MainCartContainerProps {
+  isUserLoggedIn: AuthUser | null;
+  id: string;
+  authUserId: string;
+}
 
 function MainCartContainer({
   isUserLoggedIn,
   id,
-  authUserEmail
-}: {
-  isUserLoggedIn: null | { id: string; fullName: string; email: string };
-}) {
-  const [step, setStep] = useState("cart");
-  const [allPrice, setAllPrice] = useState(0);
+  authUserId,
+}: MainCartContainerProps) {
+  const [step, setStep] = useState<"cart" | "checkout">("cart");
+  const [allPrice, setAllPrice] = useState<number>(0);
+
   return (
     <div className="container mx-auto">
       <TopSec step={step} />
 
-      <div>
-        {step === "cart" && (
-          <div>
-            <MainCart authUserEmail={authUserEmail} setAllPrice={setAllPrice} isUserLoggedIn={isUserLoggedIn} setStep={setStep} />
-          </div>
-        )}
-        {step === "checkout" && (
-          <div>
-            <Checkout authUserEmail={authUserEmail} id={id}  allPrice={allPrice} isUserLoggedIn={isUserLoggedIn} />
-          </div>
-        )}
-      </div>
+      {step === "cart" && (
+        <MainCart
+          authUserId={authUserId}
+          setAllPrice={setAllPrice}
+          isUserLoggedIn={!!isUserLoggedIn}
+          setStep={setStep}
+        />
+      )}
+
+      {step === "checkout" && (
+        <Checkout
+          authUserId={authUserId}
+          id={id}
+          allPrice={allPrice}
+          isUserLoggedIn={isUserLoggedIn}
+        />
+      )}
     </div>
   );
 }

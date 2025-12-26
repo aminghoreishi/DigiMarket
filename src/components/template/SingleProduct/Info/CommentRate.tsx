@@ -18,7 +18,9 @@ function CommentRate({
         </p>
       </div>
       <div className="text-sm flex items-center gap-2" dir="rtl">
-        <p className=" font-danaMed ss02">{rateCalculate}</p>
+        <p className=" font-danaMed ss02">
+          {Number.isFinite(rateCalculate) ? rateCalculate : 0}
+        </p>
         <FaStar />
       </div>
     </div>

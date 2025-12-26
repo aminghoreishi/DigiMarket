@@ -44,7 +44,7 @@ const SearchBar = memo(
           const data = await response.json();
           setResult(data);
         } catch (error) {
-          console.error("Error fetching search results:", error);
+      
           setResult([]);
         } finally {
           setIsLoading(false);

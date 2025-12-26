@@ -10,7 +10,7 @@ async function page() {
   const footer = await footerModel.find({});
   return (
     <>
-      <TopBar title="فوتر" />
+      <TopBar title="فوتر" isPanelUser={false} />
 
       <div className="mt-5">
         <FormFooter footer={JSON.parse(JSON.stringify(footer))} />

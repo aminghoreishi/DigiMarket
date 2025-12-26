@@ -13,8 +13,11 @@ import { BiCategory } from "react-icons/bi";
 import { FaCheck } from "react-icons/fa";
 import { BsAmazon } from "react-icons/bs";
 import { IoMdDocument } from "react-icons/io";
+import { useState } from "react";
 function SideBar() {
   const route = usePathname();
+  const [openCategory, setOpenCategory] = useState(false);
+
   return (
     <div dir="rtl" className="h-full overflow-y-auto z-50 bg-white pt-5 px-4">
       <div className="flex justify-center w-full mb-8">
@@ -91,7 +94,7 @@ function SideBar() {
             <span>سفارشات</span>
           </li>
         </Link>
-           <Link href="/admin/footer">
+        <Link href="/admin/footer">
           <li
             className={`flex items-center text-sm gap-2 cursor-pointer transition-colors ${
               route === "/admin/footer"
@@ -103,7 +106,7 @@ function SideBar() {
             <span>فوتر</span>
           </li>
         </Link>
-            <Link href="/admin/brand">
+        <Link href="/admin/brand">
           <li
             className={`flex items-center text-sm gap-2 cursor-pointer transition-colors ${
               route === "/admin/brand"
@@ -116,33 +119,50 @@ function SideBar() {
           </li>
         </Link>
         <li
-          className={`flex items-center  relative group text-sm gap-2 cursor-pointer transition-colors ${
-            route === "/admin/categories" ||
-            route === "/admin/categories/subCategories"
+          className={`text-sm transition-colors ${
+            route.startsWith("/admin/categories")
               ? "text-blue-500"
-              : "text-gray-700 hover:text-blue-500"
+              : "text-gray-700"
           }`}
         >
-          <BiCategory size={20} />
-          <Link href="/admin/categories" className="w-full">
-            <div className="flex items-center w-full justify-between">
-              <span>دسته بندی ها</span>
-              <p>
-                <MdKeyboardArrowDown
-                  size={20}
-                  className="transition-all group-hover:rotate-180"
-                />
-              </p>
-            </div>
-          </Link>
+          <div
+            onClick={() => setOpenCategory((prev) => !prev)}
+            className="flex items-center gap-2 cursor-pointer hover:text-blue-500"
+          >
+            <BiCategory size={20} />
 
-          <div className="absolute top-[170%] p-4 rounded-xl w-full bg-white right-0 shadow-2xl transition-all opacity-0 group-hover:opacity-100 duration-250 invisible group-hover:visible">
-            <ul>
+            <div className="flex items-center justify-between w-full">
+              <Link
+                href="/admin/categories"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span>دسته بندی ها</span>
+              </Link>
+
+              <MdKeyboardArrowDown
+                size={20}
+                className={`transition-transform ${
+                  openCategory ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+          </div>
+
+          {openCategory && (
+            <ul className="mt-6 mr-6 flex flex-col gap-3 text-sm text-gray-600">
               <Link href="/admin/categories/subCategories">
-                <li className="">زیر دسته بندی ها</li>
+                <li
+                  className={`cursor-pointer hover:text-blue-500 ${
+                    route === "/admin/categories/subCategories"
+                      ? "text-blue-500"
+                      : ""
+                  }`}
+                >
+                  زیر دسته بندی ها
+                </li>
               </Link>
             </ul>
-          </div>
+          )}
         </li>
 
         <Link href="/admin/comment">

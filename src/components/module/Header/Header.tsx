@@ -10,9 +10,6 @@ async function Header() {
   const isAdmin = user.user?.role === "ADMIN";
   const session = await authSessionUser();
 
-  console.log(session);
-  
-
   return (
     <header className="sticky top-0 z-40 bg-white shadow-lg">
       <div className="container mx-auto flex items-center justify-between py-3">

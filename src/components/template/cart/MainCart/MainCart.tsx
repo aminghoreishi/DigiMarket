@@ -2,21 +2,22 @@
 import { useEffect, useState } from "react";
 import CartContainer from "../cartContainer/CartContainer";
 import CartSummary from "../CartSummary/CartSummary";
-import { auth } from "@/auth";
+import { CartItem } from "@/types/cart";
+
+interface MainCartProps {
+  isUserLoggedIn: boolean;
+  setStep: React.Dispatch<React.SetStateAction<"cart" | "checkout">>;
+  setAllPrice: React.Dispatch<React.SetStateAction<number>>;
+  authUserId: string;
+}
 
 export default function MainCart({
   isUserLoggedIn,
   setStep,
   setAllPrice,
-  authUserEmail
-}: {
-  isUserLoggedIn: any;
-  setStep: React.Dispatch<React.SetStateAction<string>>;
-  setAllPrice: React.Dispatch<React.SetStateAction<number>>;
-}) {
-  const [carts, setCarts] = useState<any[]>([]);
-
- 
+  authUserId,
+}: MainCartProps) {
+  const [carts, setCarts] = useState<CartItem[]>([]);
 
   useEffect(() => {
     const data = localStorage.getItem("product");
@@ -26,9 +27,12 @@ export default function MainCart({
   }, []);
 
   useEffect(() => {
-    const total = carts.reduce((sum, item) => sum + item.price * item.count, 0);
+    const total = carts.reduce(
+      (sum, item) => sum + item.price * item.count,
+      0
+    );
     setAllPrice(total);
-  }, [carts]);
+  }, [carts, setAllPrice]);
 
   const updateCount = (id: number, newCount: number) => {
     setCarts((prev) => {
@@ -40,15 +44,19 @@ export default function MainCart({
     });
   };
 
-  const total = carts.reduce((sum, item) => sum + item.price * item.count, 0);
+  const total = carts.reduce(
+    (sum, item) => sum + item.price * item.count,
+    0
+  );
 
   return (
     <div className="grid max-lg:grid-cols-1 lg:grid-cols-12 gap-6 font-danaMed">
       {carts.length === 0 && (
-        <p className="col-span-12 text-center font-danaMed">
+        <p className="col-span-12 text-center">
           سبد خرید شما خالی است
         </p>
       )}
+
       {carts.length > 0 && (
         <>
           <div className="col-span-12 md:col-span-8 lg:col-span-9">
@@ -64,7 +72,7 @@ export default function MainCart({
               <CartSummary
                 total={total}
                 isUserLoggedIn={isUserLoggedIn}
-                authUserEmail={authUserEmail}
+                authUserId={authUserId}
                 setStep={setStep}
               />
             </div>

@@ -18,8 +18,6 @@ const CommentForm = memo(
     const [isOk, setIsOk] = useState<boolean | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    console.log(session);
-
     const createComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
 
@@ -52,7 +50,7 @@ const CommentForm = memo(
           });
         }
       } catch (error) {
-        console.error("Error creating comment:", error);
+     
       } finally {
         setIsLoading(false);
       }
