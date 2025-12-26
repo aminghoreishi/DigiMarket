@@ -142,16 +142,6 @@ App will be running at http://localhost:3000
 npm install
 
 
-3️⃣ Add environment variables
-
-Create a .env.local file at the root with:
-
-NEXTAUTH_SECRET=your_secret_key
-NEXTAUTH_URL=http://localhost:3000
-MONGODB_URI=your_mongodb_connection
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-
 
 4️⃣ Run the development server
 
@@ -184,6 +174,10 @@ Only users with the ADMIN role can access /admin routes and dashboards.
 
 
 ![App Screenshot](https://github.com/aminghoreishi/DigiMarket/blob/main/public/image/Screenshot_20251226_194437.png)
+![App Screenshot](https://github.com/aminghoreishi/DigiMarket/blob/main/public/image/Screenshot_20251226_194843.png)
+![App Screenshot](https://github.com/aminghoreishi/DigiMarket/blob/main/public/image/Screenshot_20251226_195031.png)
+
+
 
 
 🤝 Contributing
@@ -202,6 +196,7 @@ MIT License. Free for personal & commercial projects.
 
 Developed with ❤️ by @aminghoreishi
 Built proudly with Next.js & TypeScript
+
 
 
 
