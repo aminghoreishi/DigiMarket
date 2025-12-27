@@ -1,203 +1,191 @@
-# DigiMarket
+# 🛍️ DigiMarket
 
-Modern, full-featured e-commerce app built with Next.js 14, Tailwind CSS, Node.js & MongoDB
-Shop smart, manage strong, build fast!
+**Modern, full-featured e-commerce app built with Next.js 14, Tailwind CSS, Node.js & MongoDB**
 
- **DigiMarket** is a modern e-commerce web application built with **Next.js (App Router)**, **Tailwind CSS**, **Node.js**, and **MongoDB**. It provides a full shopping experience — including product browsing, carts, and admin management — with secure authentication powered by **NextAuth.js**.
+*Shop smart, manage strong, build fast!*
 
+---
 
+## 📖 About
 
-✨ Key Features (click to expand)
+**DigiMarket** is a modern e-commerce web application built with **Next.js (App Router)**, **Tailwind CSS**, **Node.js**, and **MongoDB**. It provides a full shopping experience — including product browsing, carts, and admin management — with secure authentication powered by **NextAuth.js**.
 
+---
 
+## ✨ Key Features
 
+<details>
+<summary><strong>Click to see all features</strong></summary>
 
+<br>
 
+- 🌟 **Next.js 14 + App Router** architecture
+- 🎨 **Tailwind CSS** design system for responsive UI
+- 🔐 User authentication (NextAuth + JWT + custom roles)
+- 🛒 Full cart and checkout flow
+- 📦 Dynamic product listing and details
+- 👑 Admin dashboard with role-based access
+- 💾 MongoDB + Mongoose data models
+- ⚙️ API routes for cart, product, and order management
+- ⭐ Built-in rating system for user feedback
+- 📊 Reward program for loyal users
 
-🌟 App directory & Client/Server components
+</details>
 
+---
 
+## 🗂️ Project Structure
 
-🎨 Responsive UI powered by Tailwind CSS
+<details>
+<summary><strong>Click to see full structure</strong></summary>
 
+<br>
 
-
-🔐 Secure authentication (NextAuth, Google, JWT)
-
-
-
-🛒 Cart, checkout, full shopping experience
-
-
-
-🗂️ Dynamic catalog & product management
-
-
-
-👑 Admin dashboard & role-based permissions
-
-
-
-💾 Scalable data: MongoDB + Mongoose
-
-
-
-✉️ API routes for seamless commerce (cart/products/orders)
-
-
-
-⭐ User rating & feedback system
-
-
-
-📊 Reward program for loyal users
-
- - 🌟 **Next.js 14 + App Router** architecture - 🎨 **Tailwind CSS** design system for responsive UI - 🔐 User authentication (NextAuth + JWT + custom roles) - 🛒 Full cart and checkout flow - 📦 Dynamic product listing and details - 👑 Admin dashboard with role-based access - 💾 MongoDB + Mongoose data models - ⚙️ API routes for cart, product, and order management - 📊 Built-in rating system for user feedback
-
-
-
-🗂️ Project Structure
-
-Click to see full structure 
-
+```bash
 DigiMarket/
 │
 ├── app/                    # Next.js App Router (routes & layouts)
-│   ├── (client)/
-│   ├── (server)/
-│   ├── api/                # RESTful API endpoints
-│   └── layout.tsx          # App root layout
+│   ├── (client)/          # Client-side routes
+│   ├── (server)/          # Server-side routes
+│   ├── api/               # RESTful API endpoints
+│   └── layout.tsx         # App root layout
 │
-├── components/             # UI & atomic React components
-├── lib/                    # Auth, MongoDB config, utilities
-├── models/                 # Mongoose schemas (Product, User, Order)
-├── public/                 # Static files (images, icons, etc.)
-├── types/                  # Custom TypeScript types & interfaces
+├── components/            # UI & atomic React components
+├── lib/                   # Auth, MongoDB config, utilities
+├── models/                # Mongoose schemas (Product, User, Order)
+├── public/                # Static files (images, icons, etc.)
+├── types/                 # Custom TypeScript types & interfaces
 └── package.json
+```
 
+</details>
 
- ```bash DigiMarket/ │ ├── app/ # Next.js App Router pages & layouts │ ├── (client)/ │ ├── (server)/ │ ├── api/ # RESTful API routes │ └── layout.tsx # Root layout │ ├── components/ # Reusable UI components │ ├── lib/ # DB config, NextAuth settings, utils │ ├── models/ # MongoDB models (Product, User, Order) │ ├── public/ # Static assets │ ├── types/ # TypeScript types │ └── package.json ```
+---
 
+## ⚙️ Tech Stack
 
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | Next.js 14 (App Router) |
+| **Styling** | Tailwind CSS |
+| **Backend** | Node.js / Next.js API Routes |
+| **Auth** | NextAuth.js |
+| **Database** | MongoDB + Mongoose |
+| **Type Checking** | TypeScript |
 
-⚙️ Tech Stack At a Glance
+---
 
+## 💎 Reward Score Formula
 
+**Loyalty matters!**
 
-LayerTech stackFrontendNext.js 14 (App Router)StylingTailwind CSSBackendNode.js / Next.js APIAuthNextAuth.jsDatabaseMongoDB + MongooseType SafetyTypeScriptTypeTechnology-------------------FrontendNext.js 14 (App Router)StylingTailwind CSSBackendNode.js / Next.js API RoutesAuthNextAuth.jsDatabaseMongoDB + MongooseType CheckingTypeScript
-
-
-
-💎 Reward Score Formula
-
-
-
-Loyalty matters!
 Every time a user purchases, a reward score is updated in their account:
 
-[
-\text{Score} = \text{OrderAmount} \times \text{RewardRate} ]
+$$
+\text{Score} = \text{OrderAmount} \times \text{RewardRate}
+$$
 
 Earn more by shopping more. The system updates your score automatically after every successful order! ✨
-DigiMarket assigns a reward point for every user purchase using the formula:
 
-[
-\text{Score} = \text{OrderAmount} \times \text{RewardRate} ]
+---
 
-This value updates automatically in the user’s account after each order completion 🔁
-
-
-
-⚡ Getting Started
+## ⚡ Getting Started
 
 Ready in four quick steps:
 
-1️⃣ Clone the repo
+### 1️⃣ Clone the repo
 
+```bash
 git clone https://github.com/aminghoreishi/DigiMarket.git
 cd DigiMarket
+```
 
+### 2️⃣ Install dependencies
 
-2️⃣ Install dependencies
-
+```bash
 npm install
+```
 
+### 3️⃣ Create `.env.local` at project root
 
-3️⃣ Create a .env.local at project root:
-
+```env
 AUTH_SECRET=ldom9Kh9AU5eKwPyuwPJxaPLH5geSl0YF
-
 NEXTAUTH_URL=http://localhost:3000
-
 GOOGLE_CLIENT_ID=959973183728-bjhnanr0ijrherlea7eas78hj9ogho1m.apps.googleusercontent.com
+```
 
+### 4️⃣ Launch the server
 
-4️⃣ Launch the server
-
+```bash
 npm run dev
+```
 
+🎉 App will be running at **http://localhost:3000**
 
-App will be running at http://localhost:3000
+---
 
-npm install
+## 🧰 NPM Scripts
 
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server (hot reload) |
+| `npm run build` | Build for production |
+| `npm start` | Run production server |
+| `npm run lint` | ESLint code linting |
 
+---
 
-4️⃣ Run the development server
-
-npm run dev
-
-
-Open http://localhost:3000.
-
-
-
-🧰 NPM Scripts
-
-CommandDescriptionnpm run devStart dev server (hot reload)npm run buildBuild for productionnpm startRun production servernpm run lintESLint code linting
-
-
-
-👑 Admin Access
+## 👑 Admin Access
 
 Admins are defined by a role in the MongoDB User model:
 
+```typescript
 role: "USER" | "ADMIN"
+```
 
+**Only users with the `ADMIN` role can access `/admin` routes and dashboards.**
 
-Only users with the ADMIN role gain access to /admin routes & dashboards.
-Only users with the ADMIN role can access /admin routes and dashboards.
+---
 
+## 📸 Screenshots
 
+<details>
+<summary><strong>Click to view screenshots</strong></summary>
 
-📸 Screenshots / Demo
+<br>
 
+![Home Page](https://github.com/aminghoreishi/DigiMarket/blob/main/public/image/Screenshot_20251226_194437.png)
 
-![App Screenshot](https://github.com/aminghoreishi/DigiMarket/blob/main/public/image/Screenshot_20251226_194437.png)
-![App Screenshot](https://github.com/aminghoreishi/DigiMarket/blob/main/public/image/Screenshot_20251226_194843.png)
-![App Screenshot](https://github.com/aminghoreishi/DigiMarket/blob/main/public/image/Screenshot_20251226_195031.png)
+![Product Page](https://github.com/aminghoreishi/DigiMarket/blob/main/public/image/Screenshot_20251226_194843.png)
 
+![Cart & Checkout](https://github.com/aminghoreishi/DigiMarket/blob/main/public/image/Screenshot_20251226_195031.png)
 
+</details>
 
+---
 
-🤝 Contributing
+## 🤝 Contributing
 
-Pull requests are welcome. Please open an issue first to discuss any major changes or ideas!
+Pull requests are welcome! Please open an issue first to discuss any major changes or ideas.
 
-Let’s build this marketplace together!
+**Let's build this marketplace together!** 🚀
 
-📜 License
+---
 
-MIT License. Free for personal & commercial projects.
+## 📜 License
 
+**MIT License** - Free for personal & commercial projects.
 
+---
 
+<div align="center">
 
+**Developed with ❤️ by [@aminghoreishi](https://github.com/aminghoreishi)**
 
-Developed with ❤️ by @aminghoreishi
-Built proudly with Next.js & TypeScript
+*Built proudly with Next.js & TypeScript*
 
+</div>
 
+---
 
-
-
+حالا README شما خیلی خوشگل‌تر و منظم‌تر شد! 😊 همه فاصله‌ها رعایت شده، جداول درست شدن، فرمول‌ها هم با LaTeX نوشته شدن، و یه ساختار تمیز و حرفه‌ای داره 🎨✨
